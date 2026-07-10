@@ -56,6 +56,19 @@ export interface AuthResult {
   permissions: Permission[];
 }
 
+// Returned by login when the account has 2FA enabled — the app must collect a
+// TOTP code and call twoFactor.loginVerify before a session exists.
+export interface TwoFactorChallenge {
+  requiresTwoFactor: true;
+  tempToken: string;
+  message: string;
+}
+export type LoginOutcome = AuthResult | TwoFactorChallenge;
+
+export function isTwoFactorChallenge(r: LoginOutcome): r is TwoFactorChallenge {
+  return 'requiresTwoFactor' in r && r.requiresTwoFactor === true;
+}
+
 // Raw shape of the gateway's login `data` payload.
 interface LoginData {
   access_token: string;
@@ -82,6 +95,17 @@ function derivePermissions(data: LoginData): Permission[] {
   return Array.from(new Set([...fromRoles, ...fromDirect])) as Permission[];
 }
 
+// Map the gateway's login `data` payload into the app's AuthResult. Shared by
+// the normal login path and the post-2FA-verification path so both are identical.
+function toAuthResult(d: LoginData): AuthResult {
+  return {
+    user: d.user,
+    token: d.access_token,
+    refreshToken: d.refresh_token,
+    permissions: derivePermissions(d),
+  };
+}
+
 export const authService = {
   register: async (payload: RegisterPayload): Promise<{ auth_id: string; message: string }> => {
     const { data } = await apiClient.post<ApiEnvelope<{ auth_id: string; message: string }>>(
@@ -91,15 +115,15 @@ export const authService = {
     return data.data;
   },
 
-  login: async (payload: LoginPayload): Promise<AuthResult> => {
-    const { data } = await apiClient.post<ApiEnvelope<LoginData>>(API_ENDPOINTS.auth.login, payload);
-    const d = data.data;
-    return {
-      user: d.user,
-      token: d.access_token,
-      refreshToken: d.refresh_token,
-      permissions: derivePermissions(d),
-    };
+  login: async (payload: LoginPayload): Promise<LoginOutcome> => {
+    const { data } = await apiClient.post<
+      ApiEnvelope<LoginData> & { requiresTwoFactor?: boolean; tempToken?: string; message?: string }
+    >(API_ENDPOINTS.auth.login, payload);
+    // 2FA-enabled accounts get a challenge (no `data` payload) instead of tokens.
+    if (data.requiresTwoFactor && data.tempToken) {
+      return { requiresTwoFactor: true, tempToken: data.tempToken, message: data.message ?? '' };
+    }
+    return toAuthResult(data.data);
   },
 
   verifyOtp: async (payload: VerifyOtpPayload): Promise<{ message: string }> => {
@@ -158,28 +182,57 @@ export const authService = {
     return data.data;
   },
 
-  // ─── Two-factor authentication (email OTP based) ─────────────────────────────
+  // ─── Two-factor authentication (Google Authenticator / TOTP) ─────────────────
   twoFactor: {
-    // Begin setup — the backend emails a TWO_FACTOR OTP to the user.
-    setup: async (): Promise<{ message: string }> => {
-      const { data } = await apiClient.post<ApiEnvelope<{ message: string }>>(
+    // Current 2FA state for the signed-in user.
+    status: async (): Promise<TwoFactorStatus> => {
+      const { data } = await apiClient.get<ApiEnvelope<TwoFactorStatus>>(
+        API_ENDPOINTS.auth.twoFactorStatus,
+      );
+      return data.data;
+    },
+    // Begin setup — returns a QR code (data URL) + manual key. Not enabled yet.
+    setup: async (): Promise<TwoFactorSetup> => {
+      const { data } = await apiClient.post<ApiEnvelope<TwoFactorSetup>>(
         API_ENDPOINTS.auth.twoFactorSetup,
       );
       return data.data;
     },
-    // Confirm the OTP to enable 2FA.
-    verify: async (code: string): Promise<{ message: string }> => {
-      const { data } = await apiClient.post<ApiEnvelope<{ message: string }>>(
-        API_ENDPOINTS.auth.twoFactorVerify,
-        { code },
-      );
+    // Verify the first code from the authenticator app to activate 2FA.
+    verify: async (code: string): Promise<{ message: string; two_factor_enabled: boolean }> => {
+      const { data } = await apiClient.post<
+        ApiEnvelope<{ message: string; two_factor_enabled: boolean }>
+      >(API_ENDPOINTS.auth.twoFactorVerify, { code });
       return data.data;
     },
-    disable: async (): Promise<{ message: string }> => {
-      const { data } = await apiClient.post<ApiEnvelope<{ message: string }>>(
-        API_ENDPOINTS.auth.twoFactorDisable,
-      );
+    // Disable 2FA — requires the current password OR a valid code.
+    disable: async (proof: {
+      password?: string;
+      code?: string;
+    }): Promise<{ message: string; two_factor_enabled: boolean }> => {
+      const { data } = await apiClient.post<
+        ApiEnvelope<{ message: string; two_factor_enabled: boolean }>
+      >(API_ENDPOINTS.auth.twoFactorDisable, proof);
       return data.data;
+    },
+    // Complete a 2FA login: exchange the challenge token + code for a session.
+    loginVerify: async (tempToken: string, code: string): Promise<AuthResult> => {
+      const { data } = await apiClient.post<ApiEnvelope<LoginData>>(
+        API_ENDPOINTS.auth.twoFactorLogin,
+        { tempToken, code },
+      );
+      return toAuthResult(data.data);
     },
   },
 };
+
+export interface TwoFactorStatus {
+  two_factor_enabled: boolean;
+  two_factor_enabled_at: string | null;
+}
+export interface TwoFactorSetup {
+  qr_code: string; // data URL for <img src>
+  manual_key: string;
+  otpauth_url: string;
+  message: string;
+}

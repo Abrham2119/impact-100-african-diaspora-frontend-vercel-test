@@ -4,6 +4,7 @@ import { PublicOnlyRoute } from '@/app/guards/PublicOnlyRoute';
 import { SignInPage } from '@/pages/auth/SignInPage';
 import { SignUpPage } from '@/pages/auth/SignUpPage';
 import { VerifyOtpPage } from '@/pages/auth/VerifyOtpPage';
+import { LoginTwoFactorPage } from '@/pages/auth/LoginTwoFactorPage';
 import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage';
 import { ResetPasswordPage } from '@/pages/auth/ResetPasswordPage';
 
@@ -20,6 +21,7 @@ export const authRoutes: RouteObject = {
     { path: 'sign-in', element: <SignInPage /> },
     { path: 'sign-up', element: <SignUpPage /> },
     { path: 'verify-otp', element: <VerifyOtpPage /> },
+    { path: 'two-factor', element: <LoginTwoFactorPage /> },
     { path: 'forgot-password', element: <ForgotPasswordPage /> },
     { path: 'reset-password', element: <ResetPasswordPage /> },
   ],

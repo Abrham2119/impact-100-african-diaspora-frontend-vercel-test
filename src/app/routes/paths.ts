@@ -5,6 +5,7 @@ export const PATHS = {
     signIn: '/auth/sign-in',
     signUp: '/auth/sign-up',
     verifyOtp: '/auth/verify-otp',
+    twoFactor: '/auth/two-factor',
     forgotPassword: '/auth/forgot-password',
     resetPassword: '/auth/reset-password',
   },

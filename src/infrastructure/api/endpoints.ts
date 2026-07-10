@@ -13,8 +13,10 @@ export const API_ENDPOINTS = {
     resetPassword: 'v1/auth/reset-password',
     refresh: 'v1/auth/refresh',
     logout: 'v1/auth/logout',
+    twoFactorStatus: 'v1/auth/2fa/status',
     twoFactorSetup: 'v1/auth/2fa/setup',
     twoFactorVerify: 'v1/auth/2fa/verify',
+    twoFactorLogin: 'v1/auth/2fa/login',
     twoFactorDisable: 'v1/auth/2fa/disable',
   },
   users: {
