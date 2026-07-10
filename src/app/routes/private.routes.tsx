@@ -8,6 +8,7 @@ import { ProfilePage } from '@/pages/private/ProfilePage';
 import { SettingsPage } from '@/pages/private/SettingsPage';
 import { NotificationsPage } from '@/pages/private/NotificationsPage';
 import { UsersPage } from '@/pages/private/UsersPage';
+import { RolesPage } from '@/pages/private/RolesPage';
 
 // /app/* — authenticated area behind ProtectedRoute. Individual places are
 // additionally gated by permission where needed (PermissionRoute).
@@ -29,6 +30,14 @@ export const privateRoutes: RouteObject = {
       element: (
         <PermissionRoute require="users:list">
           <UsersPage />
+        </PermissionRoute>
+      ),
+    },
+    {
+      path: 'roles',
+      element: (
+        <PermissionRoute require="roles:list">
+          <RolesPage />
         </PermissionRoute>
       ),
     },

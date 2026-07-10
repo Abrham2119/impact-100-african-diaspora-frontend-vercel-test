@@ -4,9 +4,11 @@
 export const API_ENDPOINTS = {
   auth: {
     register: 'v1/auth/register',
+    adminCreateUser: 'v1/auth/admin/users',
     login: 'v1/auth/login',
     verifyOtp: 'v1/auth/otp/verify',
     resendOtp: 'v1/auth/otp/resend',
+    verifyEmail: 'v1/auth/verify-email',
     forgotPassword: 'v1/auth/forgot-password',
     resetPassword: 'v1/auth/reset-password',
     refresh: 'v1/auth/refresh',
@@ -24,18 +26,37 @@ export const API_ENDPOINTS = {
     byId: (id: string) => `v1/users/${id}`,
     suspend: (id: string) => `v1/users/${id}/suspend`,
     activate: (id: string) => `v1/users/${id}/activate`,
+    remove: (id: string) => `v1/users/${id}`,
   },
   permissions: {
     check: 'v1/permissions/check',
+    // Roles CRUD
     roles: 'v1/permissions/roles',
+    roleById: (id: string) => `v1/permissions/roles/${id}`,
+    rolePermissions: (roleId: string) => `v1/permissions/roles/${roleId}/permissions`,
+    // Permissions CRUD
     permissions: 'v1/permissions/permissions',
+    permissionById: (id: string) => `v1/permissions/permissions/${id}`,
+    // User ↔ role/permission assignment
+    userRoles: (userId: string) => `v1/permissions/users/${userId}/roles`,
+    userRolesBulk: (userId: string) => `v1/permissions/users/${userId}/roles/bulk`,
+    userRoleById: (userId: string, roleId: string) =>
+      `v1/permissions/users/${userId}/roles/${roleId}`,
     userPermissions: (id: string) => `v1/permissions/users/${id}/permissions`,
+    userPermissionsBulk: (userId: string) => `v1/permissions/users/${userId}/permissions/bulk`,
+    userDirectPermissions: (userId: string) =>
+      `v1/permissions/users/${userId}/permissions/direct`,
   },
   notifications: {
     list: 'v1/notifications',
     unreadCount: 'v1/notifications/unread-count',
     markAllRead: 'v1/notifications/read-all',
+    markManyRead: 'v1/notifications/read',
     byId: (id: string) => `v1/notifications/${id}`,
     markRead: (id: string) => `v1/notifications/${id}/read`,
+    // Web Push
+    vapidKey: 'v1/notifications/push/vapid-key',
+    pushSubscribe: 'v1/notifications/push/subscribe',
+    pushUnsubscribe: 'v1/notifications/push/unsubscribe',
   },
 } as const;

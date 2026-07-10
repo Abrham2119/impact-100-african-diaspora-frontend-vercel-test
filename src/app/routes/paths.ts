@@ -5,6 +5,8 @@ export const PATHS = {
     signIn: '/auth/sign-in',
     signUp: '/auth/sign-up',
     verifyOtp: '/auth/verify-otp',
+    forgotPassword: '/auth/forgot-password',
+    resetPassword: '/auth/reset-password',
   },
   app: {
     dashboard: '/app/dashboard',
@@ -12,5 +14,6 @@ export const PATHS = {
     settings: '/app/settings',
     notifications: '/app/notifications',
     users: '/app/users',
+    roles: '/app/roles',
   },
 } as const;

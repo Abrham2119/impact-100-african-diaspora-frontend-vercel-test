@@ -4,6 +4,8 @@ import { PublicOnlyRoute } from '@/app/guards/PublicOnlyRoute';
 import { SignInPage } from '@/pages/auth/SignInPage';
 import { SignUpPage } from '@/pages/auth/SignUpPage';
 import { VerifyOtpPage } from '@/pages/auth/VerifyOtpPage';
+import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage';
+import { ResetPasswordPage } from '@/pages/auth/ResetPasswordPage';
 
 // /auth/* — sign-in / sign-up / verify-otp, kept behind PublicOnlyRoute so
 // logged-in users are redirected to the dashboard.
@@ -18,5 +20,7 @@ export const authRoutes: RouteObject = {
     { path: 'sign-in', element: <SignInPage /> },
     { path: 'sign-up', element: <SignUpPage /> },
     { path: 'verify-otp', element: <VerifyOtpPage /> },
+    { path: 'forgot-password', element: <ForgotPasswordPage /> },
+    { path: 'reset-password', element: <ResetPasswordPage /> },
   ],
 };

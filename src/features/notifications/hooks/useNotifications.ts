@@ -17,10 +17,34 @@ export function useUnreadCount() {
   return useQuery({ queryKey: KEYS.unread, queryFn: notificationService.unreadCount });
 }
 
+export function useMarkRead() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => notificationService.markRead(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }),
+  });
+}
+
+export function useMarkManyRead() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (ids: string[]) => notificationService.markManyRead(ids),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }),
+  });
+}
+
 export function useMarkAllRead() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: notificationService.markAllRead,
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }),
+  });
+}
+
+export function useDeleteNotification() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => notificationService.remove(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }),
   });
 }

@@ -34,6 +34,12 @@ export function SignInPage() {
             <Input id="password" type="password" autoComplete="current-password" placeholder="••••••••" {...register('password')} />
           </FormField>
 
+          <div className="text-right">
+            <Link to={PATHS.auth.forgotPassword} className="text-sm font-medium text-primary hover:underline">
+              Forgot password?
+            </Link>
+          </div>
+
           {login.isError && (
             <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
               {extractApiError(login.error)}

@@ -22,6 +22,31 @@ export interface VerifyOtpPayload {
   code: string;
   type: 'EMAIL_VERIFICATION' | 'PASSWORD_RESET' | 'TWO_FACTOR';
 }
+export interface ForgotPasswordPayload {
+  email: string;
+}
+export interface ResetPasswordPayload {
+  email: string;
+  code: string;
+  new_password: string;
+}
+// Admin-only user creation: creates an already-verified account and attaches
+// RBAC roles / direct permissions by id in one call (no email OTP required).
+export interface AdminCreateUserPayload {
+  full_name: string;
+  email: string;
+  password: string;
+  role?: 'USER' | 'ADMIN';
+  is_verified?: boolean;
+  role_ids?: string[];
+  permission_ids?: string[];
+}
+export interface AdminCreateUserResult {
+  auth_id: string;
+  email: string;
+  role: PlatformRole;
+  is_verified: boolean;
+}
 
 // ─── Result the app consumes ─────────────────────────────────────────────────
 export interface AuthResult {
@@ -95,5 +120,66 @@ export const authService = {
 
   logout: async (): Promise<void> => {
     await apiClient.post(API_ENDPOINTS.auth.logout);
+  },
+
+  // Admin: create a verified user and attach roles/permissions atomically.
+  adminCreateUser: async (payload: AdminCreateUserPayload): Promise<AdminCreateUserResult> => {
+    const { data } = await apiClient.post<ApiEnvelope<AdminCreateUserResult>>(
+      API_ENDPOINTS.auth.adminCreateUser,
+      payload,
+    );
+    return data.data;
+  },
+
+  // Request a password-reset code (sent to the user's email as a PASSWORD_RESET OTP).
+  forgotPassword: async (payload: ForgotPasswordPayload): Promise<{ message: string }> => {
+    const { data } = await apiClient.post<ApiEnvelope<{ message: string }>>(
+      API_ENDPOINTS.auth.forgotPassword,
+      payload,
+    );
+    return data.data;
+  },
+
+  // Complete the reset with the emailed code + a new password.
+  resetPassword: async (payload: ResetPasswordPayload): Promise<{ message: string }> => {
+    const { data } = await apiClient.post<ApiEnvelope<{ message: string }>>(
+      API_ENDPOINTS.auth.resetPassword,
+      payload,
+    );
+    return data.data;
+  },
+
+  // Exchange a refresh token for a new access token.
+  refresh: async (refreshToken: string): Promise<{ access_token: string }> => {
+    const { data } = await apiClient.post<ApiEnvelope<{ access_token: string }>>(
+      API_ENDPOINTS.auth.refresh,
+      { refresh_token: refreshToken },
+    );
+    return data.data;
+  },
+
+  // ─── Two-factor authentication (email OTP based) ─────────────────────────────
+  twoFactor: {
+    // Begin setup — the backend emails a TWO_FACTOR OTP to the user.
+    setup: async (): Promise<{ message: string }> => {
+      const { data } = await apiClient.post<ApiEnvelope<{ message: string }>>(
+        API_ENDPOINTS.auth.twoFactorSetup,
+      );
+      return data.data;
+    },
+    // Confirm the OTP to enable 2FA.
+    verify: async (code: string): Promise<{ message: string }> => {
+      const { data } = await apiClient.post<ApiEnvelope<{ message: string }>>(
+        API_ENDPOINTS.auth.twoFactorVerify,
+        { code },
+      );
+      return data.data;
+    },
+    disable: async (): Promise<{ message: string }> => {
+      const { data } = await apiClient.post<ApiEnvelope<{ message: string }>>(
+        API_ENDPOINTS.auth.twoFactorDisable,
+      );
+      return data.data;
+    },
   },
 };

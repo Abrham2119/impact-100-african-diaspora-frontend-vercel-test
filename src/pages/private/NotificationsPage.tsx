@@ -1,14 +1,22 @@
 import { PageHeader } from '@/components/PageHeader';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import { AppLoadingState, AppErrorState, AppEmptyState } from '@/components/feedback/AppStates';
-import { useNotifications, useMarkAllRead } from '@/features/notifications/hooks/useNotifications';
+import {
+  useNotifications,
+  useMarkAllRead,
+  useMarkRead,
+  useDeleteNotification,
+} from '@/features/notifications/hooks/useNotifications';
 import { extractApiError } from '@/infrastructure/api/api';
 import { cn } from '@/lib/utils/cn';
 
 export function NotificationsPage() {
   const notifications = useNotifications(1, 20);
   const markAll = useMarkAllRead();
+  const markRead = useMarkRead();
+  const remove = useDeleteNotification();
 
   return (
     <div className="max-w-3xl">
@@ -40,13 +48,36 @@ export function NotificationsPage() {
                   )}
                 />
                 <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <p className="font-medium text-foreground">{n.title}</p>
-                    <span className="text-xs text-muted-foreground">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium text-foreground">{n.title}</p>
+                      <Badge variant={n.read ? 'default' : 'primary'}>{n.type}</Badge>
+                    </div>
+                    <span className="shrink-0 text-xs text-muted-foreground">
                       {new Date(n.created_at).toLocaleString()}
                     </span>
                   </div>
                   <p className="text-sm text-muted-foreground">{n.body}</p>
+                  <div className="mt-2 flex gap-2">
+                    {!n.read && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => markRead.mutate(n.id)}
+                        disabled={markRead.isPending}
+                      >
+                        Mark read
+                      </Button>
+                    )}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => remove.mutate(n.id)}
+                      disabled={remove.isPending}
+                    >
+                      Delete
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>

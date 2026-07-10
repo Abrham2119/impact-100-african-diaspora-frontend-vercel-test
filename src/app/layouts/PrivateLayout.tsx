@@ -1,25 +1,46 @@
+import type { ComponentType } from 'react';
 import { Outlet, NavLink, Link } from 'react-router-dom';
 import { PATHS } from '@/app/routes/paths';
 import { cn } from '@/lib/utils/cn';
 import { Button } from '@/components/ui/Button';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { KeyIcon, UsersIcon } from '@/components/ui/icons';
 import { useAuthStore } from '@/store/authStore';
 import { useAuthLogout } from '@/hooks/useAuthLogout';
 import type { Permission } from '@/domain/enums/permission.enum';
 
+type IconType = ComponentType<React.SVGProps<SVGSVGElement>>;
+
 interface NavItem {
   to: string;
   label: string;
-  icon: string;
+  emoji?: string;
+  Icon?: IconType;
   permission?: Permission;
 }
 
-const NAV: NavItem[] = [
-  { to: PATHS.app.dashboard, label: 'Dashboard', icon: '▤' },
-  { to: PATHS.app.notifications, label: 'Notifications', icon: '🔔' },
-  { to: PATHS.app.users, label: 'Users', icon: '👥', permission: 'users:list' },
-  { to: PATHS.app.profile, label: 'Profile', icon: '👤' },
-  { to: PATHS.app.settings, label: 'Settings', icon: '⚙' },
+interface NavSection {
+  label: string;
+  items: NavItem[];
+}
+
+const NAV: NavSection[] = [
+  {
+    label: 'General',
+    items: [
+      { to: PATHS.app.dashboard, label: 'Dashboard', emoji: '▤' },
+      { to: PATHS.app.notifications, label: 'Notifications', emoji: '🔔' },
+      { to: PATHS.app.profile, label: 'Profile', emoji: '👤' },
+      { to: PATHS.app.settings, label: 'Settings', emoji: '⚙' },
+    ],
+  },
+  {
+    label: 'Account',
+    items: [
+      { to: PATHS.app.roles, label: 'Role and Permission', Icon: KeyIcon, permission: 'roles:list' },
+      { to: PATHS.app.users, label: 'Users', Icon: UsersIcon, permission: 'users:list' },
+    ],
+  },
 ];
 
 // Sidebar + header shell for the authenticated app.
@@ -28,7 +49,10 @@ export function PrivateLayout() {
   const can = useAuthStore((s) => s.can);
   const logout = useAuthLogout();
 
-  const visibleNav = NAV.filter((item) => !item.permission || can(item.permission));
+  const sections = NAV.map((section) => ({
+    ...section,
+    items: section.items.filter((item) => !item.permission || can(item.permission)),
+  })).filter((section) => section.items.length > 0);
 
   return (
     <div className="flex min-h-screen">
@@ -39,23 +63,32 @@ export function PrivateLayout() {
             ⬡ Express Auth
           </Link>
         </div>
-        <nav className="flex-1 space-y-1 p-4">
-          {visibleNav.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                cn(
-                  'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                  isActive
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
-                )
-              }
-            >
-              <span className="w-4 text-center">{item.icon}</span>
-              {item.label}
-            </NavLink>
+        <nav className="flex-1 space-y-6 p-4">
+          {sections.map((section) => (
+            <div key={section.label} className="space-y-1">
+              <p className="px-3 pb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                {section.label}
+              </p>
+              {section.items.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) =>
+                    cn(
+                      'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                      isActive
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+                    )
+                  }
+                >
+                  <span className="flex w-4 justify-center">
+                    {item.Icon ? <item.Icon /> : item.emoji}
+                  </span>
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
           ))}
         </nav>
         <div className="border-t border-border p-4">
