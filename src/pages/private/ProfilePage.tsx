@@ -8,7 +8,6 @@ import { FormField } from '@/components/ui/FormField';
 import { Spinner } from '@/components/ui/Spinner';
 import { AppLoadingState } from '@/components/feedback/AppStates';
 import { useMe, useUpdateMe, useUpdateAvatar } from '@/features/users/hooks/useUsers';
-import { extractApiError } from '@/infrastructure/api/api';
 import { fileToAvatarDataUrl } from '@/lib/utils/image';
 
 interface ProfileForm {
@@ -100,12 +99,6 @@ export function ProfilePage() {
               </Button>
               <p className="mt-1 text-xs text-muted-foreground">JPG or PNG, up to a few MB.</p>
               {avatarError && <p className="mt-1 text-xs text-destructive">{avatarError}</p>}
-              {updateAvatar.isError && (
-                <p className="mt-1 text-xs text-destructive">
-                  {extractApiError(updateAvatar.error)}
-                </p>
-              )}
-              {updateAvatar.isSuccess && <p className="mt-1 text-xs text-primary">Photo updated.</p>}
             </div>
           </div>
 
@@ -117,11 +110,6 @@ export function ProfilePage() {
             <FormField label="Bio" htmlFor="bio">
               <Input id="bio" placeholder="A short bio" {...register('bio')} />
             </FormField>
-
-            {update.isError && (
-              <p className="text-sm text-destructive">{extractApiError(update.error)}</p>
-            )}
-            {update.isSuccess && <p className="text-sm text-primary">Profile updated.</p>}
 
             <Button type="submit" disabled={update.isPending}>
               {update.isPending && <Spinner />} Save changes

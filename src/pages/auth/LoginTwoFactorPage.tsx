@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useLoginTwoFactor } from '@/features/auth/hooks/useLogin';
-import { extractApiError } from '@/infrastructure/api/api';
 import { PATHS } from '@/app/routes/paths';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -52,12 +51,6 @@ export function LoginTwoFactorPage() {
               onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
             />
           </FormField>
-
-          {verify.isError && (
-            <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              {extractApiError(verify.error)}
-            </p>
-          )}
 
           <Button type="submit" className="w-full" disabled={verify.isPending || code.length !== 6}>
             {verify.isPending && <Spinner />} Verify &amp; sign in

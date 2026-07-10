@@ -7,7 +7,6 @@ import {
 } from '@/features/auth/schemas/auth.schema';
 import { useResetPassword } from '@/features/auth/hooks/usePassword';
 import { useResendOtp } from '@/features/auth/hooks/useVerifyOtp';
-import { extractApiError } from '@/infrastructure/api/api';
 import { PATHS } from '@/app/routes/paths';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -55,12 +54,6 @@ export function ResetPasswordPage() {
               {...register('new_password')}
             />
           </FormField>
-
-          {reset.isError && (
-            <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              {extractApiError(reset.error)}
-            </p>
-          )}
 
           <Button type="submit" className="w-full" disabled={reset.isPending}>
             {reset.isPending && <Spinner />} Reset password

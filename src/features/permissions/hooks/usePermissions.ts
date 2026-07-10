@@ -17,6 +17,7 @@ export function useCreatePermission() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreatePermissionPayload) => permissionService.create(payload),
+    meta: { successMessage: 'Permission created.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.all }),
   });
 }
@@ -25,6 +26,7 @@ export function useDeletePermission() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => permissionService.remove(id),
+    meta: { successMessage: 'Permission deleted.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.all }),
   });
 }

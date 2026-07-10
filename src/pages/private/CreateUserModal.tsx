@@ -9,7 +9,6 @@ import { Spinner } from '@/components/ui/Spinner';
 import { ChevronDownIcon } from '@/components/ui/icons';
 import { useCreateUser } from '@/features/users/hooks/useUsers';
 import { useRoles } from '@/features/roles/hooks/useRoles';
-import { extractApiError } from '@/infrastructure/api/api';
 
 interface CreateUserForm {
   full_name: string;
@@ -146,9 +145,6 @@ export function CreateUserModal({ open, onClose }: { open: boolean; onClose: () 
           The account is created already verified — the user can sign in right away with these
           credentials.
         </p>
-        {createUser.isError && (
-          <p className="text-sm text-destructive">{extractApiError(createUser.error)}</p>
-        )}
       </form>
     </Modal>
   );

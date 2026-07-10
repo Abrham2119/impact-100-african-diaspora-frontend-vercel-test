@@ -205,12 +205,6 @@ export function UsersPage() {
               </Button>
             </div>
           </div>
-
-          {(suspend.isError || activate.isError || remove.isError) && (
-            <p className="mt-3 text-sm text-destructive">
-              {extractApiError(suspend.error || activate.error || remove.error)}
-            </p>
-          )}
         </CardContent>
       </Card>
 

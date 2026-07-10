@@ -19,6 +19,7 @@ export function useCreateRole() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: CreateRolePayload) => roleService.create(payload),
+    meta: { successMessage: 'Role created.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.all }),
   });
 }
@@ -28,6 +29,7 @@ export function useUpdateRole() {
   return useMutation({
     mutationFn: ({ id, payload }: { id: string; payload: UpdateRolePayload }) =>
       roleService.update(id, payload),
+    meta: { successMessage: 'Role updated.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.all }),
   });
 }
@@ -36,6 +38,7 @@ export function useDeleteRole() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => roleService.remove(id),
+    meta: { successMessage: 'Role deleted.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.all }),
   });
 }
@@ -53,6 +56,7 @@ export function useAssignRolePermissions() {
   return useMutation({
     mutationFn: ({ roleId, permissionIds }: { roleId: string; permissionIds: string[] }) =>
       roleService.assignPermissions(roleId, permissionIds),
+    meta: { successMessage: 'Permissions updated.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.all }),
   });
 }
@@ -67,6 +71,7 @@ export function useSaveRole() {
       description?: string;
       permissionIds: string[];
     }) => roleService.save(payload),
+    meta: { successMessage: 'Role saved.' },
     onSuccess: (_r, vars) => {
       qc.invalidateQueries({ queryKey: KEYS.all });
       if (vars.id) qc.invalidateQueries({ queryKey: KEYS.permissions(vars.id) });

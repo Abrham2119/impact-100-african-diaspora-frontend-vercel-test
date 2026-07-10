@@ -37,6 +37,7 @@ export function useMarkAllRead() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: notificationService.markAllRead,
+    meta: { successMessage: 'All notifications marked as read.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }),
   });
 }
@@ -45,6 +46,7 @@ export function useDeleteNotification() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => notificationService.remove(id),
+    meta: { successMessage: 'Notification removed.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }),
   });
 }

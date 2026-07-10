@@ -6,7 +6,6 @@ import {
   type ForgotPasswordValues,
 } from '@/features/auth/schemas/auth.schema';
 import { useForgotPassword } from '@/features/auth/hooks/usePassword';
-import { extractApiError } from '@/infrastructure/api/api';
 import { PATHS } from '@/app/routes/paths';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -33,12 +32,6 @@ export function ForgotPasswordPage() {
           <FormField label="Email" htmlFor="email" error={errors.email?.message}>
             <Input id="email" type="email" autoComplete="email" placeholder="you@example.com" {...register('email')} />
           </FormField>
-
-          {forgot.isError && (
-            <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              {extractApiError(forgot.error)}
-            </p>
-          )}
 
           <Button type="submit" className="w-full" disabled={forgot.isPending}>
             {forgot.isPending && <Spinner />} Send reset code

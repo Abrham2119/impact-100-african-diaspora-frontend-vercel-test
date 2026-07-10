@@ -9,6 +9,7 @@ export function useVerifyOtp() {
 
   return useMutation({
     mutationFn: (payload: VerifyOtpPayload) => authService.verifyOtp(payload),
+    meta: { successMessage: 'Email verified. Please sign in.' },
     onSuccess: () => {
       navigate(PATHS.auth.signIn, { replace: true });
     },
@@ -19,5 +20,6 @@ export function useResendOtp() {
   return useMutation({
     mutationFn: ({ email, type }: { email: string; type: VerifyOtpPayload['type'] }) =>
       authService.resendOtp(email, type),
+    meta: { successMessage: 'A new code has been sent.' },
   });
 }

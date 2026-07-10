@@ -16,7 +16,6 @@ import {
   useDisableTwoFactor,
 } from '@/features/auth/hooks/useTwoFactor';
 import type { TwoFactorSetup } from '@/features/auth/api/authService';
-import { extractApiError } from '@/infrastructure/api/api';
 
 // Google Authenticator (TOTP): Enable → scan QR / enter code → confirm.
 function TwoFactorCard() {
@@ -96,9 +95,6 @@ function TwoFactorCard() {
                   Cancel
                 </Button>
               </div>
-              {disable.isError && (
-                <p className="text-sm text-destructive">{extractApiError(disable.error)}</p>
-              )}
             </div>
           ) : (
             <Button variant="outline" onClick={() => setDisabling(true)}>
@@ -144,18 +140,11 @@ function TwoFactorCard() {
                 Cancel
               </Button>
             </div>
-            {verify.isError && (
-              <p className="text-sm text-destructive">{extractApiError(verify.error)}</p>
-            )}
           </div>
         ) : (
           <Button variant="outline" onClick={startSetup} disabled={setup.isPending}>
             {setup.isPending && <Spinner />} Enable 2FA
           </Button>
-        )}
-
-        {setup.isError && !setupData && (
-          <p className="text-sm text-destructive">{extractApiError(setup.error)}</p>
         )}
       </CardContent>
     </Card>

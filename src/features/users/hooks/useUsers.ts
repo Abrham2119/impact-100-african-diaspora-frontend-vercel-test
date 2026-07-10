@@ -19,6 +19,7 @@ export function useUpdateMe() {
   return useMutation({
     mutationFn: (payload: Partial<Pick<UserProfile, 'full_name' | 'bio'>>) =>
       userService.updateMe(payload),
+    meta: { successMessage: 'Profile updated.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.me }),
   });
 }
@@ -28,6 +29,7 @@ export function useUpdateAvatar() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (avatarUrl: string) => userService.updateAvatar(avatarUrl),
+    meta: { successMessage: 'Avatar updated.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.me }),
   });
 }
@@ -50,6 +52,7 @@ export function useCreateUser() {
       password: string;
       roleIds?: string[];
     }) => userService.createWithRole(payload),
+    meta: { successMessage: 'User created.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.all }),
   });
 }
@@ -59,6 +62,7 @@ export function useSuspendUser() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => userService.suspend(id),
+    meta: { successMessage: 'User suspended.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.all }),
   });
 }
@@ -67,6 +71,7 @@ export function useActivateUser() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => userService.activate(id),
+    meta: { successMessage: 'User activated.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.all }),
   });
 }
@@ -75,6 +80,7 @@ export function useDeleteUser() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => userService.remove(id),
+    meta: { successMessage: 'User deleted.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEYS.all }),
   });
 }
@@ -93,6 +99,7 @@ export function useAssignUserRole() {
   return useMutation({
     mutationFn: ({ userId, roleId }: { userId: string; roleId: string }) =>
       userService.assignRole(userId, roleId),
+    meta: { successMessage: 'Role assigned.' },
     onSuccess: (_r, { userId }) => qc.invalidateQueries({ queryKey: KEYS.roles(userId) }),
   });
 }
@@ -102,6 +109,7 @@ export function useRemoveUserRole() {
   return useMutation({
     mutationFn: ({ userId, roleId }: { userId: string; roleId: string }) =>
       userService.removeRole(userId, roleId),
+    meta: { successMessage: 'Role removed.' },
     onSuccess: (_r, { userId }) => qc.invalidateQueries({ queryKey: KEYS.roles(userId) }),
   });
 }

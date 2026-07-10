@@ -153,8 +153,6 @@ export function RoleModal({ role, onClose }: { role: Role | null; onClose: () =>
             </div>
           </div>
         )}
-
-        {save.isError && <p className="text-sm text-destructive">{extractApiError(save.error)}</p>}
       </div>
     </Modal>
   );

@@ -18,6 +18,7 @@ export function useVerifyTwoFactor() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (code: string) => authService.twoFactor.verify(code),
+    meta: { successMessage: 'Two-factor authentication enabled.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEY }),
   });
 }
@@ -28,6 +29,7 @@ export function useDisableTwoFactor() {
   return useMutation({
     mutationFn: (proof: { password?: string; code?: string }) =>
       authService.twoFactor.disable(proof),
+    meta: { successMessage: 'Two-factor authentication disabled.' },
     onSuccess: () => qc.invalidateQueries({ queryKey: KEY }),
   });
 }

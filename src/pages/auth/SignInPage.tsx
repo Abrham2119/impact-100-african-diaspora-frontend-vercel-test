@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { zodResolver } from '@/lib/utils/zodResolver';
 import { signInSchema, type SignInValues } from '@/features/auth/schemas/auth.schema';
 import { useLogin } from '@/features/auth/hooks/useLogin';
-import { extractApiError } from '@/infrastructure/api/api';
 import { PATHS } from '@/app/routes/paths';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -39,12 +38,6 @@ export function SignInPage() {
               Forgot password?
             </Link>
           </div>
-
-          {login.isError && (
-            <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              {extractApiError(login.error)}
-            </p>
-          )}
 
           <Button type="submit" className="w-full" disabled={login.isPending}>
             {login.isPending && <Spinner />} Sign in

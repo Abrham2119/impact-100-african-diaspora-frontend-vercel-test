@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { zodResolver } from '@/lib/utils/zodResolver';
 import { signUpSchema, type SignUpValues } from '@/features/auth/schemas/auth.schema';
 import { useRegister } from '@/features/auth/hooks/useRegister';
-import { extractApiError } from '@/infrastructure/api/api';
 import { PATHS } from '@/app/routes/paths';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -40,12 +39,6 @@ export function SignUpPage() {
           <FormField label="Password" htmlFor="password" error={errors.password?.message}>
             <Input id="password" type="password" autoComplete="new-password" placeholder="At least 8 characters" {...register('password')} />
           </FormField>
-
-          {registerMutation.isError && (
-            <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              {extractApiError(registerMutation.error)}
-            </p>
-          )}
 
           <Button type="submit" className="w-full" disabled={registerMutation.isPending}>
             {registerMutation.isPending && <Spinner />} Create account

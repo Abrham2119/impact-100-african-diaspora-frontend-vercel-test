@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { zodResolver } from '@/lib/utils/zodResolver';
 import { verifyOtpSchema, type VerifyOtpValues } from '@/features/auth/schemas/auth.schema';
 import { useVerifyOtp, useResendOtp } from '@/features/auth/hooks/useVerifyOtp';
-import { extractApiError } from '@/infrastructure/api/api';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { FormField } from '@/components/ui/FormField';
@@ -46,17 +45,6 @@ export function VerifyOtpPage() {
             <Input id="code" inputMode="numeric" maxLength={6} placeholder="123456" {...register('code')} />
           </FormField>
 
-          {verify.isError && (
-            <p className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              {extractApiError(verify.error)}
-            </p>
-          )}
-          {verify.isSuccess && (
-            <p className="rounded-md bg-primary/10 px-3 py-2 text-sm text-primary">
-              Email verified — you can sign in now.
-            </p>
-          )}
-
           <Button type="submit" className="w-full" disabled={verify.isPending}>
             {verify.isPending && <Spinner />} Verify email
           </Button>
@@ -73,9 +61,6 @@ export function VerifyOtpPage() {
             {resend.isPending ? 'Sending…' : 'Resend code'}
           </Button>
         </div>
-        {resend.isSuccess && (
-          <p className="mt-1 text-xs text-muted-foreground">A new code has been sent.</p>
-        )}
       </CardContent>
     </Card>
   );
