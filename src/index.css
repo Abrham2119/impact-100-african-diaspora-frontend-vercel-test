@@ -11,8 +11,8 @@
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 159 84% 39%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 210 40% 96%;
     --secondary-foreground: 222 47% 11%;
     --muted: 210 40% 96%;
@@ -23,7 +23,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --ring: 159 84% 39%;
     --radius: 0.6rem;
   }
 
@@ -32,7 +32,7 @@
     --foreground: 210 40% 96%;
     --card: 222 44% 10%;
     --card-foreground: 210 40% 96%;
-    --primary: 217 91% 60%;
+    --primary: 159 84% 45%;
     --primary-foreground: 222 47% 11%;
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 96%;
@@ -44,14 +44,285 @@
     --destructive-foreground: 210 40% 96%;
     --border: 217 33% 20%;
     --input: 217 33% 20%;
-    --ring: 217 91% 60%;
+    --ring: 159 84% 45%;
   }
 
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+}
+
+/* =========================================================================
+   DASHBOARD CUSTOM STYLES (Figma BrightSmile Super Admin Design System)
+   ========================================================================= */
+
+@layer components {
+  /* Container & Layout */
+  .dash-container {
+    @apply w-full max-w-7xl mx-auto space-y-6 pb-10;
+  }
+
+  /* Header Section */
+  .dash-header {
+    @apply flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between;
+  }
+
+  .dash-title {
+    @apply text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white;
+  }
+
+  .dash-subtitle {
+    @apply text-sm text-slate-500 dark:text-slate-400 mt-1;
+  }
+
+  .dash-actions-row {
+    @apply flex flex-wrap items-center gap-2.5;
+  }
+
+  /* Action Buttons */
+  .dash-btn-primary {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#10b981] hover:bg-[#059669] text-white px-4 py-2 text-sm font-semibold shadow-sm transition-all duration-150 active:scale-[0.98];
+  }
+
+  .dash-btn-outline {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-[#10b981] bg-white hover:bg-[#ecfdf5] text-[#10b981] dark:bg-card dark:hover:bg-slate-800 px-3.5 py-2 text-sm font-medium transition-all duration-150 active:scale-[0.98];
+  }
+
+  /* Stats Cards Grid */
+  .dash-stats-grid {
+    @apply grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4;
+  }
+
+  .dash-stat-card {
+    @apply relative overflow-hidden rounded-2xl bg-white dark:bg-card border border-slate-200/90 dark:border-slate-800 p-5 shadow-[0_1px_3px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-200;
+  }
+
+  .dash-stat-top {
+    @apply flex items-start justify-between gap-2;
+  }
+
+  .dash-stat-icon-wrapper {
+    @apply flex h-11 w-11 items-center justify-center rounded-xl;
+  }
+
+  .dash-icon-green {
+    @apply bg-[#e6fbf2] text-[#10b981];
+  }
+
+  .dash-icon-slate {
+    @apply bg-[#f1f5f9] text-[#475569] dark:bg-slate-800 dark:text-slate-300;
+  }
+
+  .dash-icon-red {
+    @apply bg-[#fef2f2] text-[#ef4444];
+  }
+
+  .dash-icon-teal {
+    @apply bg-[#e0f7f6] text-[#0d9488];
+  }
+
+  .dash-stat-badge-green {
+    @apply inline-flex items-center gap-1 text-xs font-semibold text-[#10b981];
+  }
+
+  .dash-stat-badge-gray {
+    @apply text-xs font-medium text-slate-500 dark:text-slate-400;
+  }
+
+  .dash-stat-label {
+    @apply text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mt-4;
+  }
+
+  .dash-stat-value {
+    @apply text-3xl font-extrabold tracking-tight text-[#10b981] mt-1;
+  }
+
+  /* Main Two-Column Layout */
+  .dash-main-grid {
+    @apply grid gap-6 lg:grid-cols-[minmax(0,1.75fr)_minmax(320px,1fr)];
+  }
+
+  /* Branch Performance Table Card */
+  .dash-table-card {
+    @apply rounded-2xl bg-white dark:bg-card border border-slate-200/90 dark:border-slate-800 shadow-[0_1px_3px_rgba(0,0,0,0.03)] overflow-hidden flex flex-col justify-between;
+  }
+
+  .dash-table-header {
+    @apply flex items-center justify-between border-b border-slate-100 dark:border-slate-800 px-6 py-5;
+  }
+
+  .dash-card-title {
+    @apply text-lg font-bold text-slate-900 dark:text-white;
+  }
+
+  .dash-filter-pill {
+    @apply inline-flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors;
+  }
+
+  .dash-table {
+    @apply w-full min-w-[580px] text-left border-collapse;
+  }
+
+  .dash-th {
+    @apply bg-[#f8fafc] dark:bg-slate-800/50 px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800;
+  }
+
+  .dash-td {
+    @apply px-6 py-4 text-sm text-slate-700 dark:text-slate-300 border-b border-slate-100 dark:border-slate-800/60 align-middle;
+  }
+
+  .dash-progress-track {
+    @apply h-2 w-28 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800;
+  }
+
+  .dash-progress-fill-emerald {
+    @apply h-full rounded-full bg-[#10b981];
+  }
+
+  .dash-progress-fill-mint {
+    @apply h-full rounded-full bg-[#34d399];
+  }
+
+  .dash-progress-fill-coral {
+    @apply h-full rounded-full bg-[#f87171];
+  }
+
+  .dash-badge-peak {
+    @apply inline-flex items-center rounded-full bg-[#dcfce7] dark:bg-emerald-950/60 px-3 py-1 text-xs font-semibold text-[#15803d] dark:text-emerald-300;
+  }
+
+  .dash-badge-optimal {
+    @apply inline-flex items-center rounded-full bg-[#eff6ff] dark:bg-blue-950/60 px-3 py-1 text-xs font-semibold text-[#2563eb] dark:text-blue-300;
+  }
+
+  .dash-badge-available {
+    @apply inline-flex items-center rounded-full bg-[#fef9c3] dark:bg-amber-950/60 px-3 py-1 text-xs font-semibold text-[#a16207] dark:text-amber-300;
+  }
+
+  .dash-table-footer {
+    @apply border-t border-slate-100 dark:border-slate-800 px-6 py-4 text-center;
+  }
+
+  .dash-footer-link {
+    @apply text-sm font-semibold text-[#10b981] hover:text-[#059669] hover:underline transition-colors;
+  }
+
+  /* Active Treatment Card */
+  .dash-active-card {
+    @apply relative overflow-hidden rounded-2xl bg-white dark:bg-card border border-slate-200/90 dark:border-slate-800 p-6 shadow-[0_1px_3px_rgba(0,0,0,0.03)];
+  }
+
+  .dash-active-title {
+    @apply text-base font-bold text-[#10b981];
+  }
+
+  .dash-active-desc {
+    @apply text-xs text-slate-500 dark:text-slate-400 mt-1;
+  }
+
+  .dash-throughput-row {
+    @apply mt-4 flex items-baseline gap-2;
+  }
+
+  .dash-throughput-number {
+    @apply text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white;
+  }
+
+  .dash-throughput-unit {
+    @apply text-sm font-semibold text-slate-500 dark:text-slate-400;
+  }
+
+  .dash-staff-row {
+    @apply mt-6 flex items-center gap-3;
+  }
+
+  .dash-avatar-group {
+    @apply flex -space-x-2.5 items-center;
+  }
+
+  .dash-avatar {
+    @apply h-8 w-8 rounded-full border-2 border-white dark:border-card object-cover shadow-sm bg-slate-200;
+  }
+
+  .dash-tooth-watermark {
+    @apply absolute -right-2 -bottom-2 w-32 h-32 opacity-15 dark:opacity-10 pointer-events-none text-slate-400;
+  }
+
+  /* Top Services Card */
+  .dash-services-card {
+    @apply rounded-2xl bg-white dark:bg-card border border-slate-200/90 dark:border-slate-800 p-6 shadow-[0_1px_3px_rgba(0,0,0,0.03)];
+  }
+
+  .dash-services-title {
+    @apply text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300;
+  }
+
+  .dash-btn-catalogue {
+    @apply w-full mt-6 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-card hover:bg-slate-50 dark:hover:bg-slate-800 py-2.5 text-center text-sm font-semibold text-slate-700 dark:text-slate-200 transition-colors shadow-sm;
+  }
+
+  /* Promotional Banner */
+  .dash-promo-card {
+    @apply rounded-2xl bg-[#121c17] dark:bg-slate-900 border border-emerald-900/30 p-6 sm:p-7 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6;
+    background: linear-gradient(135deg, #131f18 0%, #192a20 60%, #131c17 100%);
+  }
+
+  .dash-promo-title {
+    @apply text-xl sm:text-2xl font-extrabold text-white tracking-tight;
+  }
+
+  .dash-promo-desc {
+    @apply mt-2 text-sm text-slate-300 max-w-xl leading-relaxed;
+  }
+
+  .dash-promo-btn {
+    @apply shrink-0 rounded-xl bg-[#10b981] hover:bg-[#059669] text-white font-semibold px-6 py-3 text-sm shadow-md hover:shadow-lg transition-all active:scale-[0.98];
+  }
+
+  /* Loading, Error & Empty Feedback States */
+  .dash-error-card {
+    @apply rounded-2xl border border-red-200 dark:border-red-950 bg-white dark:bg-card p-12 text-center shadow-sm;
+  }
+
+  .dash-error-icon-box {
+    @apply mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 dark:bg-red-950/60 text-red-600 dark:text-red-400;
+  }
+
+  .dash-empty-card {
+    @apply rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-card p-12 text-center;
+  }
+
+  .dash-empty-icon-box {
+    @apply mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-[#10b981];
+  }
+
+  .dash-state-heading {
+    @apply mt-4 text-xl font-bold text-slate-900 dark:text-white;
+  }
+
+  .dash-state-text {
+    @apply mx-auto mt-2 max-w-md text-sm text-slate-500 dark:text-slate-400;
+  }
+
+  /* State Switcher Buttons (Loading State, Error State, Empty State) */
+  .dash-state-bar {
+    @apply flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-slate-100/90 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700 text-xs;
+  }
+
+  .dash-state-btn {
+    @apply px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer;
+  }
+
+  .dash-state-btn-active {
+    @apply bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm font-semibold;
+  }
+
+  .dash-state-btn-inactive {
+    @apply text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white;
   }
 }
