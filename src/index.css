@@ -86,11 +86,11 @@
 
   /* Action Buttons */
   .dash-btn-primary {
-    @apply inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#10b981] hover:bg-[#059669] text-white px-4 py-2 text-sm font-semibold shadow-sm transition-all duration-150 active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 text-sm font-semibold shadow-sm transition-all duration-150 active:scale-[0.98];
   }
 
   .dash-btn-outline {
-    @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-[#10b981] bg-white hover:bg-[#ecfdf5] text-[#10b981] dark:bg-card dark:hover:bg-slate-800 px-3.5 py-2 text-sm font-medium transition-all duration-150 active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-emerald-600 bg-white hover:bg-emerald-50 text-emerald-600 dark:bg-card dark:border-emerald-500 dark:text-emerald-400 dark:hover:bg-slate-800 px-3.5 py-2 text-sm font-medium transition-all duration-150 active:scale-[0.98];
   }
 
   /* Stats Cards Grid */
@@ -111,23 +111,23 @@
   }
 
   .dash-icon-green {
-    @apply bg-[#e6fbf2] text-[#10b981];
+    @apply bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400;
   }
 
   .dash-icon-slate {
-    @apply bg-[#f1f5f9] text-[#475569] dark:bg-slate-800 dark:text-slate-300;
+    @apply bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300;
   }
 
   .dash-icon-red {
-    @apply bg-[#fef2f2] text-[#ef4444];
+    @apply bg-red-50 text-red-600 dark:bg-red-950/60 dark:text-red-400;
   }
 
   .dash-icon-teal {
-    @apply bg-[#e0f7f6] text-[#0d9488];
+    @apply bg-teal-50 text-teal-600 dark:bg-teal-950/60 dark:text-teal-400;
   }
 
   .dash-stat-badge-green {
-    @apply inline-flex items-center gap-1 text-xs font-semibold text-[#10b981];
+    @apply inline-flex items-center gap-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400;
   }
 
   .dash-stat-badge-gray {
@@ -139,7 +139,7 @@
   }
 
   .dash-stat-value {
-    @apply text-3xl font-extrabold tracking-tight text-[#10b981] mt-1;
+    @apply text-3xl font-extrabold tracking-tight text-emerald-600 dark:text-emerald-400 mt-1;
   }
 
   /* Main Two-Column Layout */
@@ -169,7 +169,7 @@
   }
 
   .dash-th {
-    @apply bg-[#f8fafc] dark:bg-slate-800/50 px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800;
+    @apply bg-slate-50 dark:bg-slate-800/50 px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-800;
   }
 
   .dash-td {
@@ -181,27 +181,27 @@
   }
 
   .dash-progress-fill-emerald {
-    @apply h-full rounded-full bg-[#10b981];
+    @apply h-full rounded-full bg-emerald-500;
   }
 
   .dash-progress-fill-mint {
-    @apply h-full rounded-full bg-[#34d399];
+    @apply h-full rounded-full bg-emerald-400;
   }
 
   .dash-progress-fill-coral {
-    @apply h-full rounded-full bg-[#f87171];
+    @apply h-full rounded-full bg-red-400;
   }
 
   .dash-badge-peak {
-    @apply inline-flex items-center rounded-full bg-[#dcfce7] dark:bg-emerald-950/60 px-3 py-1 text-xs font-semibold text-[#15803d] dark:text-emerald-300;
+    @apply inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-950/60 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-300;
   }
 
   .dash-badge-optimal {
-    @apply inline-flex items-center rounded-full bg-[#eff6ff] dark:bg-blue-950/60 px-3 py-1 text-xs font-semibold text-[#2563eb] dark:text-blue-300;
+    @apply inline-flex items-center rounded-full bg-blue-50 dark:bg-blue-950/60 px-3 py-1 text-xs font-semibold text-blue-600 dark:text-blue-300;
   }
 
   .dash-badge-available {
-    @apply inline-flex items-center rounded-full bg-[#fef9c3] dark:bg-amber-950/60 px-3 py-1 text-xs font-semibold text-[#a16207] dark:text-amber-300;
+    @apply inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-950/60 px-3 py-1 text-xs font-semibold text-amber-700 dark:text-amber-300;
   }
 
   .dash-table-footer {
@@ -209,7 +209,7 @@
   }
 
   .dash-footer-link {
-    @apply text-sm font-semibold text-[#10b981] hover:text-[#059669] hover:underline transition-colors;
+    @apply text-sm font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 hover:underline transition-colors;
   }
 
   /* Active Treatment Card */
@@ -218,7 +218,7 @@
   }
 
   .dash-active-title {
-    @apply text-base font-bold text-[#10b981];
+    @apply text-base font-bold text-emerald-600 dark:text-emerald-400;
   }
 
   .dash-active-desc {
@@ -268,8 +268,7 @@
 
   /* Promotional Banner */
   .dash-promo-card {
-    @apply rounded-2xl bg-[#121c17] dark:bg-slate-900 border border-emerald-900/30 p-6 sm:p-7 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6;
-    background: linear-gradient(135deg, #131f18 0%, #192a20 60%, #131c17 100%);
+    @apply rounded-2xl bg-gradient-to-br from-emerald-950 via-slate-900 to-slate-950 border border-emerald-900/30 p-6 sm:p-7 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-6;
   }
 
   .dash-promo-title {
@@ -281,7 +280,7 @@
   }
 
   .dash-promo-btn {
-    @apply shrink-0 rounded-xl bg-[#10b981] hover:bg-[#059669] text-white font-semibold px-6 py-3 text-sm shadow-md hover:shadow-lg transition-all active:scale-[0.98];
+    @apply shrink-0 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 text-sm shadow-md hover:shadow-lg transition-all active:scale-[0.98];
   }
 
   /* Loading, Error & Empty Feedback States */
@@ -298,7 +297,7 @@
   }
 
   .dash-empty-icon-box {
-    @apply mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-[#10b981];
+    @apply mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400;
   }
 
   .dash-state-heading {

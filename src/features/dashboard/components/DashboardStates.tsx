@@ -12,6 +12,5 @@ export {
 
 export {
   DashboardEmptyView,
-  DashboardEmptyState,
   type DashboardEmptyViewProps,
 } from './DashboardEmptyView';

@@ -25,7 +25,7 @@ export function DashboardPage() {
 
   return (
     <div className="dash-container">
-      {/* State Switcher Buttons */}
+      
       <div className="dash-state-bar">
         <span className="font-semibold text-slate-700 dark:text-slate-300">
           Dashboard Preview:
@@ -82,7 +82,7 @@ export function DashboardPage() {
         </div>
       </div>
 
-      {/* Render based on selected state or React Query */}
+    
       {viewMode === "loading" ||
       (viewMode === "live" && dashboard.isLoading) ? (
         <DashboardLoadingSkeleton />
@@ -97,7 +97,7 @@ export function DashboardPage() {
         (viewMode === "live" &&
           (!dashboard.data ||
             dashboard.data.branchPerformance.length === 0)) ? (
-        <DashboardEmptyView onAddBranch={() => setViewMode("live")} />
+        <DashboardEmptyView onAction={() => setViewMode("live")} />
       ) : dashboard.data ? (
         <DashboardContent data={dashboard.data} />
       ) : null}
@@ -129,17 +129,17 @@ function DashboardContent({
           </button>
 
           <button type="button" className="dash-btn-outline">
-            <BranchIcon className="w-4 h-4 text-[#10b981]" />
+            <BranchIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Add Branch</span>
           </button>
 
           <button type="button" className="dash-btn-outline">
-            <ServiceKitIcon className="w-4 h-4 text-[#10b981]" />
+            <ServiceKitIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Add Service</span>
           </button>
 
           <button type="button" className="dash-btn-outline">
-            <ChairIcon className="w-4 h-4 text-[#10b981]" />
+            <ChairIcon className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>Add Chair</span>
           </button>
         </div>
@@ -313,13 +313,13 @@ function DashboardContent({
                   <span className="font-medium text-slate-500 dark:text-slate-400">
                     Chair utilization
                   </span>
-                  <span className="font-bold text-[#10b981]">
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">
                     {operations.chairUtilizationPercent}%
                   </span>
                 </div>
                 <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                   <div
-                    className="h-full rounded-full bg-[#10b981] transition-all"
+                    className="dash-progress-fill-emerald transition-all"
                     style={{ width: `${operations.chairUtilizationPercent}%` }}
                   />
                 </div>

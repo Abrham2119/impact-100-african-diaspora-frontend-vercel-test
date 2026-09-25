@@ -1,13 +1,11 @@
-import type { ReactNode } from 'react';
-import { cn } from '@/lib/utils/cn';
-import { BranchIcon, PlusIcon } from './DashboardIcon';
+import type { ReactNode } from "react";
+import { cn } from "@/lib/utils/cn";
+import { BranchIcon, PlusIcon } from "./DashboardIcon";
 
-export interface DashboardEmptyViewProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface DashboardEmptyViewProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   description?: string;
   onAction?: () => void;
-  onAddBranch?: () => void;
   actionText?: string;
   icon?: ReactNode;
   actionIcon?: ReactNode;
@@ -15,11 +13,10 @@ export interface DashboardEmptyViewProps
 }
 
 export function DashboardEmptyView({
-  title = 'No branches or operational data yet',
-  description = 'Welcome to your Super Admin portal. Start by creating your first clinic branch to begin tracking operations, staffing, and patient throughput.',
+  title = "No branches or operational data yet",
+  description = "Welcome to your Super Admin portal. Start by creating your first clinic branch to begin tracking operations, staffing, and patient throughput.",
   onAction,
-  onAddBranch,
-  actionText = 'Create First Branch',
+  actionText = "Create First Branch",
   icon,
   actionIcon,
   showIcon = true,
@@ -27,25 +24,25 @@ export function DashboardEmptyView({
   children,
   ...props
 }: DashboardEmptyViewProps) {
-  const handleAction = onAction ?? onAddBranch;
-
   return (
-    <div className={cn('dash-empty-card', className)} {...props}>
+    <div className={cn("dash-empty-card", className)} {...props}>
       {showIcon && (
         <div className="dash-empty-icon-box">
-          {icon ?? <BranchIcon className="h-7 w-7 text-[#10b981]" />}
+          {icon ?? (
+            <BranchIcon className="h-7 w-7 text-emerald-600 dark:text-emerald-400" />
+          )}
         </div>
       )}
 
       <h2 className="dash-state-heading">{title}</h2>
       {description && <p className="dash-state-text">{description}</p>}
 
-      {(handleAction || children) && (
+      {(onAction || children) && (
         <div className="mt-6 flex items-center justify-center gap-3">
-          {handleAction && (
+          {onAction && (
             <button
               type="button"
-              onClick={handleAction}
+              onClick={onAction}
               className="dash-btn-primary"
             >
               {actionIcon ?? <PlusIcon className="h-4 w-4" />}
@@ -58,6 +55,3 @@ export function DashboardEmptyView({
     </div>
   );
 }
-
-// Semantic alias
-export const DashboardEmptyState = DashboardEmptyView;
