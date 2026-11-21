@@ -6,7 +6,9 @@ import { useSlider, type SliderConfig, type SliderOptions } from '@/hooks/useSli
 //   <div class="row testimonial_slider pt_35 slick-initialized slick-slider slick-dotted">
 //     <div class="slick-list draggable"><div class="slick-track dc_track" style="opacity:1; transform: translate3d(-150%,0,0); transition: none;">
 //       <div class="slick-slide slick-cloned" style="flex: 0 0 50%; width: 50%; max-width: 50%;">…</div>…
-//     <ul class="slick-dots" role="tablist"><li class="slick-active" role="presentation"><button type="button" role="tab" aria-label="1 of 2" aria-selected="true">1</button></li>…
+//     <ul class="slick-dots" role="tablist">
+// Optional prev/next arrows (the brand strip, ≥992 px), placed around the list as in the design:
+//   <button type="button" class="far fa-arrow-left prevArrow slick-arrow" aria-label="Previous"></button><li class="slick-active" role="presentation"><button type="button" role="tab" aria-label="1 of 2" aria-selected="true">1</button></li>…
 // Inline styles are required here: the track offset and slide widths are computed
 // per render (same as the design script). No carousel library.
 // Off-screen and cloned slides are `inert`, so keyboard/screen-reader users only
@@ -20,9 +22,11 @@ export interface SliderProps<Item> extends SliderOptions {
   className: string;
   /** accessible label of each dot, e.g. (1, 3) => "1 of 3" (from UiStrings) */
   dotLabel: (page: number, pages: number) => string;
+  /** accessible names of the prev/next arrows; omitted → no arrows */
+  arrows?: { previous: string; next: string };
 }
 
-export function Slider<Item>({ items, getKey, renderItem, config, className, dotLabel, ...options }: SliderProps<Item>) {
+export function Slider<Item>({ items, getKey, renderItem, config, className, dotLabel, arrows, ...options }: SliderProps<Item>) {
   const slider = useSlider(items.length, config, options);
   const withDots = options.dots !== false;
   if (items.length === 0) return null;
@@ -35,6 +39,7 @@ export function Slider<Item>({ items, getKey, renderItem, config, className, dot
       onFocus={slider.pause}
       onBlur={slider.resume}
     >
+      {arrows && <button type="button" className="far fa-arrow-left prevArrow slick-arrow" aria-label={arrows.previous} onClick={slider.prev} />}
       <div className="slick-list draggable">
         <div
           className="slick-track dc_track"
@@ -55,6 +60,7 @@ export function Slider<Item>({ items, getKey, renderItem, config, className, dot
           })}
         </div>
       </div>
+      {arrows && <button type="button" className="far fa-arrow-right nextArrow slick-arrow" aria-label={arrows.next} onClick={slider.next} />}
       {withDots && (
         <ul className="slick-dots" role="tablist">
           {slider.dots.map((dot) => (

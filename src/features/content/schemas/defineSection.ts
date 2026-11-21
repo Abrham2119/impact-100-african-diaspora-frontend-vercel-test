@@ -58,6 +58,9 @@ export interface SectionType<T extends string, D extends NodeDef> {
   json: Record<string, unknown>;
 }
 
+/** The validated data of a declared section type, e.g. `SectionData<typeof heroSlider>`. */
+export type SectionData<S> = S extends SectionType<infer T, infer D> ? SectionOf<T, D> : never;
+
 export function defineSection<const T extends string, const D extends NodeDef>(type: T, def: D): SectionType<T, D> {
   const schema = nodeSchema(def).extend({ type: z.literal(type), key: z.string().nullable() });
   return {
@@ -89,6 +92,9 @@ export interface CollectionType<K extends string, D extends EntryDef> {
   schema: z.ZodType<EntryOf<D>, z.ZodTypeDef, unknown>;
   json: Record<string, unknown>;
 }
+
+/** The validated entry of a declared collection, e.g. `EntryData<typeof events>`. */
+export type EntryData<C> = C extends CollectionType<string, infer D> ? EntryOf<D> : never;
 
 export function defineCollection<const K extends string, const D extends EntryDef>(key: K, def: D): CollectionType<K, D> {
   const schema = z.object({

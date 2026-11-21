@@ -11,7 +11,9 @@
     "preview": "vite preview",
     "feature": "ts-node --esm src/scripts/create-feature.ts",
     "lint": "eslint .",
-    "check:css": "node src/scripts/check-css-collisions.ts"
+    "check:css": "node src/scripts/check-css-collisions.ts",
+    "check:copy": "node src/scripts/check-hardcoded-copy.ts",
+    "export:content-schemas": "node src/scripts/export-content-schemas.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.0",

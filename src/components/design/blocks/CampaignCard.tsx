@@ -10,7 +10,8 @@ import { ProgressBar } from '../primitives/ProgressBar';
 // All text arrives pre-formatted (money via Intl in the feature layer).
 export interface CampaignCardProps {
   href: string;
-  image: { src: string; alt: string };
+  /** omitted when the CMS has no display image for the campaign yet */
+  image?: { src: string; alt: string };
   /** label over the image */
   tag?: ReactNode;
   progressLabel: ReactNode;
@@ -25,7 +26,7 @@ export function CampaignCard({ href, image, tag, progressLabel, percent, raisedL
   return (
     <div className="campaign_card">
       <Link className="img" to={href}>
-        <img src={image.src} alt={image.alt} className="img-fluid w-100" />
+        {image && <img src={image.src} alt={image.alt} className="img-fluid w-100" />}
         {tag !== undefined && <span>{tag}</span>}
       </Link>
       <div className="text">

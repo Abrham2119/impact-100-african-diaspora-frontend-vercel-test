@@ -689,6 +689,28 @@ governanceKeys.currentBallot(locale) · governanceKeys.proposal(id, locale) · g
 
 ## 7. Content-driven rendering
 
+> **As built in Step 5.** These notes refine §7.1–§7.5. The contract and its behaviour are unchanged; only the
+> mechanics differ.
+> - **Schemas are declared once, in TypeScript:** `features/content/schemas/sectionTypes.ts`, using the small field
+>   DSL in `schemas/fields.ts` (`f.text()`, `f.rich()`, `f.link(s)()`, `m.image()`, `s.enumOf()`, `s.source()` …).
+>   From that one declaration we get the TS types (by inference, so there is no `gen:content` step and no generated
+>   file to keep in sync), the Zod validators, and the JSON Schema. `npm run export:content-schemas` writes the JSON
+>   Schema to `schemas/content-schemas.json`, which the backend's Joi registry is tested against.
+> - **Registry:** `features/content/components/sectionRegistry.tsx`. It maps each type to `entry(schema, Component)`,
+>   and `SectionData<typeof x>` types each section component. `breadcrumb_banner` is a section of every page tree;
+>   `PublicLayout` renders it and `CmsPage` skips it.
+> - **Fixtures:** `features/content/fixtures/en/{pages,collections}/*.ts` plus `ui.ts` (UiStrings). They are built
+>   in the exact API shape by `fixtures/builders.ts` and resolved by `contentService` (the only file that changes in
+>   Step 13). The home campaign cards come from a minimal `features/membership` slice (`GET /campaigns` fixture),
+>   composed with `C:campaign_display`.
+> - **Pages:** the routes of the 14 Step 5 pages render `pages/public/CmsRoutePage`, which reads the route handle's
+>   `pageKey` and renders `<CmsPage>`. The other public routes keep the placeholder until Step 6.
+> - **Section components** (`features/content/components/sections/`) render design markup only. They are therefore
+>   excluded from Tailwind's content scan and included in `check:css`, the same as `components/design`.
+> - **`check:copy`** scans `components/design/{blocks,chrome}`, `features/content/components` and `pages/public`. The
+>   starter screens (`pages/auth/legacy`, `features/auth|dashboard`) are out of scope until Steps 14–15 replace them.
+>   No allowlist file is needed: glyph-only text (`$`, `×`, `·`) has no letters and passes.
+
 ### 7.1 Shared, typed field schemas
 
 - **The contract is JSON Schema** for every section type and collection schema, as served by

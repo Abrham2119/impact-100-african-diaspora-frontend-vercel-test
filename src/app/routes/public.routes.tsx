@@ -4,6 +4,8 @@ import { LocaleGate } from '@/app/guards/LocaleGate';
 import { NotFound } from '@/components/NotFound';
 import { TwScope } from '@/components/TwScope';
 import { ScreenPlaceholder } from '@/pages/ScreenPlaceholder';
+import { CmsRoutePage } from '@/pages/public/CmsRoutePage';
+import type { CmsPageKey } from '@/domain/entities/content.types';
 import type { RouteHandle } from './routeHandle';
 
 // Public website, screens 1–33 of design-reference/ROUTES.md (ARCHITECTURE.md §4).
@@ -13,10 +15,28 @@ import type { RouteHandle } from './routeHandle';
 // (enabled non-default locales, validated by LocaleGate). React Router ranks static segments
 // first, so "/faq" never matches "/:lang".
 
-const page = (path: string | undefined, handle: RouteHandle): RouteObject =>
-  path === undefined
-    ? { index: true, handle, element: <ScreenPlaceholder /> }
-    : { path, handle, element: <ScreenPlaceholder /> };
+// Pages composed entirely from CMS sections (Step 5); the interactive pages follow in Step 6.
+const CMS_COMPOSED = new Set<CmsPageKey>([
+  'home',
+  'about',
+  'committees',
+  'charter',
+  'our_model',
+  'volunteers',
+  'testimonials',
+  'donors',
+  'gallery_photos',
+  'gallery_videos',
+  'faq',
+  'privacy',
+  'newsletter_confirmed',
+  'newsletter_unsubscribed',
+]);
+
+const page = (path: string | undefined, handle: RouteHandle): RouteObject => {
+  const element = handle.pageKey && CMS_COMPOSED.has(handle.pageKey) ? <CmsRoutePage /> : <ScreenPlaceholder />;
+  return path === undefined ? { index: true, handle, element } : { path, handle, element };
+};
 
 // A function, so each mount gets its own route objects.
 const publicChildren = (): RouteObject[] => [

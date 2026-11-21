@@ -10,7 +10,7 @@ import type { Config } from 'tailwindcss';
 //  - important: true: impact100.css bundles Bootstrap 5, whose utilities (p-4, border,
 //    rounded, bg-primary …) are `!important` and share names with Tailwind's. Marking
 //    Tailwind's utilities important (loaded later) restores the starter's values.
-//  - content excludes design code, and the design classes `container`/`collapse` are
+//  - content excludes design code (incl. the CMS section components), and the design classes `container`/`collapse` are
 //    blocklisted, so Tailwind never emits a class that design markup uses
 //    (enforced by `npm run check:css`).
 export default {
@@ -23,6 +23,8 @@ export default {
     './src/**/*.{ts,tsx}',
     '!./src/components/design/**',
     '!./src/pages/design/**',
+    // CMS section components render design markup only (Step 5)
+    '!./src/features/content/components/**',
   ],
   theme: {
     extend: {

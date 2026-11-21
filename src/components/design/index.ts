@@ -66,3 +66,6 @@ export {
 export type { CardImage } from './blocks/ContentCards';
 export { GalleryItem, Lightbox } from './blocks/Gallery';
 export type { LightboxLabels } from './blocks/Gallery';
+export { CommitteeCard } from './blocks/CommitteeCard';
+export type { CommitteeCardProps } from './blocks/CommitteeCard';
+export { BRAND_ARROWS_MIN_WIDTH, SLIDER_CONFIGS } from './blocks/sliderConfigs';
