@@ -207,7 +207,7 @@ export const homeEn = page('home', PATHS.home, { title: 'Impact100 — Home' }, 
   }),
   section('news_list', 'news', {
     settings: { layout: 'home', source: { collection: 'news', limit: 3 } },
-    fields: { kicker: 'Latest News', title: 'Insights Hub: Explore Our Latest News' },
+    fields: { kicker: 'Latest News', title: 'Hub Insights: Explore Our Latest News' },
   }),
 ]);
 
