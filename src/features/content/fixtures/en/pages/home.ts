@@ -185,7 +185,7 @@ export const homeEn = page('home', PATHS.home, { title: 'Impact100 — Home' }, 
   }),
   section('cta_band', 'volunteer_cta', {
     fields: {
-      title: 'Join With Us As a Volunteer',
+      title: 'Join Us as a Volunteer',
       body: 'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which.',
       cta: link('Join Volunteer', P.volunteers),
     },

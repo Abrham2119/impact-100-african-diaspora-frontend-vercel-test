@@ -33,7 +33,7 @@ apiClient.interceptors.response.use(
 
 // Pull a human-readable message out of an Axios error (the gateway returns
 // { success:false, message, code }).
-export function extractApiError(error: unknown): string {
+export function extractApiError(error: unknown): string {  
   if (axios.isAxiosError(error)) {
     const data = error.response?.data as { message?: string } | undefined;
     return data?.message || error.message || 'Request failed';
