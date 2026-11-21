@@ -65,6 +65,8 @@ ContentVersion(id, ownerType, ownerId, snapshot JSON, createdBy, createdAt, note
 
 ## 5. Migration of current content
 
+- **Part A (frontend only):** the whole content model, the CMS studio and i18n run on the frontend mock data layer. The fixtures hold the design's existing dummy data, which is the default content, and edits persist in the mock store. **Part B:** content-service implements the same contract and is seeded with the same fixtures.
+
 - Seed the CMS with **all** copy, images and videos currently in `design-reference/snapshots/*.html`, in English, so the rendered pages are identical before and after.
 - A check script or test fails the build if a public page component contains user-facing literal text that should come from the CMS. Allowed exceptions are listed in one file.
 

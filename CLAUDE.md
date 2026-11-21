@@ -13,8 +13,18 @@ Read these first, every session:
 - `design-reference/DESIGN_SYSTEM.md` — CSS load order, tokens, component classes.
 - `design-reference/BUSINESS_RULES.md` — membership, donations, campaigns, voting, charter rules.
 - `design-reference/CONTENT_AND_I18N.md` — CMS + multilingual content architecture (applies to every public page).
-- `IMPLEMENTATION_PLAN.md` — the phase you are working on.
+- `IMPLEMENTATION_PLAN.md` — the phase you are working on (Part A frontend first, Part B backend after).
+- `FRONTEND_HANDOFF.md` (created in FE-12) — repository interfaces = the contract for the backend.
 - `ARCHITECTURE.md` (created in Phase 1) — agreed structure, data model and API contracts.
+
+## Current phase: FRONTEND ONLY (Part A)
+- Build the entire frontend (public site, auth, member portal, admin console, CMS studio, i18n) WITHOUT backend calls.
+- All data comes from the mock data layer: repository interfaces → mock implementations backed by fixtures that hold the
+  design's EXISTING dummy data → React Query hooks. Components never call axios or fixtures directly.
+- The existing dummy data is the default data in every section. Never remove, replace or invent data during frontend
+  work; add to it only when a screen needs more of the same kind. Keep a "Reset demo data" action.
+- The backend integration (Part B) adds HTTP implementations of the same interfaces later (`VITE_DATA_SOURCE=mock|api`);
+  the mock layer and fixtures stay in the repo.
 
 ## The design is fixed
 - `design-reference/snapshots/*.html` is the visual target; `design-reference/pages/*.dc.html` is the behaviour target.

@@ -1,25 +1,45 @@
 # Implementation plan: Impact 100 African Diaspora
 
-The prompts for each step are in `PROMPTS.md`. The content and language requirements are in `CONTENT_AND_I18N.md`; they apply to every step. Work in order. Commit after every step. Tick a step off when it is done.
+The prompts for each step are in `PROMPTS.md`. The content and language requirements are in `design-reference/CONTENT_AND_I18N.md`; they apply to every step.
+
+**Order:** finish Part A (the entire frontend on dummy data) before Part B (backend and integration).
+**Dummy data:** the design's existing sample data is the default data everywhere. It is never removed or replaced during frontend work, and the backend seeds the same data.
+
+## Part A: Frontend only (no backend calls)
+
+| Step | Phase | Done when |
+|---|---|---|
+| FE-0 | Setup: unzip the design, branch, install, run dev, serve snapshots on :4000 | The app and the snapshots both open |
+| FE-1 | Plan → `ARCHITECTURE.md`: CSS strategy, components, routes, mock data layer, CMS + i18n model, mock auth | Reviewed and approved |
+| FE-2 | Design system: global CSS, assets, shared components, `/design` route | Matches the Components and Main snapshots |
+| FE-3 | Dummy-data fixtures (all design sample data), repositories, React Query hooks, i18n, mock auth | Every dataset is in a fixture; reset demo data works |
+| FE-4 | Layouts and router: Public, Auth, PortalShell, AdminShell; every route registered | Header, footer and shells match the snapshots |
+| FE-5 | Public pages A (content pages) from CMS sections | Visual match at 1440 and 390 px |
+| FE-6 | Public pages B (map, events, news, campaigns, forms, join, donate) | Visual match plus behaviour; forms save to the mock store |
+| FE-7 | Auth screens on mock auth | Role-based redirects and guards work |
+| FE-8 | Member portal, all screens | Visual match; actions update the mock store |
+| FE-9 | Admin part 1: Overview, People, Charter rules, Payments | Visual match; permissions and audit log |
+| FE-10 | Admin part 2: Governance, Engagement, System | Visual match; shows data from the public forms |
+| FE-11 | CMS studio plus multilingual content (mock-backed) | Edit, reorder, replace media, translate, publish; public pages update |
+| FE-12 | QA, no-hard-coded-content check, accessibility → `QA_REPORT.md`, `FRONTEND_HANDOFF.md` | All green; the contract is documented |
+
+**Gate:** Part B starts only after FE-12 is complete and you have checked every screen yourself.
+
+## Part B: Backend and integration
 
 | Step | Repo | Phase | Done when |
 |---|---|---|---|
-| 0 | both | Manual setup (branches, env, docker, dev servers) | Both dev servers run; snapshots open at :4000 |
-| 1 | BE | Architecture: services, data model, API contract → `docs/ARCHITECTURE.md` | Reviewed and approved |
-| 2 | FE | Frontend architecture: CSS strategy, components, routes → `ARCHITECTURE.md` | Reviewed and approved |
-| 3 | FE | Design system: global CSS, assets, shared components, `/design` route | `/design` matches the Components and Main snapshots |
-| 4 | FE | Layouts and router: Public, Auth, PortalShell, AdminShell; every route stubbed | Header, footer and shells match the snapshots |
-| 5 | FE | Public pages A built from CMS section components (fixtures shaped like the content API) | Visual match at 1440 and 390 px; no hard-coded copy |
-| 6 | FE | Public pages B (interactive: map, forms, join, donate, events, news) | Visual match plus behaviour from `.dc.html` |
-| 7 | BE | Auth: email link, 2FA, SSO adapter, profile fields, roles and permissions | Tests pass; Swagger and Postman updated |
-| 8 | BE | content-service: multilingual CMS (pages, sections, translations, language-specific media, versions) seeded with all design content | Pages render from the API in English; translation and fallback tests pass |
-| 9 | BE | engagement-service (contact, volunteer, newsletter, RSVP, stories) | Tests pass |
-| 10 | BE | membership-service (campaigns, pledges, installments, ledger, donations, WAZI adapter) | Every business-rule test passes |
-| 11 | BE | governance-service (ballots, votes, quorum, decisions, amendments, results, signing, reviews) | Quorum and outcome tests pass |
-| 12 | BE | Notifications, audit log, gateway wiring, seed data for every role | Full stack runs from seed |
-| 13 | FE | Public site on the multilingual content API; language switcher; forms submit | No visual change; switching language works with fallback; no-hard-coded-content check passes |
-| 14 | FE | Auth flows wired | Members land in the portal, admins in the admin console |
-| 15 | FE | Member portal screens wired | Matches the snapshots; uses eligibility from the API |
-| 16 | FE | Admin console and CMS studio (edit, reorder, media, translations, publish, versions) | An admin can change, translate and publish any public content without a deploy |
-| 17 | both | Tests, visual QA, accessibility → `QA_REPORT.md` | All differences fixed |
-| 18 | both | Production readiness → `DEPLOYMENT.md` | CI is green; staging is deployed |
+| BE-0 | BE | Setup: env, docker, dev servers | Gateway runs |
+| BE-1 | BE | Plan → `docs/ARCHITECTURE.md` from `FRONTEND_HANDOFF.md` | Every repository method has an endpoint |
+| BE-2 | BE | Auth, roles, permissions, demo users | Tests pass |
+| BE-3 | BE | content-service: multilingual CMS, seeded from the frontend fixtures | Fallback and publish tests pass |
+| BE-4 | BE | engagement-service | Tests pass |
+| BE-5 | BE | membership-service (campaigns, installments, ledger, donations, WAZI adapter) | Business-rule tests pass |
+| BE-6 | BE | governance-service (ballots, quorum, decisions, signing, reviews) | Quorum and outcome tests pass |
+| BE-7 | BE | Notifications, audit log, gateway, full seed | Full stack runs from seed |
+| INT-1 | FE | HTTP repositories behind the same interfaces (`VITE_DATA_SOURCE=mock|api`) | No visual change |
+| INT-2 | both | Public site, CMS and forms on the API | Identical to mock mode |
+| INT-3 | both | Auth and member portal on the API | Eligibility comes from the API |
+| INT-4 | both | Admin console and CMS studio on the API | Permissions verified per role |
+| INT-5 | both | End-to-end QA | `QA_REPORT.md` is clean |
+| INT-6 | both | Production readiness → `DEPLOYMENT.md` | CI is green; staging is deployed |
