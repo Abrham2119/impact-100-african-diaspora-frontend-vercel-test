@@ -128,6 +128,8 @@ export interface CmsCollectionQuery {
   keys?: string[];
   /** equality filter on `data` fields */
   filter?: Record<string, string>;
+  /** full-text search (`q`) over the entry's text fields */
+  q?: string;
 }
 
 /** The page banner, read from the page's `breadcrumb_banner` section. */

@@ -86,8 +86,9 @@ export function CounterItem({ icon, value, label }: { icon: keyof typeof COUNTER
   );
 }
 
-// `.wssus__event_item` (home events slider; /events in Step 6)
+// `.wssus__event_item` (home events slider; the /events grid uses `img-fluid` only)
 export function EventCard(props: {
+  grid?: boolean;
   to: string;
   image: CardImage;
   date: ReactNode;
@@ -99,7 +100,7 @@ export function EventCard(props: {
   return (
     <div className="wssus__event_item">
       <Link to={props.to} className="ix_ev_link" aria-hidden="true" tabIndex={-1}>
-        <Img image={props.image} />
+        <Img image={props.image} className={props.grid ? 'img-fluid' : 'img-fluid w-100'} />
       </Link>
       <div className="text">
         <ul>

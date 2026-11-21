@@ -36,6 +36,15 @@ function queryEntries(entries: EntryCardDto[], query: CmsCollectionQuery): Pagin
     const byKey = new Map(entries.map((entry) => [entry.key, entry]));
     list = query.keys.map((key) => byKey.get(key)).filter((entry): entry is EntryCardDto => entry !== undefined);
   }
+  if (query.q) {
+    const needle = query.q.trim().toLowerCase();
+    const text = (entry: EntryCardDto) =>
+      Object.values(entry.fields)
+        .map((lv) => (typeof lv.value === 'string' ? lv.value : ''))
+        .join(' ')
+        .toLowerCase();
+    list = list.filter((entry) => text(entry).includes(needle));
+  }
   if (query.filter) {
     const filter = Object.entries(query.filter);
     list = list.filter((entry) => filter.every(([field, value]) => String(entry.data[field]) === value));

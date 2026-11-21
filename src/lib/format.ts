@@ -18,3 +18,11 @@ export function formatDate(isoDate: string, locale: string): string {
     new Date(Date.UTC(year, month - 1, day)),
   );
 }
+
+/** "2026-10-14" → "October 14, 2026" (en): the long form the receipts and cancel page use. */
+export function formatLongDate(isoDate: string, locale: string): string {
+  const [year, month, day] = isoDate.split('-').map(Number);
+  return new Intl.DateTimeFormat(locale, { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(
+    new Date(Date.UTC(year, month - 1, day)),
+  );
+}

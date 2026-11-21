@@ -19,8 +19,12 @@ export const donationService = {
         checkout_url: PATHS.public.donateThanks,
       };
     }),
+  /** the mock answers for any token (the design shows the sample gift) */
   cancelInfo: (token: string): Promise<DonationCancelInfoDto | null> =>
-    mockResponse(() => (token ? { ...donationCancelFixture, status: cancelled ? 'CANCELLED' : 'ACTIVE' } : null), 0),
+    mockResponse(() => {
+      void token;
+      return { ...donationCancelFixture, status: cancelled ? ('CANCELLED' as const) : ('ACTIVE' as const) };
+    }, 0),
   cancel: (token: string): Promise<{ status: 'CANCELLED' }> =>
     mockResponse(() => {
       void token;

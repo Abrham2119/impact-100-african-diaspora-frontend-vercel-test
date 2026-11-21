@@ -48,9 +48,21 @@
   .dc_marquee { animation: none; }
 }
 
-/* Remaining page-level <helmet> rules arrive with their blocks (Step 6):
-   blog_details/event_details .sticky_sidebar{position:sticky;top:90px}; grants .ix_hp_block,
-   .ix_hp_row. Design-tool placeholders (.ph, .dc_map, .dc_video, .cmp_*) are not product CSS. */
+/* <helmet> of the Step 6 pages, verbatim. The map / video boxes are link tiles to the external map
+   or video (the design's own placeholders), so they are product UI here. The two .dc_map variants
+   are scoped by their parent block (event_details: 350px tile with border; contact: fills its box). */
+.event_details .sticky_sidebar,.blog_details .sticky_sidebar{position:sticky;top:90px}
+.event_map .dc_map{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:350px;border:2px solid #ffffff;border-radius:18px;background:#e4e7e9;color:#0d2420;font-weight:700;text-decoration:none}
+.contact_map .dc_map{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:100%;background:#e4e7e9;color:#0d2420;font-weight:700;text-decoration:none}
+.dc_video{position:relative;width:100%;height:100%;background:#0d2420;display:flex;align-items:center;justify-content:center}
+.ix_hp_block{margin-top:20px;padding-top:16px;border-top:1px solid #ece6da}
+.ix_hp_row{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:10px 0;color:var(--colorBlack)}
+.ix_hp_row+.ix_hp_row{border-top:1px dashed #ece6da}
+.ix_hp_row b{display:block;font-size:15.5px;font-family:var(--headingFont)}
+.ix_hp_row small{display:block;font-size:13px;color:var(--ixMuted);margin-top:2px}
+.ix_hp_row em{font-style:normal;font-size:13px;color:var(--ixMuted);text-align:right;white-space:nowrap}
+.ix_hp_row:hover b{color:var(--colorPrimary)}
+@media (max-width:575.98px){.ix_hp_row{flex-direction:column;gap:2px}.ix_hp_row em{text-align:left;white-space:normal}}
 
 /* barfiller plugin: it set these inline on every progress bar
    (impact100.css hides .tipWrap by default and forces the fill colour itself). */
@@ -108,6 +120,7 @@
 
 /* .ix_band */
 .ixd_band_title { font-size: 40px !important; font-weight: 800 !important; }
+.ixd_band_title_38 { font-size: 38px !important; font-weight: 800 !important; }
 .ixd_band_text { font-size: 18px !important; line-height: 1.7 !important; }
 
 /* video & donate: the visually hidden amount label */
@@ -142,6 +155,15 @@
 /* Step 6 */
 .ixd_mb16 { margin-bottom: 16px !important; }
 .ixd_text_left { text-align: left !important; }
+.ixd_flex_none { flex: none !important; }
+.ixd_p0 { padding: 0 !important; }
+.ixd_text_center { text-align: center !important; }
+.ixd_gap16 { gap: 16px !important; }
+.ixd_gap10 { gap: 10px !important; }
+.ixd_mt10 { margin-top: 10px !important; }
+.ixd_relative { position: relative !important; }
+/* a wrapper that takes no box (dt/dd pairs rendered from one item) */
+.ixd_contents { display: contents !important; }
 
 /* newsletter status card */
 .ixd_status_card { text-align: center !important; padding: 50px 40px !important; }

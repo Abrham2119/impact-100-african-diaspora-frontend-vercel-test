@@ -31,6 +31,20 @@ const CMS_COMPOSED = new Set<CmsPageKey>([
   'privacy',
   'newsletter_confirmed',
   'newsletter_unsubscribed',
+  // Step 6
+  'nonprofits',
+  'campaigns',
+  'campaign_detail',
+  'campaign_category',
+  'events',
+  'event_detail',
+  'hubs',
+  'news',
+  'news_detail',
+  'donate_cancel',
+  'contact_thanks',
+  'donate_thanks',
+  'volunteer_thanks',
 ]);
 
 const page = (path: string | undefined, handle: RouteHandle): RouteObject => {

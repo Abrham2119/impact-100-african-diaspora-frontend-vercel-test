@@ -1,4 +1,6 @@
-import { entry, img, video } from '../build';
+import { entry, img, link, video } from '../build';
+import { campaignDescriptionEn } from '../rich/campaignDescription';
+import { newsBodyAfterQuoteEn, newsBodyBeforeQuoteEn } from '../rich/detailBodies';
 
 // Small collections of the public pages A, copied verbatim from the design-reference pages.
 
@@ -31,9 +33,56 @@ const N: Array<[slug: string, image: string, date: string, published: string, ca
   ['why-usafi-impact-hosts-our-chapter', 'blog_img_9.webp', 'Sep 2026', '2026-09-01', 'Partners', 'Why USAFI Impact hosts our Chapter', 'Our host organization keeps every grant compliant, verified and accountable.'],
   ['report-update-building-the-chapter', 'blog_img_1.webp', 'Aug 21, 2026', '2026-08-21', 'Report', 'Report & update: building the Chapter', 'The WAZI app is live, advisory meetings now run monthly, and leadership is taking shape around two Co-Chairs and a set of committees.'],
 ];
+// The detail page's body, quote, tags and author box are template sample copy (blog_details.dc.html,
+// FQ8): the same for every story until the CMS has the real articles.
+const SAMPLE_ARTICLE = {
+  body_before: newsBodyBeforeQuoteEn,
+  quote:
+    'Donec sollicitudin eros porta lacinia feugiat. Donec et venenatis quam. Sed eu velit non purus imperdiet sagittis a nunc. Phasellus eu euismod Intege erra pellentesque luctusurna tempus id feugiat nec porta ac quam.',
+  quote_author: 'Dominic L. Ement',
+  body_after: newsBodyAfterQuoteEn,
+  tags: ['Course', 'Education', 'Learn', 'Online'].map((tag) => link(tag, '#')),
+  author_name: 'Ravi O\'Leigh',
+  author_role: 'Digital Marketing',
+  author_bio: 'Sed mi leo, accumsan vel ante at, viverra placerat nulla. Donec pharetra rutrum sed allium lectus fermentum enim Nam maximus.',
+  author_links: ['Facebook', 'LinkedIn', 'Twitter', 'Pinterest'].map((network) => link(network, '#')),
+};
 export const newsEn = N.map(([slug, image, date_label, published_on, category, title, excerpt]) =>
-  entry(slug, { slug, fields: { title, excerpt, date_label, category }, media: { image: img(image, 'blog') }, data: { published_on } }),
+  entry(slug, {
+    slug,
+    fields: { title, excerpt, date_label, category, ...SAMPLE_ARTICLE },
+    media: {
+      image: img(image, 'blog'),
+      detail_image: img('blog_details_img.webp', 'Blog'),
+      author_photo: img('blog_details_author_img.webp', 'Author'),
+    },
+    data: { published_on },
+  }),
 );
+
+// C:blog_comments — the sample comments of blog_details.dc.html (there is no comments API yet).
+const COMMENT =
+  'Nulla a ipsum nibh. Fusce purus elit, tristique vitae enim sed, auctor placerat est. Maecenas consequat nibh consequat malesuada fringilla, mauris lorem dapibus metus, non imperdiet nunc erat ultricies est. Praesent ames nec lorem sit amet leo consequat.';
+export const blogCommentsEn = (
+  [
+    ['comment_img_1.webp', "Ravi O'Leigh"],
+    ['comment_img_2.webp', 'Doug Lyphe'],
+    ['comment_img_2.webp', 'Doug Lyphe'],
+  ] as const
+).map(([image, name], i) =>
+  entry(`comment-${i + 1}`, { fields: { name, date_label: 'June 25, 2025 at 08:45 pm', text: COMMENT }, media: { avatar: img(image, 'Comments') } }),
+);
+
+// C:us_hubs — the five US regional hubs (hubs.dc.html `H`).
+export const usHubsEn = (
+  [
+    ['northern-california', 'Northern California', 'LIVE', 'ok'],
+    ['southern-california', 'Southern California', 'LAUNCHING', 'warn'],
+    ['atlanta', 'Atlanta', 'LAUNCHING · Dec 2026', 'warn'],
+    ['dmv', 'DMV', 'LAUNCHING · Mar 2027', 'warn'],
+    ['fifth-us-hub', 'Fifth US hub', 'PLANNED', 'info'],
+  ] as const
+).map(([key, name, status, badge_kind]) => entry(key, { fields: { name, status }, data: { badge_kind } }));
 
 // C:donors — /about/donors (template sample, backend Q10). 30 per page, "01 02 03" → 90 seeded.
 const D: Array<[name: string, cents: number]> = [
@@ -56,9 +105,18 @@ export const videosEn = Array.from({ length: 27 }, (_, i) =>
   entry(`video-${i + 1}`, { media: { thumbnail: video(VIDEO_URL, 'gallery1', VIDEO_THUMBS[i % 9]) }, data: { url: VIDEO_URL } }),
 );
 
-// C:campaign_display — the card image of each membership campaign, keyed by campaign slug.
+// C:campaign_display — the display data of each membership campaign, keyed by campaign slug: the
+// card image, the detail gallery (campaign_details.dc.html `IMG`), description and video (sample).
+const GALLERY_IMAGES = [1, 2, 3, 4, 5, 6, 7].map((n) => img(`donate_card_img_${n}.webp`, 'Product'));
+const CAMPAIGN_VIDEO = 'https://www.youtube.com/watch?v=bjxTIcuzB6k';
+const display = (slug: string, image: string, alt: string) =>
+  entry(slug, {
+    media: { image: img(image, alt), gallery: GALLERY_IMAGES },
+    fields: { description: campaignDescriptionEn },
+    data: { video_url: CAMPAIGN_VIDEO },
+  });
 export const campaignDisplayEn = [
-  entry('2026-27', { media: { image: img('donate_card_img_1.webp', '2026–27 Campaign · Oct 1, 2026 – Mar 31, 2027') } }),
-  entry('2025-26', { media: { image: img('donate_card_img_2.webp', '2025–26 Campaign · Oct 1, 2025 – Mar 31, 2026') } }),
-  entry('2024-25', { media: { image: img('donate_card_img_3.webp', '2024–25 Campaign · Oct 1, 2024 – Mar 31, 2025') } }),
+  display('2026-27', 'donate_card_img_1.webp', '2026–27 Campaign · Oct 1, 2026 – Mar 31, 2027'),
+  display('2025-26', 'donate_card_img_2.webp', '2025–26 Campaign · Oct 1, 2025 – Mar 31, 2026'),
+  display('2024-25', 'donate_card_img_3.webp', '2024–25 Campaign · Oct 1, 2024 – Mar 31, 2025'),
 ];

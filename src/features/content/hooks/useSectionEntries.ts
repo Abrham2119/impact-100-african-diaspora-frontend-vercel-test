@@ -15,7 +15,7 @@ import { useCollection } from './useContent';
 /** backend §0.3: `limit` default 10, max 100 */
 const MAX_PAGE_SIZE = 100;
 
-export function useSectionEntries<K extends string, D extends EntryDef>(type: CollectionType<K, D>, source: CollectionSource) {
+export function useSectionEntries<K extends string, D extends EntryDef>(type: CollectionType<K, D>, source: CollectionSource, q?: string) {
   const { locale } = useLocale();
   const urlPage = usePageParam();
   const page = source.paginate ? urlPage : 1;
@@ -27,8 +27,9 @@ export function useSectionEntries<K extends string, D extends EntryDef>(type: Co
       keys: source.keys,
       filter: source.filter,
       page,
+      ...(q ? { q } : {}),
     }),
-    [source.collection, source.limit, source.keys, source.filter, page],
+    [source.collection, source.limit, source.keys, source.filter, page, q],
   );
   const result = useCollection(query, locale);
 

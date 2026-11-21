@@ -1,11 +1,24 @@
 import type { PageTreeDto } from '@/types/content.dto';
 import { aboutEn } from './about';
 import { bannerOnlyPagesEn } from './bannerOnly';
+import { campaignCategoryPageEn, campaignDetailPageEn, campaignsPageEn } from './campaigns';
 import { charterEn } from './charter';
 import { committeesPageEn } from './committees';
+import {
+  contactThanksPageEn,
+  donateCancelPageEn,
+  donateThanksPageEn,
+  eventDetailPageEn,
+  eventsPageEn,
+  hubsPageEn,
+  newsDetailPageEn,
+  newsPageEn,
+  volunteerThanksPageEn,
+} from './eventsNews';
 import { homeEn } from './home';
 import { donorsPageEn, faqPageEn, photosPageEn, testimonialsPageEn, videosPageEn, volunteersPageEn } from './lists';
 import { newsletterConfirmedEn, newsletterUnsubscribedEn, privacyEn } from './notices';
+import { nonprofitsEn } from './nonprofits';
 import { ourModelEn } from './ourModel';
 
 // Every English page tree (`GET content/pages/:key`), keyed by CMS page key (ARCHITECTURE.md §4).
@@ -25,4 +38,18 @@ export const pagesEn: Record<string, PageTreeDto> = {
   privacy: privacyEn,
   newsletter_confirmed: newsletterConfirmedEn,
   newsletter_unsubscribed: newsletterUnsubscribedEn,
+  // Step 6
+  nonprofits: nonprofitsEn,
+  campaigns: campaignsPageEn,
+  campaign_detail: campaignDetailPageEn,
+  campaign_category: campaignCategoryPageEn,
+  events: eventsPageEn,
+  event_detail: eventDetailPageEn,
+  hubs: hubsPageEn,
+  news: newsPageEn,
+  news_detail: newsDetailPageEn,
+  donate_cancel: donateCancelPageEn,
+  contact_thanks: contactThanksPageEn,
+  donate_thanks: donateThanksPageEn,
+  volunteer_thanks: volunteerThanksPageEn,
 };

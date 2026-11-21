@@ -69,3 +69,5 @@ export type { LightboxLabels } from './blocks/Gallery';
 export { CommitteeCard } from './blocks/CommitteeCard';
 export type { CommitteeCardProps } from './blocks/CommitteeCard';
 export { BRAND_ARROWS_MIN_WIDTH, SLIDER_CONFIGS } from './blocks/sliderConfigs';
+export { CampaignGallery } from './blocks/CampaignGallery';
+export type { CampaignGalleryProps } from './blocks/CampaignGallery';

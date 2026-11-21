@@ -10,6 +10,8 @@ export const SLIDER_CONFIGS = {
   brands: { show: 5, scroll: 5, breakpoints: [bp(1200, 4, 4), bp(992, 3, 3), bp(768, 2, 2), bp(576, 2, 2)] },
   events: { show: 3, scroll: 3, breakpoints: [bp(1200, 2, 2), bp(992, 2, 2), bp(768, 1, 1), bp(576, 1, 1)] },
   testimonials: { show: 2, scroll: 2, breakpoints: [bp(992, 1, 1), bp(768, 1, 1), bp(576, 1, 1)] },
+  /** campaign_details related slider: 3/3; <1200 2/2, <992 2/2, <768 1/1, <576 1/1 */
+  campaigns: { show: 3, scroll: 3, breakpoints: [bp(1200, 2, 2), bp(992, 2, 2), bp(768, 1, 1), bp(576, 1, 1)] },
   people: { show: 4, scroll: 4, breakpoints: [bp(1200, 3, null), bp(992, 2, null), bp(768, 2, 2), bp(576, 1, 1)] },
 } satisfies Record<string, SliderConfig>;
 

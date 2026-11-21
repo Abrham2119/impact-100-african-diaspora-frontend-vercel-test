@@ -5,11 +5,13 @@ import * as T from '../schemas/sectionTypes';
 import { AboutBlockSection } from './sections/AboutBlockSection';
 import { BandSection, CounterBandSection, CtaBandSection, StatusCardSection, TextMarqueeSection } from './sections/BandSections';
 import { CampaignCardsSection } from './sections/CampaignCardsSection';
+import { CampaignDetailSection } from './sections/CampaignDetailSection';
 import { CardGridSection } from './sections/CardGridSection';
 import { VideoDonateSection } from './sections/VideoDonateSection';
 import { CategoryCarouselSection, EventSliderSection, LogoStripSection, ServicesSliderSection } from './sections/CarouselSections';
 import { CharterDocumentSection } from './sections/CharterSection';
 import { CommitteeGridSection } from './sections/CommitteeGridSection';
+import { EventDetailSection, HubPlanSection, NewsDetailSection } from './sections/DetailSections';
 import { DecisionTableSection, LegalTextSection } from './sections/DocumentSections';
 import { FaqSection } from './sections/FaqSection';
 import { FlowStepsSection } from './sections/FlowStepsSection';
@@ -82,6 +84,10 @@ const REGISTRY = new Map<string, SectionRenderer>([
   entry(T.statusCard, StatusCardSection),
   entry(T.flowSteps, FlowStepsSection),
   entry(T.formBlock, FormBlockSection),
+  entry(T.campaignDetail, CampaignDetailSection),
+  entry(T.hubPlan, HubPlanSection),
+  entry(T.eventDetail, EventDetailSection),
+  entry(T.newsDetail, NewsDetailSection),
 ]);
 
 /** Section types rendered outside the page body (the layout draws the banner). */

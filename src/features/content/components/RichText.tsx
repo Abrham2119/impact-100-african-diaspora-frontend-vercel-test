@@ -31,7 +31,7 @@ function Inline({ node }: { node: RichInline }): ReactNode {
 
 const inlines = (nodes: RichInline[]) => nodes.map((node, i) => <Inline key={i} node={node} />);
 
-function Block({ block }: { block: RichBlock }) {
+function Block({ block, plainLists }: { block: RichBlock; plainLists: boolean }) {
   switch (block.type) {
     case 'paragraph':
       return <p>{inlines(block.children)}</p>;
@@ -39,7 +39,8 @@ function Block({ block }: { block: RichBlock }) {
       return block.level === 3 ? <h3>{inlines(block.children)}</h3> : <h4>{inlines(block.children)}</h4>;
     case 'list': {
       const items = block.items.map((item, i) => <li key={i}>{inlines(item)}</li>);
-      return block.ordered ? <ol className="ix_list">{items}</ol> : <ul className="ix_list">{items}</ul>;
+      const listClass = plainLists ? undefined : 'ix_list';
+      return block.ordered ? <ol className={listClass}>{items}</ol> : <ul className={listClass}>{items}</ul>;
     }
     case 'table':
       return (
@@ -73,12 +74,13 @@ function Block({ block }: { block: RichBlock }) {
   }
 }
 
-export function RichText({ value }: { value: RichTextAst }) {
+/** `plainLists`: lists without `ix_list` (the template's article bodies: campaign, event, news details). */
+export function RichText({ value, plainLists = false }: { value: RichTextAst; plainLists?: boolean }) {
   return (
     <>
       {value.map((block, i) => (
         <Fragment key={i}>
-          <Block block={block} />
+          <Block block={block} plainLists={plainLists} />
         </Fragment>
       ))}
     </>

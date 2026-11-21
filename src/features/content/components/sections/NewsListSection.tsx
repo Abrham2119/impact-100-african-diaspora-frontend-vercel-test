@@ -1,4 +1,5 @@
 import { BlogCard } from '@/components/design';
+import { useSearchParamState } from '@/hooks/useSearchParamState';
 import { PATHS } from '@/app/routes/paths';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
@@ -13,11 +14,13 @@ export function NewsListSection({ section }: { section: SectionData<typeof newsL
   const { toPath } = useLocale();
   const t = useT('site');
   const { source, layout } = section.settings;
-  const { entries, page, totalPages, isPending, isError, refetch } = useSectionEntries(news, source);
+  // the /news list honours `?q=` (sidebar search, categories and tags of the news detail page)
+  const [q] = useSearchParamState('q');
+  const { entries, page, totalPages, isPending, isError, refetch } = useSectionEntries(news, source, layout === 'page' ? (q ?? undefined) : undefined);
   const { kicker, title, lead } = section.fields;
 
   return (
-    <section className="blog mt_100">
+    <section className={layout === 'page' ? 'blog_page mt_75' : 'blog mt_100'}>
       <div className="container">
         <SectionHeadingRow kicker={kicker} title={title} lead={lead} />
         <CollectionState isPending={isPending} isError={isError} isEmpty={entries.length === 0} onRetry={() => void refetch()}>

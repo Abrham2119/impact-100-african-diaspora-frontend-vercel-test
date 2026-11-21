@@ -17,9 +17,13 @@ export interface ProgressBarProps {
   percent: number;
   /** render already filled (no grow animation) */
   instant?: boolean;
+  /** class of the label (campaign details: `founded`) */
+  labelClassName?: string;
+  /** content after the bar, inside `.donate_progressbar` (campaign details: the raised/goal line) */
+  children?: ReactNode;
 }
 
-export function ProgressBar({ label, percent, instant = false }: ProgressBarProps) {
+export function ProgressBar({ label, percent, instant = false, labelClassName, children }: ProgressBarProps) {
   const pct = Math.max(0, Math.min(100, Math.round(percent)));
   const [grown, setGrown] = useState(instant);
 
@@ -31,7 +35,7 @@ export function ProgressBar({ label, percent, instant = false }: ProgressBarProp
 
   return (
     <div className="donate_progressbar">
-      <p>{label}</p>
+      <p className={labelClassName}>{label}</p>
       <div className="barfiller">
         <div className="tipWrap">
           <span className="tip" style={{ left: grown ? `calc(${pct}% - ${TIP_HALF_WIDTH})` : '0px' }}>
@@ -40,6 +44,7 @@ export function ProgressBar({ label, percent, instant = false }: ProgressBarProp
         </div>
         <span className="fill" style={{ width: grown ? `${pct}%` : '0%' }} />
       </div>
+      {children}
     </div>
   );
 }

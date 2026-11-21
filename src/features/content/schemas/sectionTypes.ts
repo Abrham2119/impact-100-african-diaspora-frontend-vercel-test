@@ -29,9 +29,10 @@ export const heroSlider = defineSection('hero_slider', {
   },
 });
 
+/** Campaign categories: the home carousel, or the paged grid of /campaigns/category. */
 export const categoryCarousel = defineSection('category_carousel', {
   fields: heading,
-  settings: { source: s.source('campaign_categories'), href: s.string() },
+  settings: { source: s.source('campaign_categories'), href: s.string(), layout: s.enumOf(['slider', 'grid'], 'slider') },
 });
 
 export const aboutBlock = defineSection('about_block', {
@@ -80,7 +81,7 @@ export const cardGrid = defineSection('card_grid', {
 
 export const band = defineSection('band', {
   fields: { kicker: o(f.text()), title: f.text(), body: f.text(), actions: o(f.links()) },
-  settings: { split: s.enumOf(['8_4', '7_5'], '8_4') },
+  settings: { split: s.enumOf(['8_4', '7_5'], '8_4'), title_size: s.enumOf(['40', '38'], '40') },
 });
 
 export const videoDonate = defineSection('video_donate', {
@@ -112,6 +113,11 @@ export const logoStrip = defineSection('logo_strip', {
 });
 
 /** Membership campaigns (`GET /campaigns`) composed with the `campaign_display` collection (image). */
+/**
+ * Campaign cards: the home block (`layout: home`, with the background shape) or the /campaigns
+ * lists (`layout: page`). In the heading, `{campaign}` is replaced by the first listed campaign's
+ * name (the list's "2026–27 Campaign" heading).
+ */
 export const campaignCards = defineSection('campaign_cards', {
   fields: heading,
   media: { background: o(m.image()) },
@@ -119,7 +125,27 @@ export const campaignCards = defineSection('campaign_cards', {
     status: s.enumOf(['active', 'history', 'all'], 'all'),
     limit: s.number(3),
     display: s.source('campaign_display'),
+    layout: s.enumOf(['home', 'page', 'slider'], 'home'),
+    spacing: s.enumOf(['top', 'section'], 'section'),
   },
+});
+
+/** /campaigns/:slug — figures from `GET /campaigns/:slug`, gallery/description/video from C:campaign_display. */
+export const campaignDetail = defineSection('campaign_detail', {
+  fields: {
+    label_period: f.text(),
+    label_status: f.text(),
+    label_who: f.text(),
+    who_can_join: f.text(),
+    membership_title: f.text(),
+    cta: f.link(),
+    renew_text: o(f.text()),
+    renew_link: o(f.link()),
+    tab_description: f.text(),
+    tab_faq: f.text(),
+    tab_video: f.text(),
+  },
+  settings: { display: s.source('campaign_display'), faq_source: s.source('faqs'), default_level: s.string() },
 });
 
 export const counterBand = defineSection('counter_band', {
@@ -132,9 +158,67 @@ export const counterBand = defineSection('counter_band', {
   },
 });
 
+/** Events: the home slider, or the paged grid of /events (`layout: grid`). */
 export const eventSlider = defineSection('event_slider', {
   fields: heading,
+  settings: { source: s.source('events'), layout: s.enumOf(['slider', 'grid'], 'slider') },
+});
+
+/** The US hubs launch plan cards (event.dc.html). */
+export const hubPlan = defineSection('hub_plan', {
+  fields: heading,
+  item: {
+    fields: { badge: f.text(), name: f.text(), area: f.text(), note: o(f.text()), launch_label: f.text(), launch: f.text(), cta: o(f.link()) },
+    settings: { badge_kind: s.enumOf(BADGE_KINDS, 'info') },
+  },
+});
+
+/** /events/:slug — the event (C:events by slug), its RSVP form and the hub call. */
+export const eventDetail = defineSection('event_detail', {
+  fields: {
+    rsvp_kicker: f.text(),
+    rsvp_title: f.text(),
+    rsvp_submit: f.text(),
+    rsvp_login: o(f.link()),
+    rsvp_note: o(f.text()),
+    rsvp_done_title: f.text(),
+    rsvp_done_body: f.text(),
+    hub_kicker: o(f.text()),
+    hub_title: o(f.text()),
+    hub_cta: o(f.link()),
+    schedule_title: f.text(),
+    label_date: f.text(),
+    label_time: f.text(),
+    label_location: f.text(),
+    label_link: f.text(),
+    organizer_title: f.text(),
+    label_name: f.text(),
+    label_email: f.text(),
+    label_phone: f.text(),
+    map_title: f.text(),
+  },
   settings: { source: s.source('events') },
+});
+
+/** /news/:slug — the story (C:news by slug), tags, share, author box, sample comments + the (inert) comment form. */
+export const newsDetail = defineSection('news_detail', {
+  fields: {
+    comments_label: f.text(),
+    tags_label: f.text(),
+    share_label: f.text(),
+    comments_title: f.text(),
+    form_title: f.text(),
+    form_note: f.text(),
+    form_remember: f.text(),
+    form_submit: f.text(),
+    search_title: f.text(),
+    recent_title: f.text(),
+    categories_title: f.text(),
+    sidebar_tags_title: f.text(),
+  },
+  settings: { source: s.source('news'), comments: s.source('blog_comments'), recent_limit: s.number(3) },
+  /** share networks: label = accessible name, icon = icon-font class, href = share URL with `{url}` */
+  item: { fields: { label: f.text() }, settings: { icon: s.string(), href: s.string() } },
 });
 
 export const textMarquee = defineSection('text_marquee', {
@@ -240,6 +324,18 @@ export const formBlock = defineSection('form_block', {
     side_body: o(f.rich()),
     success_title: o(f.text()),
     success_body: o(f.text()),
+    fail_title: o(f.text()),
+    fail_body: o(f.text()),
+    /** progress / hint line, may hold `{count}`-style tokens filled by the component */
+    progress_note: o(f.text()),
+    /** copy repeated on each card of a card list (hubs) */
+    card_kicker: o(f.text()),
+    card_body: o(f.text()),
+    card_cta: o(f.text()),
+    /** the form card's own heading (`{name}` tokens allowed) and submit button */
+    form_kicker: o(f.text()),
+    form_title: o(f.text()),
+    submit_label: o(f.text()),
     actions: o(f.links()),
   },
   media: { image: o(m.image()) },
@@ -249,7 +345,7 @@ export const formBlock = defineSection('form_block', {
     default_key: o(s.string()),
   },
   item: {
-    fields: { title: o(f.text()), body: o(f.rich()), link: o(f.link()) },
+    fields: { title: o(f.text()), body: o(f.rich()), link: o(f.link()), value: o(f.text()) },
     settings: { key: o(s.string()), done: s.bool(false) },
   },
 });
@@ -283,6 +379,10 @@ export const SECTION_TYPES = [
   statusCard,
   flowSteps,
   formBlock,
+  campaignDetail,
+  hubPlan,
+  eventDetail,
+  newsDetail,
 ] as const;
 
 export type SectionTypeName = (typeof SECTION_TYPES)[number]['type'];
@@ -295,8 +395,33 @@ export const campaignCategories = defineCollection('campaign_categories', {
 });
 
 export const events = defineCollection('events', {
-  fields: { title: f.text(), summary: f.text(), date_label: f.text(), place: f.text() },
+  fields: { title: f.text(), summary: f.text(), date_label: f.text(), place: f.text(), body: o(f.rich()), map_label: o(f.text()) },
   media: { image: m.image() },
+  data: {
+    time_label: o(s.string()),
+    link_url: o(s.string()),
+    organizer_name: o(s.string()),
+    organizer_email: o(s.string()),
+    organizer_phone: o(s.string()),
+    map_url: o(s.string()),
+  },
+});
+
+/** C:countries — the Sub-Saharan countries (all USAFI hubs); `featured` = the three highlighted hubs. */
+export const countries = defineCollection('countries', {
+  fields: { name: f.text(), capital: f.text(), hub_text: o(f.text()) },
+  data: { map_key: s.string(), featured: s.bool(false) },
+});
+
+/** C:us_hubs — the five US regional hubs (hubs.dc.html, join form). */
+export const usHubs = defineCollection('us_hubs', {
+  fields: { name: f.text(), status: f.text() },
+  data: { badge_kind: s.enumOf(BADGE_KINDS, 'info') },
+});
+
+export const blogComments = defineCollection('blog_comments', {
+  fields: { name: f.text(), date_label: f.text(), text: f.text() },
+  media: { avatar: m.image() },
 });
 
 export const testimonialEntries = defineCollection('testimonials', {
@@ -323,8 +448,22 @@ export const portfolios = defineCollection('portfolios', {
 });
 
 export const news = defineCollection('news', {
-  fields: { title: f.text(), excerpt: f.text(), date_label: f.text(), category: f.text() },
-  media: { image: m.image() },
+  fields: {
+    title: f.text(),
+    excerpt: f.text(),
+    date_label: f.text(),
+    category: f.text(),
+    body_before: o(f.rich()),
+    quote: o(f.text()),
+    quote_author: o(f.text()),
+    body_after: o(f.rich()),
+    tags: o(f.links()),
+    author_name: o(f.text()),
+    author_role: o(f.text()),
+    author_bio: o(f.text()),
+    author_links: o(f.links()),
+  },
+  media: { image: m.image(), detail_image: o(m.image()), author_photo: o(m.image()) },
   data: { published_on: s.string() },
 });
 
@@ -348,7 +487,9 @@ export const charterVersions = defineCollection('charter_versions', {
 
 /** Display data of a membership campaign, keyed by the campaign slug. */
 export const campaignDisplay = defineCollection('campaign_display', {
-  media: { image: m.image() },
+  media: { image: m.image(), gallery: o(m.list()) },
+  fields: { description: o(f.rich()) },
+  data: { video_url: o(s.string()) },
 });
 
 export const COLLECTION_TYPES = [
@@ -366,4 +507,7 @@ export const COLLECTION_TYPES = [
   videos,
   charterVersions,
   campaignDisplay,
+  usHubs,
+  blogComments,
+  countries,
 ] as const;

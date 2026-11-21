@@ -1,4 +1,5 @@
 import { entry, img } from '../build';
+import { eventDetailBodyEn } from '../rich/detailBodies';
 
 // C:events — one source for the home slider and /events (Step 6). Copied verbatim from
 // design-reference/pages/index.dc.html (`data.evt`). Slugs replace the design's `#e=<index>`.
@@ -13,6 +14,22 @@ const E: Array<[slug: string, image: string, date: string, place: string, title:
   ['annual-meeting-vote-and-first-grant-2027', 'event_img_8.webp', 'Date TBC', 'Location to be confirmed · Members', 'Annual meeting, vote & first grant (2027)', 'Finalists present their projects, eligible members vote, and the Chapter celebrates its first major grant.'],
 ];
 
+// The detail page's body, schedule, organizer and map are template sample data (event_details.dc.html,
+// FQ8): the same for every event until the CMS has the real details.
+const SAMPLE_DETAIL = {
+  time_label: '15:16 - 21:36',
+  link_url: 'https://meet.google.com/dek-litx-2fr',
+  organizer_name: 'Md. Rayhan Hossain',
+  organizer_email: 'example@gmail.com',
+  organizer_phone: '+(446) 256 234 98',
+  map_url: 'https://www.google.com/maps/place/Jackson+Heights,+Queens,+NY,+USA',
+};
+
 export const eventsEn = E.map(([slug, image, date_label, place, title, summary]) =>
-  entry(slug, { slug, fields: { title, summary, date_label, place }, media: { image: img(image, 'event') } }),
+  entry(slug, {
+    slug,
+    fields: { title, summary, date_label, place, body: eventDetailBodyEn, map_label: 'Jackson Heights, Queens, NY' },
+    media: { image: img(image, 'event') },
+    data: SAMPLE_DETAIL,
+  }),
 );

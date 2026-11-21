@@ -7,6 +7,7 @@ import { SectionHeading } from './SectionHeading';
 // width: narrow = col-xl-6 · medium = col-xl-8 · wide = col-xl-8 col-lg-10 (the ix_card grids).
 const WIDTH = {
   narrow: 'col-xl-6 m-auto',
+  seven: 'col-xl-7 m-auto',
   medium: 'col-xl-8 m-auto',
   wide: 'col-xl-8 col-lg-10 m-auto',
 } as const;

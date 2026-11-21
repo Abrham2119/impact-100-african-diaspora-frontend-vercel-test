@@ -15,9 +15,10 @@ import { CollectionState, SectionHeadingRow } from './shared';
 
 // band — `.ix_band` (home "Powered by WAZi" 8/4, our-model "Where the money goes" 7/5)
 const SPLIT = {
-  '8_4': { text: 'col-lg-8', actions: 'col-lg-4', title: 'ixd_mt8', body: 'ixd_mt12' },
-  '7_5': { text: 'col-lg-7', actions: 'col-lg-5', title: undefined, body: 'ixd_mt14' },
+  '8_4': { text: 'col-lg-8', actions: 'col-lg-4', body: 'ixd_mt12' },
+  '7_5': { text: 'col-lg-7', actions: 'col-lg-5', body: 'ixd_mt14' },
 } as const;
+const TITLE_SIZE = { '40': 'ixd_band_title', '38': 'ixd_band_title_38' } as const;
 
 export function BandSection({ section }: { section: SectionData<typeof band> }) {
   const { fields } = section;
@@ -29,7 +30,7 @@ export function BandSection({ section }: { section: SectionData<typeof band> }) 
           <div className="row ix_gap align-items-center">
             <div className={split.text}>
               {fields.kicker !== undefined && <p className="ix_kicker">{fields.kicker}</p>}
-              <h2 className={cx('ixd_band_title', split.title)}>{fields.title}</h2>
+              <h2 className={cx(TITLE_SIZE[section.settings.title_size], fields.kicker !== undefined && 'ixd_mt8')}>{fields.title}</h2>
               <p className={cx(split.body, 'ixd_band_text')}>{fields.body}</p>
             </div>
             <div className={split.actions}>

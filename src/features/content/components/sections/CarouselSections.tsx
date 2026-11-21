@@ -7,17 +7,37 @@ import type { SectionData } from '../../schemas/defineSection';
 import { campaignCategories, events, type categoryCarousel, type eventSlider, type logoStrip, type servicesSlider } from '../../schemas/sectionTypes';
 import { useSectionEntries } from '../../hooks/useSectionEntries';
 import { CmsImage } from '../CmsImage';
-import { CollectionState, SectionHeadingRow, toImage, useDotLabel } from './shared';
+import { CollectionState, SectionHeadingRow, SectionPagination, toImage, useDotLabel } from './shared';
 
 // The slick carousels of index.dc.html / about_us.dc.html, markup verbatim. Each slide wraps its
 // item in the design's column (`<div class="col-xl-N" style="width:100%;display:inline-block">`).
 
-// category_carousel — "Browse by Category" (C:campaign_categories)
+// category_carousel — "Browse by Category" (C:campaign_categories); `layout: grid` is the paged
+// /campaigns/category page (category.dc.html).
 export function CategoryCarouselSection({ section }: { section: SectionData<typeof categoryCarousel> }) {
   const { toPath } = useLocale();
   const dotLabel = useDotLabel();
-  const { entries, isPending, isError, refetch } = useSectionEntries(campaignCategories, section.settings.source);
+  const { entries, page, totalPages, isPending, isError, refetch } = useSectionEntries(campaignCategories, section.settings.source);
   const { kicker, title, lead } = section.fields;
+
+  if (section.settings.layout === 'grid') {
+    return (
+      <section className="category_page mt_75">
+        <div className="container">
+          <CollectionState isPending={isPending} isError={isError} isEmpty={entries.length === 0} onRetry={() => void refetch()}>
+            <div className="row">
+              {entries.map((entry) => (
+                <div key={entry.key} className="col-xl-2 col-6 col-sm-4 col-md-3">
+                  <CategoryItem to={toPath(section.settings.href)} image={toImage(entry.media.image)} name={entry.fields.name} />
+                </div>
+              ))}
+            </div>
+            {section.settings.source.paginate && <SectionPagination page={page} totalPages={totalPages} />}
+          </CollectionState>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="caregoey mt_100">
@@ -109,13 +129,47 @@ export function LogoStripSection({ section }: { section: SectionData<typeof logo
   );
 }
 
-// event_slider — "Gather with us" (C:events; the cards link to /events/:slug)
+// event_slider — "Gather with us" (C:events; the cards link to /events/:slug); `layout: grid` is
+// the paged /events list (event.dc.html).
 export function EventSliderSection({ section }: { section: SectionData<typeof eventSlider> }) {
   const { toPath } = useLocale();
   const t = useT('site');
   const dotLabel = useDotLabel();
-  const { entries, isPending, isError, refetch } = useSectionEntries(events, section.settings.source);
+  const { entries, page, totalPages, isPending, isError, refetch } = useSectionEntries(events, section.settings.source);
   const { kicker, title, lead } = section.fields;
+  const card = (entry: (typeof entries)[number], grid: boolean) => (
+    <EventCard
+      grid={grid}
+      to={toPath(PATHS.public.eventDetail(entry.slug ?? entry.key))}
+      image={toImage(entry.media.image)}
+      date={entry.fields.date_label}
+      place={entry.fields.place}
+      title={entry.fields.title}
+      summary={entry.fields.summary}
+      cta={t('event.rsvp')}
+    />
+  );
+
+  if (section.settings.layout === 'grid') {
+    return (
+      <section className="event_page mt_75">
+        <div className="container">
+          <SectionHeadingRow kicker={kicker} title={title} lead={lead} width="wide" />
+          <div className="mt_50" />
+          <CollectionState isPending={isPending} isError={isError} isEmpty={entries.length === 0} onRetry={() => void refetch()}>
+            <div className="row">
+              {entries.map((entry) => (
+                <div key={entry.key} className="col-xl-4 col-md-6">
+                  {card(entry, true)}
+                </div>
+              ))}
+            </div>
+            {section.settings.source.paginate && <SectionPagination page={page} totalPages={totalPages} />}
+          </CollectionState>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="event mt_100">
@@ -128,22 +182,7 @@ export function EventSliderSection({ section }: { section: SectionData<typeof ev
             items={entries}
             getKey={(entry) => entry.key}
             dotLabel={dotLabel}
-            renderItem={(entry) => {
-              const to = toPath(PATHS.public.eventDetail(entry.slug ?? entry.key));
-              return (
-                <div className="col-xl-4 ixd_slide_col">
-                  <EventCard
-                    to={to}
-                    image={toImage(entry.media.image)}
-                    date={entry.fields.date_label}
-                    place={entry.fields.place}
-                    title={entry.fields.title}
-                    summary={entry.fields.summary}
-                    cta={t('event.rsvp')}
-                  />
-                </div>
-              );
-            }}
+            renderItem={(entry) => <div className="col-xl-4 ixd_slide_col">{card(entry, false)}</div>}
           />
         </CollectionState>
       </div>

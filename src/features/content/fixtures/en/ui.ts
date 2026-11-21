@@ -174,6 +174,21 @@ const site = {
   'charter.version': 'Version',
   'charter.oldTitle': 'You are reading an earlier version',
   'charter.oldBody': 'This version is kept for reference. The current version is the {current}.',
+  // Step 6
+  'answer.yes': 'Yes',
+  'answer.no': 'No',
+  'level.initiator': 'Initiator',
+  'level.incubator': 'Incubator',
+  'level.innovator': 'Innovator',
+  'level.investor': 'Investor',
+  'level.chip': '{name} {amount}',
+  'campaign.goalLabel': 'Goal',
+  'campaign.period': '{start} – {end}',
+  'gallery.thumb': 'Show image {n}',
+  'video.playYoutube': 'Play video on YouTube',
+  'news.comments': '{count} Comments',
+  'news.categoryCount': '({count})',
+  'gift.monthly': '{amount} a month · {portfolio} · {country}',
 };
 
 // Public form microcopy (Step 6): field labels, placeholders and error messages. Errors are the
@@ -199,6 +214,18 @@ const forms = {
   'error.story': 'Write your story — between 10 and 5,000 characters.',
   'error.photoAlt': 'Describe the photo for people who can’t see it.',
   'error.submit': 'We couldn’t send this. Please try again.',
+  // labels and placeholders (design copy)
+  'rsvp.name': 'Name',
+  'rsvp.email': 'Email',
+  'rsvp.namePlaceholder': 'Or log in to RSVP in one click',
+  'hub.hub': 'Hub',
+  'hub.name': 'Name',
+  'hub.email': 'Email',
+  'comment.name': 'Name',
+  'comment.email': 'Email',
+  'comment.reply': 'Leave a reply',
+  'search.label': 'Search',
+  'search.placeholder': 'Search Here...',
 };
 
 const source = { common, portal, admin, site, forms };
