@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { Toaster } from '@/components/ui/Toaster';
 import { LocaleProvider } from '@/i18n/LocaleProvider';
 import { useLegacyHashParams } from '@/hooks/useLegacyHashParams';
+import { useScrollToTopOnNavigate } from '@/hooks/useScrollToTopOnNavigate';
 import { DemoRoleSwitcher } from '@/features/auth/components/DemoRoleSwitcher';
 
 // Top-level layout wrapper for the whole app (global chrome like toasts and the locale).
@@ -11,6 +12,7 @@ import { DemoRoleSwitcher } from '@/features/auth/components/DemoRoleSwitcher';
 // LocaleProvider lives here, inside the router, because the URL prefix is part of the locale.
 export function RootLayout() {
   useLegacyHashParams();
+  useScrollToTopOnNavigate();
   return (
     <LocaleProvider>
       <Outlet />
