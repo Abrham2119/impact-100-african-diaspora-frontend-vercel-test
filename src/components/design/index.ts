@@ -75,3 +75,4 @@ export { CheckField, KeyValueList, OptionButton, OptionGroup } from './primitive
 export type { OptionButtonProps } from './primitives/Options';
 export { AfricaMap } from './blocks/AfricaMap';
 export type { AfricaMapProps } from './blocks/AfricaMap';
+export { AuthCard } from './blocks/AuthCard';

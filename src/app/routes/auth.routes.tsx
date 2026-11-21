@@ -7,7 +7,7 @@ import { ProtectedRoute } from '@/app/guards/ProtectedRoute';
 import { RoutePending } from '@/app/guards/RoutePending';
 import { TwScope } from '@/components/TwScope';
 import { resolveLanding } from '@/features/auth/lib/resolveLanding';
-import { ScreenPlaceholder } from '@/pages/ScreenPlaceholder';
+import { CmsRoutePage } from '@/pages/public/CmsRoutePage';
 import { SignInPage } from '@/pages/auth/legacy/SignInPage';
 import { SignUpPage } from '@/pages/auth/legacy/SignUpPage';
 import { VerifyOtpPage } from '@/pages/auth/legacy/VerifyOtpPage';
@@ -17,7 +17,7 @@ import { ResetPasswordPage } from '@/pages/auth/legacy/ResetPasswordPage';
 import type { RouteHandle } from './routeHandle';
 
 // /auth/* — the design sign-in screens 34–39 (+ the emailed-link landing, ARCHITECTURE §4 37b)
-// inside the public chrome. Signed-in users are sent on to `?next=` or their landing
+// inside the public chrome, composed from their CMS pages (FE-7, mock auth in Part A). Signed-in users are sent on to `?next=` or their landing
 // (admin console / member portal). Two-step set-up needs a session; the two-step challenge
 // happens mid-login, before there is one.
 const publicOnly = (child: ReactNode) => <PublicOnlyRoute landing={resolveLanding}>{child}</PublicOnlyRoute>;
@@ -25,7 +25,7 @@ const publicOnly = (child: ReactNode) => <PublicOnlyRoute landing={resolveLandin
 const screen = (path: string, handle: RouteHandle, guard: (child: ReactNode) => ReactNode = publicOnly): RouteObject => ({
   path,
   handle,
-  element: guard(<ScreenPlaceholder />),
+  element: guard(<CmsRoutePage />),
 });
 
 export const authRoutes: RouteObject = {

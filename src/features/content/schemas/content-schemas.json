@@ -2062,7 +2062,13 @@
                 "join",
                 "donate",
                 "cancel_gift",
-                "eligibility"
+                "eligibility",
+                "sign_in",
+                "sign_up",
+                "forgot",
+                "check_email",
+                "two_step",
+                "two_step_setup"
               ],
               "default": "contact",
               "x-kind": "enum"
@@ -2089,6 +2095,10 @@
             "default_amount": {
               "type": "number",
               "x-kind": "number"
+            },
+            "icon": {
+              "type": "string",
+              "x-kind": "string"
             }
           },
           "required": [],
@@ -2192,6 +2202,18 @@
             "summary": {
               "$ref": "#/definitions/LocalizedText",
               "x-kind": "text"
+            },
+            "alt_label": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "sso_label": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "after_form": {
+              "$ref": "#/definitions/LocalizedRichText",
+              "x-kind": "rich_text"
             },
             "actions": {
               "$ref": "#/definitions/LocalizedLinkList",

@@ -728,6 +728,27 @@ governanceKeys.currentBallot(locale) · governanceKeys.proposal(id, locale) · g
 > - The engagement / membership / governance `components/` folders render design markup only. They are therefore
 >   excluded from Tailwind's content scan, and covered by `check:css` and `check:copy`.
 
+> **As built in FE-7 (auth on mock auth).**
+> - **Contract:** `features/auth/api/authRepository.ts` covers login link, consume, WAZI SSO, sign-up and TOTP
+>   (login, setup, verify). `api/index.ts` picks the mock or HTTP implementation from `VITE_DATA_SOURCE`
+>   (`infrastructure/api/dataSource.ts`). The HTTP one is a placeholder until INT-3.
+> - **Mock auth:** `mockAuthRepository.ts` plus `fixtures/demoUsers.ts`. The demo people are the design's sample
+>   members (Amara Mensah, Kofi Boateng, Wanjiru Kamau, David Otieno, Aisha Diallo, Grace Mwale), with three
+>   "(demo)" accounts for Editor, Hub co-Ambassador and Super admin.
+>   - State (links, enrolment, challenges) lives in localStorage and resets from the demo switcher.
+>   - Two-step accepts any 6 digits except `000000`.
+>   - The emailed link appears in a **demo inbox** on check_email. WAZI SSO signs in Amara Mensah.
+> - **Session:** `authStore.setDesignSession` stores the chapter roles and `mfa`, with permissions from
+>   `constant/roleMatrix.ts` (backend §6.3). Super admin bypasses checks. The starter session is unchanged.
+> - **Rules:** `domain/rules/access.ts` holds `requiresTwoFactor`, `isAdminAudience` and `menuAudiencesFor`;
+>   `features/auth/lib/resolveLanding.ts` holds `landingFor`. `TwoFactorRoute` sends two-step roles without `mfa` to
+>   enrol.
+> - **Header:** account links carry `audience` (signedOut, signedIn, nonMember, admin) in the nav data, and
+>   PublicLayout filters them by role.
+> - **Screens:** the six screens are CMS `form_block`s (`features/auth/components/AuthScreens.tsx` on the `AuthCard`
+>   block). `/auth/sign-in/link?token=` consumes the link and shows check_email's "Link expired?" card on failure.
+> - **Demo role switcher:** `DemoRoleSwitcher` in RootLayout, shown while the data is mock. `?demo=off` hides it.
+
 ### 7.1 Shared, typed field schemas
 
 - **The contract is JSON Schema** for every section type and collection schema, as served by
@@ -954,7 +975,7 @@ package is installed by this document.
 | FQ2 | **Fonts for non-Latin locales.** Nunito has no Ethiopic (Amharic) glyphs. Which fallback (for example Noto Sans Ethiopic) is allowed under "no new fonts"? | Decide when backend Q1 (launch languages) is answered |
 | FQ3 | **Donate deep link.** ROUTES says `?fund=`, but the `.dc` page reads `#area=`. | `?fund=` is canonical, and `area` is accepted as an alias |
 | FQ4 | **Event detail route.** `/events/:id` (ROUTES) versus per-locale slugs (CONTENT_AND_I18N). | `/events/:slug`, with the legacy `#e=n` resolved to a slug |
-| FQ5 | **Sign-up and forgot-password** screens show password fields, but sign-in is passwordless (backend D1/Q18). | Sign-up = name and email, then a login link; forgot password = "email me a login link". The designer needs to confirm the removed fields. |
+| FQ5 | **Sign-up and forgot-password** screens show password fields, but sign-in is passwordless (backend D1/Q18). | **Decided in FE-7:** same layout, no password fields and no Google button. Sign-up = name and email, then a login link; forgot password = email, then a login link. |
 | FQ6 | **Hub links** use display names (`#hub=Southeast`), and the hub lists differ between the hubs and events pages (backend Q13). | Keys from `C:hubs`, with names mapped to keys for legacy links |
 | FQ7 | **Language select labels:** English names ("English", "Amharic") as in the design, or native names ("አማርኛ")? | Native name, which is identical for English |
 | FQ8 | **Template sample copy** in the snapshots: lorem ipsum (event and news detail, testimonials, FAQ), "Our Customer Reviews", "Traveler", the "29M supporters / $60000+" footer counters and the category names. | Seeded verbatim as English CMS content (the design rule) and flagged to the client for real copy |

@@ -1,4 +1,12 @@
 import type { ComponentType } from 'react';
+import {
+  CheckEmailScreen,
+  ForgotScreen,
+  SignInScreen,
+  SignUpScreen,
+  TwoStepScreen,
+  TwoStepSetupScreen,
+} from '@/features/auth/components/AuthScreens';
 import { ContactForm } from '@/features/engagement/components/ContactForm';
 import { EligibilityCheck } from '@/features/engagement/components/EligibilityCheck';
 import { HubJoin } from '@/features/engagement/components/HubJoin';
@@ -24,4 +32,10 @@ export const FORM_REGISTRY: Partial<Record<(typeof FORM_KEYS)[number], FormBlock
   share_story: ShareStoryForm,
   join: JoinWizard,
   donate: DonateForm,
+  sign_in: SignInScreen,
+  sign_up: SignUpScreen,
+  forgot: ForgotScreen,
+  check_email: CheckEmailScreen,
+  two_step: TwoStepScreen,
+  two_step_setup: TwoStepSetupScreen,
 };

@@ -196,6 +196,19 @@
 .ixd_vbox_close { background: transparent !important; border: 0 !important; color: #ffffff !important; }
 .ixd_vbox_arrow { background: transparent !important; border: 0 !important; padding: 0 !important; }
 
+/* Auth screens (sign_in / two_step / two_step_enrol .dc.html inline styles, verbatim) */
+.ixd_sso_icon { margin-right: 8px !important; color: var(--colorPrimary) !important; }
+.ixd_code_input { letter-spacing: .4em !important; font-size: 22px !important; text-align: center !important; }
+.ixd_block_btn { display: block !important; margin-top: 20px !important; }
+/* the design's block button there is an <a>, which `.login_form button` (width, margins, padding,
+   no arrow) does not reach; ours is a real submit button, so restore .common_btn's own values */
+.login_form button.ixd_block_btn { width: 100%; margin: 20px 0 0; padding: 17px 38px 16px 25px; }
+.login_form button.ixd_block_btn::after { display: block; }
+.ixd_enrol_card { height: auto !important; margin-top: 20px !important; display: flex !important; gap: 20px !important; align-items: center !important; flex-wrap: wrap !important; }
+.ixd_qr_placeholder { width: 120px; height: 120px; flex: none; background: repeating-conic-gradient(var(--colorBlack) 0 25%, #fff 0 50%) 0 0 / 24px 24px; border-radius: 10px; }
+.ixd_qr_image { width: 120px; height: 120px; flex: none; border-radius: 10px; }
+.ixd_text_black { color: var(--colorBlack) !important; }
+
 /* Demo role switcher (mock data only, FE-7) — built from design classes; positioned bottom-left,
    clear of the back-to-top button. Colours and radii are the design's own tokens. */
 .ixd_demo_switcher { position: fixed; left: 20px; bottom: 20px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }

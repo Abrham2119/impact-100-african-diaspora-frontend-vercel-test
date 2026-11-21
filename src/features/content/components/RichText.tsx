@@ -8,17 +8,18 @@ import { useLocale } from '@/i18n/useLocale';
 // <ul class="ix_list">, table → the design's `ix_table_wrap mt_20 > ix_table_wrap > table.ix_table`,
 // note → <p class="ix_note">. In-app links go through the router and get the locale prefix.
 
-function Inline({ node }: { node: RichInline }): ReactNode {
+function Inline({ node, plainLinks }: { node: RichInline; plainLinks: boolean }): ReactNode {
   const { toPath } = useLocale();
   if (node.type === 'break') return <br />;
   if (node.type === 'link') {
-    const children = node.children.map((child, i) => <Inline key={i} node={child} />);
+    const className = plainLinks ? undefined : 'ix_link';
+    const children = node.children.map((child, i) => <Inline key={i} node={child} plainLinks={plainLinks} />);
     return node.href.startsWith('/') ? (
-      <Link className="ix_link" to={toPath(node.href)}>
+      <Link className={className} to={toPath(node.href)}>
         {children}
       </Link>
     ) : (
-      <a className="ix_link" href={node.href} target="_blank" rel="noopener">
+      <a className={className} href={node.href} target="_blank" rel="noopener">
         {children}
       </a>
     );
@@ -29,9 +30,18 @@ function Inline({ node }: { node: RichInline }): ReactNode {
   return content;
 }
 
-const inlines = (nodes: RichInline[]) => nodes.map((node, i) => <Inline key={i} node={node} />);
-
-function Block({ block, plainLists, paragraphClassName }: { block: RichBlock; plainLists: boolean; paragraphClassName?: string }) {
+function Block({
+  block,
+  plainLists,
+  plainLinks,
+  paragraphClassName,
+}: {
+  block: RichBlock;
+  plainLists: boolean;
+  plainLinks: boolean;
+  paragraphClassName?: string;
+}) {
+  const inlines = (nodes: RichInline[]) => nodes.map((node, i) => <Inline key={i} node={node} plainLinks={plainLinks} />);
   switch (block.type) {
     case 'paragraph':
       return <p className={paragraphClassName}>{inlines(block.children)}</p>;
@@ -76,14 +86,25 @@ function Block({ block, plainLists, paragraphClassName }: { block: RichBlock; pl
 
 /**
  * `plainLists`: lists without `ix_list` (the template's article bodies: campaign, event, news details).
+ * `plainLinks`: links without `ix_link` (the auth screens' `p.sign_up` line styles its own links).
  * `paragraphClassName`: a design class on every paragraph (e.g. the join "Done" text column).
  */
-export function RichText({ value, plainLists = false, paragraphClassName }: { value: RichTextAst; plainLists?: boolean; paragraphClassName?: string }) {
+export function RichText({
+  value,
+  plainLists = false,
+  plainLinks = false,
+  paragraphClassName,
+}: {
+  value: RichTextAst;
+  plainLists?: boolean;
+  plainLinks?: boolean;
+  paragraphClassName?: string;
+}) {
   return (
     <>
       {value.map((block, i) => (
         <Fragment key={i}>
-          <Block block={block} plainLists={plainLists} paragraphClassName={paragraphClassName} />
+          <Block block={block} plainLists={plainLists} plainLinks={plainLinks} paragraphClassName={paragraphClassName} />
         </Fragment>
       ))}
     </>

@@ -360,6 +360,13 @@ export const FORM_KEYS = [
   'donate',
   'cancel_gift',
   'eligibility',
+  // auth screens (FE-7)
+  'sign_in',
+  'sign_up',
+  'forgot',
+  'check_email',
+  'two_step',
+  'two_step_setup',
 ] as const;
 
 /**
@@ -399,6 +406,10 @@ export const formBlock = defineSection('form_block', {
     secure_note: o(f.text()),
     /** a summary line with `{tokens}` filled by the component (donate: the gift summary) */
     summary: o(f.text()),
+    /** auth screens: the "Or" separator, the WAZIImpact.org button, the line under the form */
+    alt_label: o(f.text()),
+    sso_label: o(f.text()),
+    after_form: o(f.rich()),
     actions: o(f.links()),
   },
   media: { image: o(m.image()) },
@@ -409,6 +420,8 @@ export const formBlock = defineSection('form_block', {
     /** preset amounts in whole currency units (donate) and the preselected one */
     amounts: o(s.numbers()),
     default_amount: o(s.number()),
+    /** icon-font class of a status card (check_email) */
+    icon: o(s.string()),
   },
   item: {
     fields: { title: o(f.text()), body: o(f.rich()), link: o(f.link()), value: o(f.text()) },

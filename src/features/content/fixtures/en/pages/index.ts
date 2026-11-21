@@ -1,6 +1,6 @@
 import type { PageTreeDto } from '@/types/content.dto';
 import { aboutEn } from './about';
-import { bannerOnlyPagesEn } from './bannerOnly';
+import { authPagesEn } from './auth';
 import { campaignCategoryPageEn, campaignDetailPageEn, campaignsPageEn } from './campaigns';
 import { charterEn } from './charter';
 import { committeesPageEn } from './committees';
@@ -26,7 +26,7 @@ import { ourModelEn } from './ourModel';
 
 // Every English page tree (`GET content/pages/:key`), keyed by CMS page key (ARCHITECTURE.md §4).
 export const pagesEn: Record<string, PageTreeDto> = {
-  ...bannerOnlyPagesEn,
+  ...authPagesEn,
   home: homeEn,
   about: aboutEn,
   committees: committeesPageEn,

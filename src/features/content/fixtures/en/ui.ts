@@ -337,7 +337,17 @@ const forms = {
   'donate.monthlyGift': 'Monthly gift',
   'donate.frequencyOnce': 'one-time',
   'donate.frequencyMonthly': 'monthly',
+  // auth screens (sign_in / sign_up / two_step .dc.html)
+  'auth.email': 'Email',
+  'auth.name': 'Name',
+  'auth.code': '6-digit code',
+  'auth.codePlaceholder': '123 456',
+  'auth.qr': 'QR code for your authenticator app',
+  'auth.cantScan': 'Can’t scan?',
+  'auth.enterKey': 'Enter this key:',
   // placeholder — client wording pending
+  'error.code': 'That code didn’t work. Check your authenticator app and try again.',
+  'error.signInAgain': 'This sign-in has timed out. Please start again.',
   'error.photo': 'Choose a JPG, PNG or WebP image up to 5 MB.',
 };
 
