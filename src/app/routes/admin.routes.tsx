@@ -14,10 +14,14 @@ import { CampaignsPage } from '@/features/admin/components/CampaignsPage';
 import { DashboardPage } from '@/features/admin/components/DashboardPage';
 import { ExportsPage } from '@/features/admin/components/ExportsPage';
 import { FinancePage } from '@/features/admin/components/FinancePage';
+import { FlagsPage } from '@/features/admin/components/FlagsPage';
 import { HubPage } from '@/features/admin/components/HubPage';
+import { LedgerPage } from '@/features/admin/components/LedgerPage';
+import { OfflinePaymentPage } from '@/features/admin/components/OfflinePaymentPage';
 import { PeoplePage } from '@/features/admin/components/PeoplePage';
 import { PermissionsPage } from '@/features/admin/components/PermissionsPage';
 import { PersonPage } from '@/features/admin/components/PersonPage';
+import { ReconciliationPage } from '@/features/admin/components/ReconciliationPage';
 import { RolesPage } from '@/features/admin/components/RolesPage';
 import { SettingsHistoryPage } from '@/features/admin/components/SettingsHistoryPage';
 import { SettingsPage } from '@/features/admin/components/SettingsPage';
@@ -37,6 +41,10 @@ const PAGES: Record<string, ComponentType> = {
   admin_settings: SettingsPage,
   admin_approvals: ApprovalsPage,
   admin_settings_history: SettingsHistoryPage,
+  admin_ledger: LedgerPage,
+  admin_offline: OfflinePaymentPage,
+  admin_flags: FlagsPage,
+  admin_reconciliation: ReconciliationPage,
 };
 
 // /admin/* — admin console, screens 56–88 (ARCHITECTURE.md §4). Every page needs a grant

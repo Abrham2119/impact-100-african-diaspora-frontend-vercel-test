@@ -54,3 +54,8 @@ export function formatStamp(stamp: string, locale: string): string {
 export function formatCount(value: number, locale: string): string {
   return new Intl.NumberFormat(locale).format(value);
 }
+
+/** 17000 → "$170.00" (ledger amounts, always with cents). */
+export function formatAmount(cents: number, locale: string, currency = 'USD'): string {
+  return new Intl.NumberFormat(locale, { style: 'currency', currency, minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(cents / 100);
+}

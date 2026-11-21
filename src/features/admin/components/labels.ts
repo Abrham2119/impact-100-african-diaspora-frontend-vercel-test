@@ -26,3 +26,9 @@ export const diffText = (t: T, money: (cents: number) => string, diff: SettingsC
       return t(`diff.${d.field}`, { from: fmt(d.from), to: fmt(d.to) });
     })
     .join(' · ');
+
+/** "Aisha Diallo" → "A. Diallo" (who recorded an offline payment) */
+export const shortName = (fullName: string) => {
+  const [first = '', ...rest] = fullName.trim().split(/\s+/);
+  return rest.length ? `${first.charAt(0)}. ${rest.join(' ')}` : first;
+};
