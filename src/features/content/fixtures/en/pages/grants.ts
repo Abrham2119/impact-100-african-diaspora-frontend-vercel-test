@@ -10,7 +10,7 @@ const P = PATHS.public;
 const DEFAULT_HUB = 'kenya';
 
 export const grantsPageEn = page('grants', P.grants, { title: 'Impact100 — Grants' }, [
-  banner('Grants & the Africa map', ['Grants']),
+  banner('Grants', ['Grants']),
   section('hub_map', 'map', {
     settings: { default_hub: DEFAULT_HUB },
     fields: {
