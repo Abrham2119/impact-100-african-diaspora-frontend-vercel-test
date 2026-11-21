@@ -214,7 +214,7 @@ class Component extends DCLogic {
     const interest = ['kenya', 'p1'];
     const filters = [['all', 'All roles']].concat(Object.entries(AREA)).map(([k, n]) => ({ label: n, count: String(k === 'all' ? R.length : R.filter((r) => r[0] === k).length), cls: 'ix_chip' + (s.area === k ? ' ix_on' : ''), pressed: s.area === k ? 'true' : 'false', pick: () => this.setState({ area: k }) }));
     const inTray = (i) => s.tray.indexOf(i) >= 0;
-    const roles = R.map((r, i) => ({ i, r })).filter((x) => s.area === 'all' || x.r[0] === s.area).map(({ i, r }) => ({ area: AREA[r[0]], title: r[1], owner: r[2], desc: r[3], match: interest.indexOf(r[4]) >= 0, btnCls: 'common_btn ix_btn_sm' + (inTray(i) ? ' ix_btn_acc' : ''), btnLabel: inTray(i) ? 'in your tray ✓' : 'add to tray', toggle: () => this.setState({ tray: inTray(i) ? s.tray.filter((t) => t !== i) : s.tray.concat([i]), tried: false }) }));
+    const roles = R.map((r, i) => ({ i, r })).filter((x) => s.area === 'all' || x.r[0] === s.area).map(({ i, r }) => ({ area: AREA[r[0]], title: r[1], owner: r[2], desc: r[3], match: interest.indexOf(r[4]) >= 0, btnCls: 'common_btn ix_btn_sm' + (inTray(i) ? ' ix_btn_acc' : ''), btnLabel: inTray(i) ? 'in your tray ✓' : 'I’m interested', toggle: () => this.setState({ tray: inTray(i) ? s.tray.filter((t) => t !== i) : s.tray.concat([i]), tried: false }) }));
     const tray = s.tray.map((i) => ({ title: R[i][1], owner: R[i][2], remove: () => this.setState({ tray: s.tray.filter((t) => t !== i) }) }));
     const nameErr = s.tried && s.name.trim().length < 2, emailErr = s.tried && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s.email), locErr = s.tried && !s.loc.trim(), trayErr = s.tried && s.tray.length === 0;
 

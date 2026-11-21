@@ -1454,7 +1454,7 @@ const forms = {
   'volunteer.filters': 'Filter roles by area',
   'volunteer.match': 'Matches your interests',
   'volunteer.team': 'Team: {team}',
-  'volunteer.add': 'add to tray',
+  'volunteer.add': 'I’m interested',
   'volunteer.inTray': 'in your tray ✓',
   'volunteer.tray': 'Your tray',
   'volunteer.selected': '{count} selected',
