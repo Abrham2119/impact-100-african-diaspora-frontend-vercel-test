@@ -37,7 +37,7 @@ export const contactPageEn = page('contact', P.contact, { title: 'Impact100 — 
 ]);
 
 export const volunteerPageEn = page('volunteer', P.volunteer, { title: 'Impact100 — Volunteer' }, [
-  banner('Volunteer with us', [['Opportunities', P.volunteer], 'Volunteer']),
+  banner('Volunteer', [['Opportunities', P.volunteer], 'Volunteer']),
   section('form_block', 'roles', {
     settings: { form_key: 'volunteer', source: { collection: 'volunteer_roles' } },
     fields: {
