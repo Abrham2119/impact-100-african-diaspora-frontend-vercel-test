@@ -45,3 +45,24 @@ export { AppShell } from './shell/AppShell';
 export type { AppShellProps, ShellCrumb, ShellLink } from './shell/AppShell';
 // Loading / empty / error states.
 export { EmptyState, ErrorState, LoadingState } from './states/QueryStates';
+// Content blocks (Step 5): CMS sections render these with resolved copy and media.
+export { HeadingRow } from './primitives/HeadingRow';
+export type { HeadingRowProps } from './primitives/HeadingRow';
+export { HeroSlider } from './blocks/HeroSlider';
+export type { HeroSlide, HeroSliderProps } from './blocks/HeroSlider';
+export { IxCardItem } from './blocks/IxCardItem';
+export type { IxCardItemProps, IxCardVariant } from './blocks/IxCardItem';
+export {
+  BlogCard,
+  CategoryItem,
+  CharterSection,
+  CounterItem,
+  DonorCard,
+  EventCard,
+  PersonCard,
+  ServiceItem,
+  TestimonialCard,
+} from './blocks/ContentCards';
+export type { CardImage } from './blocks/ContentCards';
+export { GalleryItem, Lightbox } from './blocks/Gallery';
+export type { LightboxLabels } from './blocks/Gallery';
