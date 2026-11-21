@@ -27,6 +27,7 @@ export const useParticipation = (proposalId: string | undefined) =>
 export const useComments = (targetId: string | undefined) => useGovQuery(`comments:${targetId}`, () => governanceRepository.comments(targetId ?? ''), targetId !== undefined);
 export const useDecisions = () => useGovQuery('decisions', governanceRepository.decisions);
 export const useAmendments = () => useGovQuery('amendments', governanceRepository.amendments);
+export const useCharterSections = () => useGovQuery('charterSections', governanceRepository.charterSections);
 export const useAmendment = (id: string | undefined) => useGovQuery(`amendment:${id}`, () => governanceRepository.amendment(id ?? ''), id !== undefined);
 export const useResults = () => useGovQuery('results', governanceRepository.results);
 export const useResult = (id: string | undefined) => useGovQuery(`result:${id}`, () => governanceRepository.result(id ?? ''), id !== undefined);

@@ -25,6 +25,7 @@ import { createMockStore } from '@/infrastructure/mock/mockStore';
 import {
   AMENDMENTS,
   BALLOT,
+  CHARTER_SECTIONS,
   CHARTER_VERSION,
   CLOSED_VOTES,
   COMMENTS,
@@ -78,6 +79,8 @@ export interface GovernanceRepository {
   decisions(): Promise<Array<Decision & { myVote: VoteChoice | null }>>;
   voteDecision(input: { decisionId: string; choice: VoteChoice }): Promise<void>;
   amendments(): Promise<Amendment[]>;
+  /** the charter's numbered sections (the amendment form's choices) */
+  charterSections(): Promise<string[]>;
   amendment(id: string): Promise<Amendment | null>;
   proposeAmendment(input: { section: string; text: string }): Promise<Amendment>;
   results(): Promise<{ financials: CycleFinancials; votes: ClosedVote[] }>;
@@ -179,6 +182,7 @@ export const mockGovernanceRepository: GovernanceRepository = {
       });
     }),
   amendments: () => mockResponse(() => store.read().amendments),
+  charterSections: () => mockResponse(() => CHARTER_SECTIONS),
   amendment: (id) => mockResponse(() => store.read().amendments.find((a) => a.id === id) ?? null),
   proposeAmendment: ({ section, text }) =>
     mockResponse(() => {

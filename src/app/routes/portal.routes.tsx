@@ -7,10 +7,14 @@ import type { ShellRouteMeta } from '@/config/navigation/types';
 import type { Permission } from '@/domain/enums/permission.enum';
 import type { ComponentType } from 'react';
 import { ScreenPlaceholder } from '@/pages/ScreenPlaceholder';
+import { AmendmentPage } from '@/features/portal/components/AmendmentPage';
 import { DashboardPage } from '@/features/portal/components/DashboardPage';
+import { DecisionsPage } from '@/features/portal/components/DecisionsPage';
 import { HistoryPage } from '@/features/portal/components/HistoryPage';
 import { ProposalPage } from '@/features/portal/components/ProposalPage';
 import { ReceiptPage } from '@/features/portal/components/ReceiptPage';
+import { ResultPage } from '@/features/portal/components/ResultPage';
+import { ResultsPage } from '@/features/portal/components/ResultsPage';
 import { VotePage } from '@/features/portal/components/VotePage';
 import { PATHS } from './paths';
 
@@ -21,6 +25,10 @@ const PAGES: Record<string, ComponentType> = {
   portal_vote: VotePage,
   portal_proposal: ProposalPage,
   portal_receipt: ReceiptPage,
+  portal_decisions: DecisionsPage,
+  portal_amendment: AmendmentPage,
+  portal_results: ResultsPage,
+  portal_result: ResultPage,
 };
 
 // /portal/* — member portal, screens 40–55 (ARCHITECTURE.md §4). Signed-in users only;

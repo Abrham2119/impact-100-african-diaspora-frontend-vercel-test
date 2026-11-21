@@ -15,7 +15,18 @@ const initials = (name: string) =>
     .toUpperCase()
     .slice(0, 2);
 
-export function Discussion({ targetId, heading = true, extra }: { targetId: string; heading?: boolean; extra?: ReactNode }) {
+export function Discussion({
+  targetId,
+  heading = true,
+  placeholder = true,
+  extra,
+}: {
+  targetId: string;
+  heading?: boolean;
+  /** the vote page shows "Up to 2,000 characters"; the amendment page none */
+  placeholder?: boolean;
+  extra?: ReactNode;
+}) {
   const t = useT('portal');
   const id = useId();
   const { data: comments } = useComments(targetId);
@@ -40,7 +51,7 @@ export function Discussion({ targetId, heading = true, extra }: { targetId: stri
       ))}
       <div className="contact_input">
         <label htmlFor={id}>{t('vote.addComment')}</label>
-        <textarea id={id} rows={3} maxLength={MAX_COMMENT} placeholder={t('vote.commentPlaceholder')} value={text} onChange={(e) => setText(e.target.value)} />
+        <textarea id={id} rows={3} maxLength={MAX_COMMENT} placeholder={placeholder ? t('vote.commentPlaceholder') : undefined} value={text} onChange={(e) => setText(e.target.value)} />
       </div>
       <div className="ix_btn_row">
         <button type="button" className="common_btn ix_btn_sm" disabled={post.isPending} onClick={send}>
