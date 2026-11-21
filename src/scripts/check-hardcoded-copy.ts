@@ -20,6 +20,7 @@ const SCANNED = [
   'src/features/engagement/components',
   'src/features/membership/components',
   'src/features/governance/components',
+  'src/features/auth/components',
   'src/pages/public',
 ];
 const COPY_ATTRIBUTES = new Set(['alt', 'title', 'placeholder', 'aria-label', 'label']);

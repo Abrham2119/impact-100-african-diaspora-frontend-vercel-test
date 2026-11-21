@@ -16,7 +16,7 @@ const navItem = (item: NavItem, toPath: ToPath): NavItem => ({
   ...(item.menu ? { menu: menu(item.menu, toPath) } : {}),
 });
 
-const links = (list: ChromeLink[], toPath: ToPath) => list.map((l) => (l.external ? l : link(l, toPath)));
+const links = <L extends ChromeLink>(list: L[], toPath: ToPath): L[] => list.map((l) => (l.external ? l : link(l, toPath)));
 
 export function localizeChrome(chrome: PublicChrome, toPath: ToPath): PublicChrome {
   const { nav, footer } = chrome;

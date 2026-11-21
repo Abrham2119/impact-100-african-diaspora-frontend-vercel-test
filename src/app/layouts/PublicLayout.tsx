@@ -6,6 +6,9 @@ import { localizeChrome } from '@/features/content/lib/localizeChrome';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { useRouteHandle } from '@/app/routes/routeHandle';
+import { menuAudiencesFor } from '@/domain/rules/access';
+import { landingFor } from '@/features/auth/lib/resolveLanding';
+import { useAuthStore } from '@/store/authStore';
 
 // Public website layout (README "Four layouts" #1): top info bar + main menu with mega menus,
 // the page's breadcrumb banner, the page, the footer with the newsletter sign-up and the
@@ -22,7 +25,20 @@ export function PublicLayout() {
   const pageKey = handle?.pageKey === 'home' ? undefined : handle?.pageKey;
   const { data: banner } = usePageBanner(pageKey, locale);
 
-  const localized = useMemo(() => localizeChrome(chrome, toPath), [chrome, toPath]);
+  const session = useAuthStore((s) => s.session);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  // The account menu by role (FE-7): links filtered by audience; signed in, the icon opens the landing.
+  const localized = useMemo(() => {
+    const base = localizeChrome(chrome, toPath);
+    const viewer = isAuthenticated ? session : null;
+    const audiences = menuAudiencesFor(viewer && { platformRole: viewer.platformRole, roles: viewer.roles });
+    const account = {
+      label: viewer ? t('shell.account') : base.nav.account.label,
+      to: viewer ? landingFor(viewer) : base.nav.account.to,
+      links: base.nav.account.links.filter((link) => link.audience.some((a) => audiences.includes(a))),
+    };
+    return { ...base, nav: { ...base.nav, account } };
+  }, [chrome, toPath, session, isAuthenticated, t]);
   const languages = useMemo(() => locales.map((l) => ({ value: l.code, label: l.nativeName })), [locales]);
   const trail = useMemo(
     // an empty href marks the current page (plain text, aria-current)

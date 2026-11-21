@@ -2,6 +2,7 @@
 // These are the shapes the CMS serves for the navigation menus, the top bar and the footer.
 // Every label is already resolved for the current locale; `to` is an in-app path (or an
 // external URL when `external` is set). Framework-free: no React types here.
+import type { MenuAudience } from './session.types';
 
 export interface CmsImageRef {
   src: string;
@@ -12,6 +13,11 @@ export interface ChromeLink {
   label: string;
   to: string;
   external?: boolean;
+}
+
+/** An account-menu link, shown to the viewers in `audience` (FE-7: by role). */
+export interface AccountLink extends ChromeLink {
+  audience: MenuAudience[];
 }
 
 /** Social profile link: icon-only, so the label is the accessible name. */
@@ -71,7 +77,7 @@ export interface PublicNav {
   brand: { to: string; logo: CmsImageRef };
   items: NavItem[];
   ctas: HeaderCta[];
-  account: { label: string; to: string; links: ChromeLink[] };
+  account: { label: string; to: string; links: AccountLink[] };
 }
 
 export interface FooterStat {

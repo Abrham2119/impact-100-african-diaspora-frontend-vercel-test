@@ -26,6 +26,25 @@ const common = {
   'shell.logout': 'Log out',
   'shell.website': 'Website',
   'shell.portal': 'Portal',
+  // demo role switcher (mock data only, not product UI)
+  'demo.button': 'Demo users',
+  'demo.as': 'Demo: {role}',
+  'demo.title': 'Sign in as a demo user',
+  'demo.note': 'Mock data only. Two-step is treated as passed.',
+  'demo.signOut': 'sign out',
+  'demo.reset': 'reset demo data',
+  'demo.role.member': 'Member',
+  'demo.role.voting': 'Voting member',
+  'demo.role.reviewer': 'Reviewer',
+  'demo.role.hub': 'Hub co-Ambassador',
+  'demo.role.editor': 'Editor',
+  'demo.role.finance': 'Finance',
+  'demo.role.admin': 'Chapter admin',
+  'demo.role.super': 'Super admin',
+  'demo.role.supporter': 'Donor · volunteer',
+  'demo.inbox': 'Demo inbox',
+  'demo.inboxLink': 'Open the login link sent to {email}',
+  'demo.inboxNone': 'No demo account uses {email}, so no link was sent. Try {example}.',
 };
 
 const portal = {

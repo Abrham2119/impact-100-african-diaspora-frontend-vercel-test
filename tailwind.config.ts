@@ -29,6 +29,7 @@ export default {
     '!./src/features/engagement/components/**',
     '!./src/features/membership/components/**',
     '!./src/features/governance/components/**',
+    '!./src/features/auth/components/**',
   ],
   theme: {
     extend: {
