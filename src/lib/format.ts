@@ -32,3 +32,9 @@ export function formatMonthDay(monthDay: string, locale: string): string {
   const [month, day] = monthDay.split('-').map(Number);
   return new Intl.DateTimeFormat(locale, { month: 'long', day: 'numeric', timeZone: 'UTC' }).format(new Date(Date.UTC(2000, month - 1, day)));
 }
+
+/** "2027-02-15" → "Feb 15" (en): day and short month, no year. */
+export function formatDayMonth(isoDate: string, locale: string): string {
+  const [year, month, day] = isoDate.split('-').map(Number);
+  return new Intl.DateTimeFormat(locale, { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(new Date(Date.UTC(year, month - 1, day)));
+}

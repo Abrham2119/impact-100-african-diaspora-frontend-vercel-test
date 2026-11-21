@@ -79,3 +79,4 @@ export { AuthCard } from './blocks/AuthCard';
 // Portal / admin blocks (FE-8)
 export { Panel, StatRow } from './portal/Panel';
 export type { StatItem } from './portal/Panel';
+export { Modal } from './primitives/Modal';

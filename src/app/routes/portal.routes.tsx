@@ -9,12 +9,18 @@ import type { ComponentType } from 'react';
 import { ScreenPlaceholder } from '@/pages/ScreenPlaceholder';
 import { DashboardPage } from '@/features/portal/components/DashboardPage';
 import { HistoryPage } from '@/features/portal/components/HistoryPage';
+import { ProposalPage } from '@/features/portal/components/ProposalPage';
+import { ReceiptPage } from '@/features/portal/components/ReceiptPage';
+import { VotePage } from '@/features/portal/components/VotePage';
 import { PATHS } from './paths';
 
 // The built screens by design screen name (FE-8); the rest keep the placeholder until their batch lands.
 const PAGES: Record<string, ComponentType> = {
   portal: DashboardPage,
   portal_history: HistoryPage,
+  portal_vote: VotePage,
+  portal_proposal: ProposalPage,
+  portal_receipt: ReceiptPage,
 };
 
 // /portal/* — member portal, screens 40–55 (ARCHITECTURE.md §4). Signed-in users only;
