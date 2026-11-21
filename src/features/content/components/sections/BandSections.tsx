@@ -4,6 +4,7 @@ import { submissionStorage } from '@/infrastructure/storage/submission.storage';
 import { useCountUp } from '@/hooks/useCountUp';
 import { useMarqueeDuration } from '@/hooks/useMarqueeDuration';
 import { cx } from '@/lib/classes';
+import { useT } from '@/i18n/useT';
 import type { SectionData } from '../../schemas/defineSection';
 import { portfolios, type band, type counterBand, type ctaBand, type statusCard, type textMarquee } from '../../schemas/sectionTypes';
 import { useSectionEntries } from '../../hooks/useSectionEntries';
@@ -134,6 +135,7 @@ function CountUpBand({ section }: { section: Counter }) {
 }
 
 function PortfolioBand({ section }: { section: Counter }) {
+  const t = useT('site');
   const source = section.settings.source ?? { collection: portfolios.key };
   const { entries, isPending, isError, refetch } = useSectionEntries(portfolios, source);
   return (
@@ -149,7 +151,7 @@ function PortfolioBand({ section }: { section: Counter }) {
                   <>
                     <b>{entry.fields.name}</b>
                     <br />
-                    {entry.fields.flagship}
+                    {t('portfolio.flagship', { name: entry.fields.flagship })}
                   </>
                 }
               />

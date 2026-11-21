@@ -189,6 +189,13 @@ const site = {
   'news.comments': '{count} Comments',
   'news.categoryCount': '({count})',
   'gift.monthly': '{amount} a month · {portfolio} · {country}',
+  'portfolio.flagship': 'Flagship: {name}',
+  'grants.hubLabel': '{name} hub — capital {capital}',
+  'grants.hubCaption': '{name} hub · {capital}',
+  'grants.otherHub': 'Or choose any other USAFI hub',
+  'grants.chooseCountry': 'Choose a country',
+  'grants.where': '{capital}, {country} · {amount}',
+  'grants.proposalKicker': '{country} · {portfolio} · {flagship}',
 };
 
 // Public form microcopy (Step 6): field labels, placeholders and error messages. Errors are the

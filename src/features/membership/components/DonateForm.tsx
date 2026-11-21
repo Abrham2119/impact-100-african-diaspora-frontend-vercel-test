@@ -199,7 +199,7 @@ export function DonateForm({ section }: { section: FormBlockData }) {
                         key={option.key}
                         on={option.key === fund?.key}
                         title={option.fields.name}
-                        sub={option.fields.flagship}
+                        sub={tf('donate.flagship', { name: option.fields.flagship })}
                         onClick={() => setFund(option.key)}
                       />
                     ))}

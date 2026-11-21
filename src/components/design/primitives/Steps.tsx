@@ -11,6 +11,8 @@ export interface FlowStep {
   num: ReactNode;
   title: ReactNode;
   text?: ReactNode;
+  /** replaces the `.ix_num` circle (the dated roadmap shows an `.ix_badge` instead) */
+  marker?: ReactNode;
 }
 
 export interface FlowStepsProps {
@@ -24,7 +26,7 @@ export function FlowSteps({ steps, variant = 'default', className }: FlowStepsPr
     <ol className={cx('ix_flow', variant === 'compact' && 'ix_flow_2', className)}>
       {steps.map((step) => (
         <li key={step.id}>
-          <span className="ix_num">{step.num}</span>
+          {step.marker ?? <span className="ix_num">{step.num}</span>}
           <b>{step.title}</b>
           {step.text !== undefined && <p>{step.text}</p>}
         </li>
@@ -68,15 +70,15 @@ export interface TimelineItem {
   done?: boolean;
 }
 
-export function Timeline({ items, className }: { items: TimelineItem[]; className?: string }) {
+export function Timeline({ items, className, as: List = 'ol' }: { items: TimelineItem[]; className?: string; as?: 'ol' | 'ul' }) {
   return (
-    <ol className={cx('ix_timeline', className)}>
+    <List className={cx('ix_timeline', className)}>
       {items.map((item) => (
         <li key={item.id} className={cx(item.done && 'ix_done')}>
           <b>{item.title}</b>
           {item.text !== undefined && <p>{item.text}</p>}
         </li>
       ))}
-    </ol>
+    </List>
   );
 }

@@ -73,3 +73,5 @@ export { CampaignGallery } from './blocks/CampaignGallery';
 export type { CampaignGalleryProps } from './blocks/CampaignGallery';
 export { CheckField, KeyValueList, OptionButton, OptionGroup } from './primitives/Options';
 export type { OptionButtonProps } from './primitives/Options';
+export { AfricaMap } from './blocks/AfricaMap';
+export type { AfricaMapProps } from './blocks/AfricaMap';

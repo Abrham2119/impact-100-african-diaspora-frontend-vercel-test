@@ -1,4 +1,4 @@
-import { FlowSteps } from '@/components/design';
+import { Badge, FlowSteps } from '@/components/design';
 import type { SectionData } from '../../schemas/defineSection';
 import type { flowSteps } from '../../schemas/sectionTypes';
 import { SectionHeadingRow } from './shared';
@@ -14,7 +14,15 @@ export function FlowStepsSection({ section }: { section: SectionData<typeof flow
         <div className="row mt_50">
           <div className="col-12">
             {fields.list_kicker !== undefined && <p className="ix_kicker ixd_mb16">{fields.list_kicker}</p>}
-            <FlowSteps steps={items.map((item) => ({ id: item.id, num: item.fields.num, title: item.fields.title, text: item.fields.text }))} />
+            <FlowSteps
+              steps={items.map((item) => ({
+                id: item.id,
+                num: item.fields.num,
+                title: item.fields.title,
+                text: item.fields.text,
+                marker: item.settings.badge_kind ? <Badge kind={item.settings.badge_kind}>{item.fields.num}</Badge> : undefined,
+              }))}
+            />
           </div>
         </div>
       </div>

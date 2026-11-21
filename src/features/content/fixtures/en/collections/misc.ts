@@ -1,3 +1,4 @@
+import { rich } from '../../builders';
 import { entry, img, link, video } from '../build';
 import { campaignDescriptionEn } from '../rich/campaignDescription';
 import { newsBodyAfterQuoteEn, newsBodyBeforeQuoteEn } from '../rich/detailBodies';
@@ -18,12 +19,27 @@ export const campaignCategoriesEn = CAT.map(([image, name]) =>
   entry(name.toLowerCase().replace(/\s+/g, '-'), { slug: name.toLowerCase().replace(/\s+/g, '-'), fields: { name }, media: { image: img(image, 'category') } }),
 );
 
-// C:portfolios — USAFI's four funding portfolios (about_us.dc.html counter band; later grants/donate).
+// C:portfolios — USAFI's four funding portfolios (about_us counter band, donate, grants cards).
+// `flagship` is the bare name; "Flagship: …" is UiStrings `site.portfolio.flagship`.
+const focus = (text: string) => [rich.p(`${text} Hub focus: `, rich.b('{hub}'), '.')];
+const volunteerFor = (label: string) => link(label, '/volunteer?area=usafi');
 export const portfoliosEn = [
-  entry('diaspora-engagement', { fields: { name: 'Diaspora Engagement', flagship: 'Flagship: Impact 100' }, data: { icon: 'projects' } }),
-  entry('academic-partnerships', { fields: { name: 'Academic Partnerships', flagship: 'Flagship: Victoria Falls Summit' }, data: { icon: 'team' } }),
-  entry('youth-women-entrepreneurship', { fields: { name: 'Youth & Women Entrepreneurship', flagship: 'Flagship: To be announced' }, data: { icon: 'reviews' } }),
-  entry('sustainable-development', { fields: { name: 'Sustainable Development', flagship: 'Flagship: THRIVE Africa Network projects' }, data: { icon: 'awards' } }),
+  entry('diaspora-engagement', {
+    fields: { name: 'Diaspora Engagement', flagship: 'Impact 100', focus: focus('Flagship of diaspora engagement.'), volunteer_link: volunteerFor('Volunteer for Impact 100 →') },
+    data: { icon: 'projects' },
+  }),
+  entry('academic-partnerships', {
+    fields: { name: 'Academic Partnerships', flagship: 'Victoria Falls Summit', focus: focus('Flagship of academic partnerships.'), volunteer_link: volunteerFor('Volunteer for Victoria Falls Summit →') },
+    data: { icon: 'team' },
+  }),
+  entry('youth-women-entrepreneurship', {
+    fields: { name: 'Youth & Women Entrepreneurship', flagship: 'To be announced', focus: focus('Flagship of youth & women entrepreneurship.'), volunteer_link: volunteerFor('Volunteer for this portfolio →') },
+    data: { icon: 'reviews' },
+  }),
+  entry('sustainable-development', {
+    fields: { name: 'Sustainable Development', flagship: 'THRIVE Africa Network projects', focus: focus('Flagship of sustainable development.'), volunteer_link: volunteerFor('Volunteer for THRIVE Africa Network projects →') },
+    data: { icon: 'awards' },
+  }),
 ];
 
 // C:news — the 4 stories of /news (blogs.dc.html). Home "Latest News" shows the latest 3 (decision of Step 5).

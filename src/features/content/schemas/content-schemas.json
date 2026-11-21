@@ -1994,7 +1994,21 @@
             "properties": {
               "settings": {
                 "type": "object",
-                "properties": {},
+                "properties": {
+                  "badge_kind": {
+                    "type": "string",
+                    "enum": [
+                      "neutral",
+                      "ok",
+                      "warn",
+                      "info",
+                      "accent",
+                      "bad"
+                    ],
+                    "default": "neutral",
+                    "x-kind": "enum"
+                  }
+                },
                 "required": [],
                 "additionalProperties": false
               },
@@ -2048,8 +2062,7 @@
                 "join",
                 "donate",
                 "cancel_gift",
-                "eligibility",
-                "hub_map"
+                "eligibility"
               ],
               "default": "contact",
               "x-kind": "enum"
@@ -2745,6 +2758,452 @@
           }
         }
       }
+    },
+    "hub_map": {
+      "title": "hub_map",
+      "type": "object",
+      "properties": {
+        "settings": {
+          "type": "object",
+          "properties": {
+            "default_hub": {
+              "type": "string",
+              "x-kind": "string"
+            }
+          },
+          "required": [
+            "default_hub"
+          ],
+          "additionalProperties": false
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "kicker": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "lead": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "map_label": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "region_north": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "region_sub_saharan": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "legend_north": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "legend_hub": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "legend_mine": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "boundaries_note": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "list_kicker": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "country_title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "country_body": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "country_actions": {
+              "$ref": "#/definitions/LocalizedLinkList",
+              "x-kind": "link_list"
+            },
+            "interest_label": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "projects_kicker": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "roles_kicker": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "role_title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "role_where": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "role_link": {
+              "$ref": "#/definitions/LocalizedLink",
+              "x-kind": "link"
+            },
+            "saved_title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "saved_body": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "unsaved_title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "unsaved_body": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "cta": {
+              "$ref": "#/definitions/LocalizedLink",
+              "x-kind": "link"
+            }
+          },
+          "required": [
+            "map_label",
+            "region_north",
+            "region_sub_saharan",
+            "legend_north",
+            "legend_hub",
+            "legend_mine",
+            "list_kicker",
+            "country_title",
+            "country_body",
+            "interest_label",
+            "projects_kicker",
+            "roles_kicker",
+            "role_title",
+            "role_where",
+            "role_link",
+            "saved_title",
+            "saved_body",
+            "unsaved_title",
+            "unsaved_body"
+          ],
+          "additionalProperties": false
+        },
+        "media": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    "split_feature": {
+      "title": "split_feature",
+      "type": "object",
+      "properties": {
+        "settings": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "lead": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "actions": {
+              "$ref": "#/definitions/LocalizedLinkList",
+              "x-kind": "link_list"
+            },
+            "card_kicker": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "card_note": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            }
+          },
+          "required": [
+            "title"
+          ],
+          "additionalProperties": false
+        },
+        "media": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "settings": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              },
+              "fields": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "$ref": "#/definitions/LocalizedText",
+                    "x-kind": "text"
+                  },
+                  "text": {
+                    "$ref": "#/definitions/LocalizedText",
+                    "x-kind": "text"
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "media": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "portfolio_cards": {
+      "title": "portfolio_cards",
+      "type": "object",
+      "properties": {
+        "settings": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "$ref": "#/definitions/CollectionSource",
+              "default": {
+                "collection": "portfolios"
+              },
+              "x-kind": "collection_ref"
+            },
+            "default_hub": {
+              "type": "string",
+              "x-kind": "string"
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "kicker": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "lead": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "no_hub": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            }
+          },
+          "required": [
+            "no_hub"
+          ],
+          "additionalProperties": false
+        },
+        "media": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    "plan_pair": {
+      "title": "plan_pair",
+      "type": "object",
+      "properties": {
+        "settings": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "left_kicker": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "left_title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "right_kicker": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "right_title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "badges_title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "note": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            }
+          },
+          "required": [
+            "left_kicker",
+            "left_title",
+            "right_kicker",
+            "right_title"
+          ],
+          "additionalProperties": false
+        },
+        "media": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "settings": {
+                "type": "object",
+                "properties": {
+                  "done": {
+                    "type": "boolean",
+                    "default": false,
+                    "x-kind": "boolean"
+                  }
+                },
+                "required": [],
+                "additionalProperties": false
+              },
+              "fields": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "$ref": "#/definitions/LocalizedText",
+                    "x-kind": "text"
+                  },
+                  "text": {
+                    "$ref": "#/definitions/LocalizedText",
+                    "x-kind": "text"
+                  }
+                },
+                "required": [
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              "media": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "proposals_list": {
+      "title": "proposals_list",
+      "type": "object",
+      "properties": {
+        "settings": {
+          "type": "object",
+          "properties": {
+            "default_hub": {
+              "type": "string",
+              "x-kind": "string"
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "fields": {
+          "type": "object",
+          "properties": {
+            "kicker": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "lead": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "your_hub": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "requested": {
+              "$ref": "#/definitions/LocalizedRichText",
+              "x-kind": "rich_text"
+            },
+            "read_link": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            }
+          },
+          "required": [
+            "your_hub",
+            "requested",
+            "read_link"
+          ],
+          "additionalProperties": false
+        },
+        "media": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
     }
   },
   "collections": {
@@ -3103,6 +3562,14 @@
             "flagship": {
               "$ref": "#/definitions/LocalizedText",
               "x-kind": "text"
+            },
+            "focus": {
+              "$ref": "#/definitions/LocalizedRichText",
+              "x-kind": "rich_text"
+            },
+            "volunteer_link": {
+              "$ref": "#/definitions/LocalizedLink",
+              "x-kind": "link"
             }
           },
           "required": [

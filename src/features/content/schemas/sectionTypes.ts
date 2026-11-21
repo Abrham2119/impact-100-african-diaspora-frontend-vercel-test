@@ -289,10 +289,65 @@ export const statusCard = defineSection('status_card', {
   settings: { icon: s.string(), summary_key: o(s.string()) },
 });
 
-/** `ol.ix_flow` numbered steps (nonprofits "How it works", grants roadmap). */
+/** `ol.ix_flow` numbered steps (nonprofits "How it works", grants roadmaps); with `badge_kind` the
+ * step's `num` shows as a badge (the dated roadmap). */
 export const flowSteps = defineSection('flow_steps', {
   fields: { ...heading, list_kicker: o(f.text()) },
-  item: { fields: { num: f.text(), title: f.text(), text: o(f.text()) } },
+  item: { fields: { num: f.text(), title: f.text(), text: o(f.text()) }, settings: { badge_kind: o(s.enumOf(BADGE_KINDS, 'neutral')) } },
+});
+
+/** grants: the Africa map + hub panel. The selected hub is `?hub=` (shared with the sections below). */
+export const hubMap = defineSection('hub_map', {
+  fields: {
+    ...heading,
+    map_label: f.text(),
+    region_north: f.text(),
+    region_sub_saharan: f.text(),
+    legend_north: f.text(),
+    legend_hub: f.text(),
+    legend_mine: f.text(),
+    boundaries_note: o(f.text()),
+    list_kicker: f.text(),
+    country_title: f.text(),
+    country_body: f.text(),
+    country_actions: o(f.links()),
+    interest_label: f.text(),
+    projects_kicker: f.text(),
+    roles_kicker: f.text(),
+    role_title: f.text(),
+    role_where: f.text(),
+    role_link: f.link(),
+    saved_title: f.text(),
+    saved_body: f.text(),
+    unsaved_title: f.text(),
+    unsaved_body: f.text(),
+    cta: o(f.link()),
+  },
+  settings: { default_hub: s.string() },
+});
+
+/** grants "How grants are selected": heading + text + button beside a card of rubric rows. */
+export const splitFeature = defineSection('split_feature', {
+  fields: { title: f.text(), lead: o(f.text()), actions: o(f.links()), card_kicker: o(f.text()), card_note: o(f.text()) },
+  item: { fields: { title: f.text(), text: o(f.text()) } },
+});
+
+/** grants "Each portfolio and its flagship": C:portfolios cards with the selected hub (`{hub}`). */
+export const portfolioCards = defineSection('portfolio_cards', {
+  fields: { ...heading, no_hub: f.text() },
+  settings: { source: s.source('portfolios'), default_hub: o(s.string()) },
+});
+
+/** grants work plan + selection process: two cards. Item `type`: milestone | step | badge. */
+export const planPair = defineSection('plan_pair', {
+  fields: { left_kicker: f.text(), left_title: f.text(), right_kicker: f.text(), right_title: f.text(), badges_title: o(f.text()), note: o(f.text()) },
+  item: { fields: { title: f.text(), text: o(f.text()) }, settings: { done: s.bool(false) } },
+});
+
+/** grants "Proposals members are reading now" (`GET /proposals/public`), the selected hub first. */
+export const proposalsList = defineSection('proposals_list', {
+  fields: { ...heading, your_hub: f.text(), requested: f.rich(), read_link: f.text() },
+  settings: { default_hub: o(s.string()) },
 });
 
 /** The interactive forms and widgets, by key (formRegistry). */
@@ -305,7 +360,6 @@ export const FORM_KEYS = [
   'donate',
   'cancel_gift',
   'eligibility',
-  'hub_map',
 ] as const;
 
 /**
@@ -395,6 +449,11 @@ export const SECTION_TYPES = [
   hubPlan,
   eventDetail,
   newsDetail,
+  hubMap,
+  splitFeature,
+  portfolioCards,
+  planPair,
+  proposalsList,
 ] as const;
 
 export type SectionTypeName = (typeof SECTION_TYPES)[number]['type'];
@@ -462,7 +521,8 @@ export const committees = defineCollection('committees', {
 });
 
 export const portfolios = defineCollection('portfolios', {
-  fields: { name: f.text(), flagship: f.text() },
+  /** `focus`: the grants card text, `{hub}` = the selected hub; `volunteer_link`: its call to action */
+  fields: { name: f.text(), flagship: f.text(), focus: o(f.rich()), volunteer_link: o(f.link()) },
   data: { icon: s.enumOf(COUNTER_ICONS, 'projects') },
 });
 

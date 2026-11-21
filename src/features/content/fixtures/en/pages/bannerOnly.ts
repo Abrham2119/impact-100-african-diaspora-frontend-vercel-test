@@ -3,9 +3,8 @@ import type { PageTreeDto } from '@/types/content.dto';
 import { page } from '../build';
 import { banner } from './banner';
 
-// Pages whose body lands in a later step (public pages B in Step 6, auth screens): for now their
-// page tree holds only the breadcrumb banner and the SEO title, copied verbatim from each snapshot.
-const P = PATHS.public;
+// The auth screens (bodies in Step 14): for now their page tree holds only the breadcrumb banner and
+// the SEO title, copied verbatim from each snapshot. Every public page has its full tree (Steps 5–6).
 const A = PATHS.auth;
 const signIn: [string, string] = ['Member login', A.signIn];
 
@@ -18,7 +17,6 @@ const only = (
 ): [string, PageTreeDto] => [key, page(key, path, { title: `Impact100 — ${seoTitle}` }, [banner(title, trail)])];
 
 export const bannerOnlyPagesEn: Record<string, PageTreeDto> = Object.fromEntries([
-  only('grants', P.grants, 'Grants', 'Grants & the Africa map', ['Grants']),
   only('auth_sign_in', A.signIn, 'Sign in', 'Member login', ['Member login']),
   only('auth_sign_up', A.signUp, 'Sign up', 'sign up', ['sign up']),
   only('auth_forgot', A.forgotPassword, 'Forgot password', 'forgot password', ['forgot password']),

@@ -11,14 +11,17 @@ export interface ResultBoxProps {
   title: ReactNode;
   /** paragraph text under the title */
   children?: ReactNode;
+  /** content after the paragraph, inside the box (e.g. a button row) */
+  extra?: ReactNode;
   className?: string;
 }
 
-export function ResultBox({ kind, title, children, className }: ResultBoxProps) {
+export function ResultBox({ kind, title, children, extra, className }: ResultBoxProps) {
   return (
     <div className={cx('ix_result', `ix_${kind}`, className)} role={kind === 'bad' ? 'alert' : 'status'}>
       <h4>{title}</h4>
       {children !== undefined && <p>{children}</p>}
+      {extra}
     </div>
   );
 }

@@ -16,6 +16,7 @@ import { DecisionTableSection, LegalTextSection } from './sections/DocumentSecti
 import { FaqSection } from './sections/FaqSection';
 import { FlowStepsSection } from './sections/FlowStepsSection';
 import { FormBlockSection } from './sections/FormBlockSection';
+import { HubMapSection, PlanPairSection, PortfolioCardsSection, ProposalsListSection, SplitFeatureSection } from './sections/GrantsSections';
 import { HeroSliderSection } from './sections/HeroSliderSection';
 import { DonorListSection, PhotoGallerySection, VideoGallerySection } from './sections/ListSections';
 import { NewsListSection } from './sections/NewsListSection';
@@ -88,6 +89,11 @@ const REGISTRY = new Map<string, SectionRenderer>([
   entry(T.hubPlan, HubPlanSection),
   entry(T.eventDetail, EventDetailSection),
   entry(T.newsDetail, NewsDetailSection),
+  entry(T.hubMap, HubMapSection),
+  entry(T.splitFeature, SplitFeatureSection),
+  entry(T.portfolioCards, PortfolioCardsSection),
+  entry(T.planPair, PlanPairSection),
+  entry(T.proposalsList, ProposalsListSection),
 ]);
 
 /** Section types rendered outside the page body (the layout draws the banner). */
