@@ -242,3 +242,19 @@
 .ixd_demo_user { display: flex; justify-content: space-between; gap: 10px; width: 100%; padding: 8px 0; border: 0; border-bottom: 1px dashed #ece6da; background: transparent; text-align: left; color: var(--colorBlack); }
 .ixd_demo_user[aria-pressed='true'] b, .ixd_demo_user:hover b { color: var(--colorPrimary); }
 .ixd_demo_user span { color: var(--ixMuted); font-size: 13px; }
+
+/* Admin console (FE-9): sortable table headers look exactly like the design's header text */
+.ixd_th_sort {
+  background: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font: inherit !important;
+  color: inherit !important;
+  letter-spacing: inherit !important;
+  text-transform: inherit !important;
+  text-align: inherit !important;
+  cursor: pointer;
+}
+.ixd_th_sort:focus-visible { outline: 2px solid var(--colorPrimary); outline-offset: 2px; }
+.ixd_sort_icon { margin-left: 6px; font-size: 11px; }

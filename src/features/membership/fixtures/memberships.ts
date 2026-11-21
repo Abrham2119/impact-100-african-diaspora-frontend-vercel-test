@@ -3,9 +3,10 @@ import type { Contribution, MembershipRecord } from '@/domain/entities/membershi
 // Members' 2026–27 memberships and payments (portal.dc.html, portal_history.dc.html).
 // Amara Mensah's are the design's data: Investor pledge of $1,000 in 6 installments (5 × $170 +
 // $150), three paid ($510 received), two $25 monthly donations. The other members are minimal
-// records derived from admin › People (FE-8 decision, sample data): David Otieno $250 paid
-// (Initiator — the design's "$250 member"), Wanjiru Kamau and Kofi Boateng $1,000 paid in full.
-// Grace Mwale (donor · volunteer) has donations only.
+// records derived from admin › People and the admin ledger (FE-8/FE-9 decisions, sample data):
+// David Otieno — $300 by cheque on Nov 28 against an Incubator $500 pledge (Initiator, no vote);
+// Wanjiru Kamau — $1,100 on Nov 27 for a $1,000 pledge ($100 overpaid, flagged); Kofi Boateng —
+// $1,000 paid in full. Grace Mwale (donor · volunteer) has donations only.
 const inst = (userId: string, seq: number, dueOn: string, cents: number, status: MembershipRecord['installments'][number]['status']) => ({
   id: `${userId}-i${seq}`,
   seq,
@@ -15,14 +16,14 @@ const inst = (userId: string, seq: number, dueOn: string, cents: number, status:
   ...(status === 'PAID' ? { paidOn: dueOn } : {}),
 });
 
-const paidInFull = (userId: string, memberNo: string, levelKey: string, cents: number): MembershipRecord => ({
+const paidInFull = (userId: string, memberNo: string, levelKey: string, cents: number, paidOn = '2026-10-01'): MembershipRecord => ({
   userId,
   campaignSlug: '2026-27',
   memberNo,
   pledgeLevelKey: levelKey,
   pledgeCents: cents,
   validThru: '03/27',
-  installments: [inst(userId, 1, '2026-10-01', cents, 'PAID')],
+  installments: [inst(userId, 1, paidOn, cents, 'PAID')],
 });
 
 export const MEMBERSHIPS: MembershipRecord[] = [
@@ -42,8 +43,16 @@ export const MEMBERSHIPS: MembershipRecord[] = [
       inst('u-amara', 6, '2027-03-01', 15_000, 'SCHEDULED'),
     ],
   },
-  paidInFull('u-david', 'IMP · 2627 · 0051', 'initiator', 25_000),
-  paidInFull('u-wanjiru', 'IMP · 2627 · 0017', 'investor', 100_000),
+  {
+    userId: 'u-david',
+    campaignSlug: '2026-27',
+    memberNo: 'IMP · 2627 · 0051',
+    pledgeLevelKey: 'incubator',
+    pledgeCents: 50_000,
+    validThru: '03/27',
+    installments: [inst('u-david', 1, '2026-11-28', 30_000, 'PAID'), inst('u-david', 2, '2027-01-28', 20_000, 'DUE')],
+  },
+  { ...paidInFull('u-wanjiru', 'IMP · 2627 · 0017', 'investor', 100_000, '2026-11-27'), overpaidCents: 10_000 },
   paidInFull('u-kofi', 'IMP · 2627 · 0003', 'investor', 100_000),
 ];
 
@@ -74,8 +83,8 @@ export const CONTRIBUTIONS: Record<string, Contribution[]> = {
     donation('u-amara', 'd1', '2026-10-14'),
     installment('u-amara', 1, 6, '2026-10-01', 17_000),
   ],
-  'u-david': [installment('u-david', 1, 1, '2026-10-01', 25_000)],
-  'u-wanjiru': [installment('u-wanjiru', 1, 1, '2026-10-01', 100_000)],
+  'u-david': [installment('u-david', 1, 2, '2026-11-28', 30_000)],
+  'u-wanjiru': [installment('u-wanjiru', 1, 1, '2026-11-27', 100_000)],
   'u-kofi': [installment('u-kofi', 1, 1, '2026-10-01', 100_000)],
-  'u-grace': [donation('u-grace', 'd1', '2026-10-14')],
+  'u-grace': [donation('u-grace', 'd1', '2026-11-30')],
 };

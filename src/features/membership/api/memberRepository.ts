@@ -3,7 +3,9 @@ import { summarizeMembership } from '@/domain/rules/membership';
 import { mockResponse } from '@/infrastructure/api/mock';
 import { currentMockUserId } from '@/infrastructure/mock/currentUser';
 import { createMockStore } from '@/infrastructure/mock/mockStore';
+import { profileMockStore } from '@/features/profile/api/profileRepository';
 import { CONTRIBUTIONS, MEMBERSHIPS } from '../fixtures/memberships';
+import { appendLedger } from './ledgerStore';
 import { settingsService } from './settingsService';
 
 // The signed-in member's own membership (backend §4.7 `me/membership`, `me/installments`,
@@ -16,6 +18,8 @@ export interface MemberRepository {
   contributions(): Promise<Contribution[]>;
   payNextInstallment(): Promise<{ amountCents: number } | null>;
 }
+
+const profileName = (userId: string) => profileMockStore.read().profiles.find((p) => p.userId === userId)?.fullName ?? '';
 
 const store = createMockStore('membership', () => ({ memberships: MEMBERSHIPS, contributions: CONTRIBUTIONS }));
 /** how long the mock WAZIImpact.org takes to confirm a payment */
@@ -31,6 +35,19 @@ const confirm = (userId: string, installmentId: string) =>
     item.paidOn = today;
     const nextDue = record.installments.filter((i) => i.status === 'SCHEDULED').sort((a, b) => a.seq - b.seq)[0];
     if (nextDue) nextDue.status = 'DUE';
+    appendLedger({
+      date: today,
+      personId: userId,
+      personName: profileName(userId),
+      kind: 'PLEDGE',
+      countryKey: null,
+      portfolioKey: null,
+      amountCents: item.amountCents,
+      source: 'WAZI',
+      recordedBy: null,
+      reason: null,
+      status: 'CONFIRMED',
+    });
     const list = (db.contributions[userId] ??= []);
     list.unshift({
       id: `${userId}-p${item.seq}-${today}`,

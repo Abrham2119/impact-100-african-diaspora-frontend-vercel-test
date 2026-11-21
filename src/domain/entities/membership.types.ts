@@ -17,6 +17,8 @@ export interface MembershipSettings {
   quorumPct: number;
   cycle: { starts: string; ends: string };
   goalCents: number;
+  /** days an amendment circulates before it can go on a ballot */
+  circulationDays?: number;
 }
 
 export interface InstallmentPlan {
@@ -53,6 +55,8 @@ export interface MembershipRecord {
   /** "03/27" — the campaign end on the card */
   validThru: string;
   installments: Installment[];
+  /** received above the pledge — never counted toward it (a finance flag) */
+  overpaidCents?: number;
 }
 
 /** A confirmed payment in the contribution history (membership installments and direct donations). */

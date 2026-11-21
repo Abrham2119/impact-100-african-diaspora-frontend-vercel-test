@@ -21,9 +21,15 @@ export function isAdminAudience(user: Pick<SessionUser, 'platformRole' | 'roles'
   return user.platformRole === 'SUPER_ADMIN' || has(user.roles, ADMIN_CONSOLE_ROLES);
 }
 
-/** The union of the roles' default grants (§6.3). Super admin bypasses checks in the store. */
+/** Where a role's grants come from: the default matrix, or the edited one (admin › Permission matrix). */
+let rolePermissions: (role: ChapterRoleName) => Permission[] = (role) => ROLE_PERMISSIONS[role];
+export function setRolePermissionSource(source: (role: ChapterRoleName) => Permission[]): void {
+  rolePermissions = source;
+}
+
+/** The union of the roles' grants (§6.3). Super admin bypasses checks in the store. */
 export function permissionsFor(roles: ChapterRole[]): Permission[] {
-  return [...new Set(roles.flatMap((r) => ROLE_PERMISSIONS[r.role]))];
+  return [...new Set(roles.flatMap((r) => rolePermissions(r.role)))];
 }
 
 /** The account-menu audiences a viewer belongs to (signed out → login + join; by role once signed in). */

@@ -496,6 +496,7 @@ const admin = {
   root: 'Admin console',
   // shell (admin.dc.html sidebar status line)
   'status.mfa': '{role} · two-step on',
+  'pill.ballot': 'Grant ballot opens {date} · Manage ballots',
   'role.CHAPTER_ADMIN': 'Chapter admin',
   'role.USAFI_FINANCE': 'USAFI finance',
   'role.CONTENT_EDITOR': 'Content Editor',

@@ -3,6 +3,8 @@ import { requiresTwoFactor } from '@/domain/rules/access';
 import { PATHS } from '@/app/routes/paths';
 import { mockReference, mockResponse } from '@/infrastructure/api/mock';
 import { authStorage } from '@/infrastructure/storage/auth.storage';
+import { directoryAccount, directoryOnlyAccounts } from '@/features/admin/api/adminMockStore';
+import '@/features/admin/api/permissionMatrix';
 import { DEMO_USERS } from '../fixtures/demoUsers';
 import { AuthError, type AuthRepository, type SignInResult, type TwoFactorSetup } from './authRepository';
 
@@ -54,7 +56,12 @@ function update(change: (state: MockAuthState) => void): MockAuthState {
   return state;
 }
 
-const allAccounts = (state: MockAuthState): SessionUser[] => [...DEMO_USERS.map((d) => d.user), ...state.accounts];
+/** Demo users as the admin directory has them now (granted roles, disabled access), people added
+ * in the admin console, then accounts signed up during the demo. */
+const allAccounts = (state: MockAuthState): SessionUser[] => {
+  const demo = DEMO_USERS.map((d) => directoryAccount(d.user)).filter((u): u is SessionUser => u !== null);
+  return [...demo, ...directoryOnlyAccounts(DEMO_USERS.map((d) => d.user.id)), ...state.accounts];
+};
 const byEmail = (state: MockAuthState, email: string) => allAccounts(state).find((u) => u.email.toLowerCase() === email.trim().toLowerCase());
 const byId = (state: MockAuthState, id: string) => allAccounts(state).find((u) => u.id === id);
 const tokenFor = (user: SessionUser) => `mock.${user.id}.${mockReference('T')}`;
@@ -162,7 +169,8 @@ export const mockAuthTools = {
   /** a full session for a demo user, two-step passed (the role switcher) */
   sessionFor: (key: string) => {
     const demo = DEMO_USERS.find((d) => d.key === key);
-    return demo ? { session: demo.user, token: tokenFor(demo.user), mfa: requiresTwoFactor(demo.user) } : null;
+    const user = demo ? directoryAccount(demo.user) : null;
+    return user ? { session: user, token: tokenFor(user), mfa: requiresTwoFactor(user) } : null;
   },
   reset: () => save(initial()),
 };

@@ -1,4 +1,4 @@
-import type { InstallmentPlan, MembershipLevel, MembershipRecord, MembershipSettings, MembershipSummary } from '@/domain/entities/membership.types';
+import type { Installment, InstallmentPlan, MembershipLevel, MembershipRecord, MembershipSettings, MembershipSummary } from '@/domain/entities/membership.types';
 
 // Membership rules of design-reference/BUSINESS_RULES.md, as pure functions. The thresholds and
 // rounding come from the charter settings (one source), never from literals.
@@ -40,5 +40,44 @@ export function summarizeMembership(record: MembershipRecord, settings: Membersh
     charterUnlocked: receivedCents >= settings.membershipMinimumCents && receivedCents >= record.pledgeCents,
     nextInstallment: open[0] ?? null,
     processing: record.installments.find((i) => i.status === 'PROCESSING') ?? null,
+  };
+}
+
+/**
+ * Applies a payment received outside the schedule (an offline cheque or transfer) to a pledge: it
+ * pays the open installments in order, splitting the last one it reaches; what is left above the
+ * pledge is an overpayment, which never counts toward it (admin_flags).
+ */
+export function applyPayment(
+  record: MembershipRecord,
+  amountCents: number,
+  paidOn: string,
+): { record: MembershipRecord; appliedCents: number; overpaidCents: number } {
+  let left = amountCents;
+  const paid: Installment[] = record.installments.filter((i) => i.status === 'PAID');
+  const open = record.installments.filter((i) => i.status !== 'PAID').sort((a, b) => a.seq - b.seq);
+  const rest: Installment[] = [];
+  for (const item of open) {
+    if (left <= 0 || item.status === 'PROCESSING') {
+      rest.push(item);
+    } else if (left >= item.amountCents) {
+      paid.push({ ...item, status: 'PAID', paidOn });
+      left -= item.amountCents;
+    } else {
+      paid.push({ ...item, id: `${item.id}-part`, amountCents: left, status: 'PAID', paidOn });
+      rest.push({ ...item, amountCents: item.amountCents - left });
+      left = 0;
+    }
+  }
+  const installments = [...paid.sort((a, b) => (a.paidOn ?? a.dueOn).localeCompare(b.paidOn ?? b.dueOn)), ...rest].map((item, index) => ({
+    ...item,
+    seq: index + 1,
+  }));
+  const firstOpen = installments.find((i) => i.status === 'DUE' || i.status === 'SCHEDULED');
+  if (firstOpen && !installments.some((i) => i.status === 'DUE')) firstOpen.status = 'DUE';
+  return {
+    record: { ...record, installments, overpaidCents: (record.overpaidCents ?? 0) + left },
+    appliedCents: amountCents - left,
+    overpaidCents: left,
   };
 }

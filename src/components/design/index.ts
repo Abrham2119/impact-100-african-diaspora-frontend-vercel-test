@@ -17,7 +17,7 @@ export type { FieldProps, SelectOption, SelectProps } from './primitives/Field';
 export { FlowSteps, Stepper, Timeline } from './primitives/Steps';
 export type { FlowStep, FlowStepsProps, StepperProps, TimelineItem } from './primitives/Steps';
 export { Table } from './primitives/Table';
-export type { TableColumn, TableProps } from './primitives/Table';
+export type { TableColumn, TableSort, TableProps } from './primitives/Table';
 export { Accordion } from './primitives/Accordion';
 export type { AccordionItem, AccordionProps } from './primitives/Accordion';
 export { Pagination } from './primitives/Pagination';
