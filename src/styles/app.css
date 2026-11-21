@@ -165,9 +165,9 @@
 .ixd_m2_0 { margin: 2px 0 0 !important; }
 .ixd_mt20 { margin-top: 20px !important; }
 /* grants map legend swatches (grants.dc.html inline backgrounds, verbatim) */
-.ixd_swatch_north { background: #e8dfcf !important; }
-.ixd_swatch_hub { background: #9aa9c6 !important; }
-.ixd_swatch_mine { background: var(--colorPrimary) !important; }
+.ixd_swatch_north { background: var(--ixMapNorth) !important; }
+.ixd_swatch_hub { background: var(--ixMapLand) !important; }
+.ixd_swatch_mine { background: var(--ixMapSelected) !important; }
 /* grants hub list: chips stacked full width, muted capital */
 .ixd_chip_column { margin-top: 12px !important; flex-direction: column !important; align-items: stretch !important; }
 .ixd_fw600 { font-weight: 600 !important; }
@@ -261,3 +261,98 @@
 .ixd_th_sort:focus-visible,
 .ixd_plain_btn:focus-visible { outline: 2px solid var(--colorPrimary); outline-offset: 2px; }
 .ixd_sort_icon { margin-left: 6px; font-size: 11px; }
+
+/* =============================================================================
+   Grants Africa map theme (requested change, overrides impact100-ext.css .ix_map):
+   sand land, the three featured hubs in the primary orange, the selected country
+   dark with a ringed pin, and a custom hover/focus tooltip.
+   ========================================================================== */
+:root {
+  --ixMapNorth: #e8dfcf;
+  --ixMapLand: #e2d4c0;
+  --ixMapLandHover: #d4c0a4;
+  --ixMapHub: var(--colorPrimary);
+  --ixMapSelected: var(--colorBlack);
+  --ixMapStroke: var(--colorWhite);
+  --ixMapTipBg: var(--colorBlack);
+  --ixMapTipText: var(--colorWhite);
+  --ixMapTipMuted: rgba(255, 255, 255, 0.72);
+  --ixMapTipShadow: 0 12px 30px rgba(17, 17, 17, 0.22);
+}
+
+.ixd_map_canvas { position: relative; }
+
+.ix_map .ix_north { fill: var(--ixMapNorth); }
+.ix_map .ix_country,
+.ix_map .ix_hub { stroke: var(--ixMapStroke); stroke-width: 0.8; cursor: pointer; transition: fill 0.2s, filter 0.2s; }
+.ix_map .ix_country { fill: var(--ixMapLand); }
+.ix_map .ix_country:hover { fill: var(--ixMapLandHover); }
+.ix_map .ix_hub { fill: var(--ixMapHub); }
+.ix_map .ix_hub:hover,
+.ix_map .ix_hub:focus { fill: var(--ixMapHub); filter: brightness(0.88); outline: none; }
+.ix_map .ix_hub:focus-visible { stroke: var(--ixMapSelected); stroke-width: 1.6; }
+.ix_map .ix_country.ix_on,
+.ix_map .ix_country.ix_on:hover,
+.ix_map .ix_hub.ix_on,
+.ix_map .ix_hub.ix_on:hover { fill: var(--ixMapSelected); filter: none; }
+
+.ix_map .ix_pin,
+.ix_map .ix_pin_lbl,
+.ix_map .ix_region_lbl,
+.ix_map .ixd_pin_ring { pointer-events: none; }
+.ix_map .ix_pin { fill: var(--ixMapSelected); stroke: var(--ixMapStroke); }
+.ix_map .ix_pin.ixd_pin_on { fill: var(--ixMapHub); }
+.ix_map .ixd_pin_ring { fill: none; stroke: var(--ixMapHub); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: ixd_pin_pulse 2s ease-out infinite; }
+.ix_map .ix_pin_lbl { paint-order: stroke; stroke: var(--ixMapStroke); stroke-width: 3px; stroke-linejoin: round; }
+
+@keyframes ixd_pin_pulse {
+  0% { transform: scale(0.9); opacity: 1; }
+  70% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ix_map .ixd_pin_ring { animation: none; }
+}
+
+.ixd_map_tip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 150px;
+  max-width: 230px;
+  padding: 10px 14px 11px;
+  border-radius: 12px;
+  border-top: 3px solid var(--ixMapHub);
+  background: var(--ixMapTipBg);
+  color: var(--ixMapTipText);
+  box-shadow: var(--ixMapTipShadow);
+  font-family: var(--paraFont);
+  font-size: 13px;
+  line-height: 1.4;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s, transform 0.15s;
+}
+.ixd_map_tip_on { opacity: 1; transform: translateY(0); }
+.ixd_map_tip_badge {
+  align-self: flex-start;
+  margin-bottom: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--ixMapHub);
+  color: var(--ixMapTipText);
+  font-family: var(--headingFont);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ixd_map_tip_name { font-family: var(--headingFont); font-size: 16px; font-weight: 800; color: var(--ixMapTipText); }
+.ixd_map_tip_meta { color: var(--ixMapTipMuted); font-size: 13px; }
+.ixd_map_tip_hint { margin-top: 4px; color: var(--ixMapHub); font-weight: 700; font-size: 12px; }

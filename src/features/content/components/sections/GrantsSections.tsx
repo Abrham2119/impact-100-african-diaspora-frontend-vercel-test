@@ -49,6 +49,11 @@ export function HubMapSection({ section }: { section: SectionData<typeof hubMap>
     () => Object.fromEntries(featured.map((country) => [country.data.map_key, t('grants.hubLabel', { name: country.fields.name, capital: country.fields.capital })])),
     [featured, t],
   );
+  const capitals = useMemo(() => Object.fromEntries(all.entries.map((country) => [country.data.map_key, country.fields.capital])), [all.entries]);
+  const mapTip = useMemo(
+    () => ({ capital: t('grants.mapTip.capital'), featured: t('grants.mapTip.featured'), selected: t('grants.mapTip.selected'), hint: t('grants.mapTip.hint') }),
+    [t],
+  );
   const values = { name: hub?.fields.name ?? '', capital: hub?.fields.capital ?? '' };
   const saved = Boolean(hub && portfolio);
 
@@ -76,6 +81,8 @@ export function HubMapSection({ section }: { section: SectionData<typeof hubMap>
                 names={names}
                 hubLabels={hubLabels}
                 regionLabels={{ north: c.region_north, subSaharan: c.region_sub_saharan }}
+                capitals={capitals}
+                tip={mapTip}
               />
               <div className="ix_map_legend">
                 <span>

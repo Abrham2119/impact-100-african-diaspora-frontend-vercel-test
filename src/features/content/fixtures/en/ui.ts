@@ -1401,6 +1401,11 @@ const site = {
   'grants.hubCaption': '{name} hub · {capital}',
   'grants.otherHub': 'Or choose any other USAFI hub',
   'grants.chooseCountry': 'Choose a country',
+  // Grants map tooltip — not in the design (added on request); editable placeholders.
+  'grants.mapTip.capital': 'Capital: {capital}',
+  'grants.mapTip.featured': 'Featured hub',
+  'grants.mapTip.selected': 'Your hub',
+  'grants.mapTip.hint': 'Click to choose this hub',
   'grants.where': '{capital}, {country} · {amount}',
   'grants.proposalKicker': '{country} · {portfolio} · {flagship}',
 };
