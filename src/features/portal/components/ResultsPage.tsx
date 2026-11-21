@@ -4,7 +4,6 @@ import { PATHS } from '@/app/routes/paths';
 import type { ClosedVote, VoteOutcome } from '@/domain/entities/governance.types';
 import { outcomeOf } from '@/domain/rules/governance';
 import { useResults } from '@/features/governance/hooks/usePortalGovernance';
-import { usePublicSettings } from '@/features/membership/hooks/useMembership';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatMoney } from '@/lib/format';
@@ -17,7 +16,6 @@ export function ResultsPage() {
   const t = useT('portal');
   const { locale } = useLocale();
   const query = useResults();
-  const { data: settings } = usePublicSettings();
   const money = (cents: number) => formatMoney(cents, locale);
   const f = query.data?.financials;
 
@@ -58,7 +56,7 @@ export function ResultsPage() {
               key: 'outcome',
               header: t('results.outcome'),
               cell: (row) => {
-                const outcome = outcomeOf(row, settings.quorumPct);
+                const outcome = outcomeOf(row, row.quorumPct);
                 return <Badge kind={OUTCOME_KIND(outcome)}>{t(`outcome.${outcome}`)}</Badge>;
               },
             },

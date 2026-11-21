@@ -94,6 +94,8 @@ export interface ClosedVote {
   abstain: number;
   publishedOn: string;
   settingsVersion: string;
+  /** the quorum of that settings version — later settings never change a published result */
+  quorumPct: number;
 }
 
 export interface CycleFinancials {

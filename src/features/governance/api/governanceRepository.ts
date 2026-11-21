@@ -132,7 +132,8 @@ export const mockGovernanceRepository: GovernanceRepository = {
       const userId = currentMockUserId();
       const extra = Object.values(db.tallies);
       return {
-        ballot: BALLOT,
+        // an open ballot is counted under the charter settings in force (closed votes keep theirs)
+        ballot: { ...BALLOT, quorumPct: settingsService.seed().quorumPct },
         proposals: PROPOSALS,
         mine: Object.fromEntries(db.participations.filter((p) => p.userId === userId).map((p) => [p.proposalId, p])),
         yesNo: BALLOT.baseYesNo + extra.reduce((sum, t) => sum + t.YES + t.NO, 0),

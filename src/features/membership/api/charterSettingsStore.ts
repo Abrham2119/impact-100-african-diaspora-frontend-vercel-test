@@ -23,8 +23,15 @@ export function promoteDueVersions(versions: SettingsVersion[]): SettingsVersion
   });
 }
 
-/** The numbers of the active version. */
+/**
+ * The numbers in force today: the adopted charter (v1.0) with every approved change whose
+ * effective date has come applied in date order — so changes approved in any order combine.
+ */
 export function activeCharterValues(): CharterValues {
-  const versions = promoteDueVersions(charterSettingsMockStore.read().versions);
-  return versions.find((v) => v.status === 'ACTIVE')?.values ?? V1_VALUES;
+  const now = today();
+  return charterSettingsMockStore
+    .read()
+    .versions.filter((v) => v.diff && v.status !== 'REJECTED' && v.activeFrom !== null && v.activeFrom <= now)
+    .sort((a, b) => (a.activeFrom ?? '').localeCompare(b.activeFrom ?? ''))
+    .reduce<CharterValues>((values, v) => (v.diff ?? []).reduce((acc, d) => ({ ...acc, [d.field]: d.to }), values), { ...V1_VALUES });
 }

@@ -90,8 +90,6 @@ export const mockCharterRepository: CharterRepository = {
       const change = charterSettingsMockStore.read().changes.find((c) => c.id === id);
       if (!change) throw new AdminError('NOT_FOUND');
       if (!canDecide(change, who.id)) throw new AdminError('OWN_CHANGE');
-      const base = activeCharterValues();
-      const values = change.diff.reduce<CharterValues>((v, d) => ({ ...v, [d.field]: d.to }), { ...base });
       charterSettingsMockStore.mutate((db) => {
         const c = db.changes.find((x) => x.id === id);
         if (c) Object.assign(c, { status: 'APPROVED', decidedBy: who.id, decidedByName: who.name });
@@ -108,7 +106,7 @@ export const mockCharterRepository: CharterRepository = {
           approvedByName: who.name,
           activeFrom: change.effectiveFrom,
           status: 'SCHEDULED',
-          values,
+          values: null,
         };
         db.versions = promoteDueVersions([version, ...db.versions]);
       });

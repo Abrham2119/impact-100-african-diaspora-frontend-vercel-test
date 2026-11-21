@@ -9,6 +9,8 @@ import type { Permission } from '@/domain/enums/permission.enum';
 import type { UiKey } from '@/features/content/fixtures/en/ui';
 import type { ComponentType } from 'react';
 import { ScreenPlaceholder } from '@/pages/ScreenPlaceholder';
+import { ApprovalsPage } from '@/features/admin/components/ApprovalsPage';
+import { CampaignsPage } from '@/features/admin/components/CampaignsPage';
 import { DashboardPage } from '@/features/admin/components/DashboardPage';
 import { ExportsPage } from '@/features/admin/components/ExportsPage';
 import { FinancePage } from '@/features/admin/components/FinancePage';
@@ -17,6 +19,8 @@ import { PeoplePage } from '@/features/admin/components/PeoplePage';
 import { PermissionsPage } from '@/features/admin/components/PermissionsPage';
 import { PersonPage } from '@/features/admin/components/PersonPage';
 import { RolesPage } from '@/features/admin/components/RolesPage';
+import { SettingsHistoryPage } from '@/features/admin/components/SettingsHistoryPage';
+import { SettingsPage } from '@/features/admin/components/SettingsPage';
 import { PATHS } from './paths';
 
 // The built screens by design screen name (FE-9 / FE-10); the rest keep the placeholder until built.
@@ -29,6 +33,10 @@ const PAGES: Record<string, ComponentType> = {
   admin_person: PersonPage,
   admin_roles: RolesPage,
   admin_permissions: PermissionsPage,
+  admin_cycles: CampaignsPage,
+  admin_settings: SettingsPage,
+  admin_approvals: ApprovalsPage,
+  admin_settings_history: SettingsHistoryPage,
 };
 
 // /admin/* — admin console, screens 56–88 (ARCHITECTURE.md §4). Every page needs a grant

@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom';
 import { Badge, BarRows, EmptyState, Panel, QueryState, StatRow, Timeline, type TimelineItem } from '@/components/design';
 import { outcomeOf, quorumNeeded } from '@/domain/rules/governance';
 import { useResult } from '@/features/governance/hooks/usePortalGovernance';
-import { usePublicSettings } from '@/features/membership/hooks/useMembership';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatDate } from '@/lib/format';
@@ -16,7 +15,6 @@ export function ResultPage() {
   const { locale } = useLocale();
   const { id } = useParams();
   const query = useResult(id);
-  const { data: settings } = usePublicSettings();
   const r = query.data;
 
   return (
@@ -25,11 +23,11 @@ export function ResultPage() {
         <EmptyState>{tc('states.empty')}</EmptyState>
       ) : (
         (() => {
-          const needed = quorumNeeded(r.eligible, settings.quorumPct);
+          const needed = quorumNeeded(r.eligible, r.quorumPct);
           const yesNo = r.yes + r.no;
           const total = yesNo + r.abstain;
           const met = yesNo >= needed;
-          const outcome = outcomeOf(r, settings.quorumPct);
+          const outcome = outcomeOf(r, r.quorumPct);
           const share = (n: number) => (total > 0 ? (n / total) * 100 : 0);
           const steps: TimelineItem[] = [
             { id: 'quorum', title: t('result.step1'), text: met ? t('result.step1Met', { yesNo, needed }) : t('result.step1NotMet', { yesNo, needed }), done: true },
@@ -49,7 +47,7 @@ export function ResultPage() {
                   columns="col-md-3 col-6"
                   items={[
                     { key: 'eligible', label: t('result.eligible'), value: String(r.eligible) },
-                    { key: 'quorum', label: t('result.quorum'), value: String(needed), note: t('result.quorumNote', { pct: settings.quorumPct }) },
+                    { key: 'quorum', label: t('result.quorum'), value: String(needed), note: t('result.quorumNote', { pct: r.quorumPct }) },
                     { key: 'yesNo', label: t('result.yesNo'), value: String(yesNo), note: met ? t('result.quorumMet') : t('result.quorumNotMet') },
                     { key: 'abstain', label: t('result.abstentions'), value: String(r.abstain), note: t('result.recorded') },
                   ]}

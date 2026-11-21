@@ -142,10 +142,10 @@ export const FINANCIALS: CycleFinancials = {
 };
 
 export const CLOSED_VOTES: ClosedVote[] = [
-  { id: 'r-grant-2025-26', title: 'Grant ballot 2025–26 · Water and sanitation, Zambia', eligible: 88, yes: 44, no: 15, abstain: 2, publishedOn: '2026-04-04', settingsVersion: 'v1.0' },
-  { id: 'r-november-installments', title: 'Adopt installment plans from November', eligible: 84, yes: 30, no: 12, abstain: 3, publishedOn: '2026-04-04', settingsVersion: 'v1.0' },
-  { id: 'r-atlanta-seat', title: 'Add a second Atlanta co-Ambassador seat', eligible: 84, yes: 25, no: 10, abstain: 3, publishedOn: '2026-04-04', settingsVersion: 'v1.0' },
-  { id: 'r-agm-online', title: 'Move the AGM online', eligible: 84, yes: 22, no: 22, abstain: 4, publishedOn: '2026-04-04', settingsVersion: 'v1.0' },
+  { id: 'r-grant-2025-26', title: 'Grant ballot 2025–26 · Water and sanitation, Zambia', eligible: 88, yes: 44, no: 15, abstain: 2, publishedOn: '2026-04-04', settingsVersion: 'v1.0', quorumPct: 50 },
+  { id: 'r-november-installments', title: 'Adopt installment plans from November', eligible: 84, yes: 30, no: 12, abstain: 3, publishedOn: '2026-04-04', settingsVersion: 'v1.0', quorumPct: 50 },
+  { id: 'r-atlanta-seat', title: 'Add a second Atlanta co-Ambassador seat', eligible: 84, yes: 25, no: 10, abstain: 3, publishedOn: '2026-04-04', settingsVersion: 'v1.0', quorumPct: 50 },
+  { id: 'r-agm-online', title: 'Move the AGM online', eligible: 84, yes: 22, no: 22, abstain: 4, publishedOn: '2026-04-04', settingsVersion: 'v1.0', quorumPct: 50 },
 ];
 
 /** suggestions allowed per member per cycle */
