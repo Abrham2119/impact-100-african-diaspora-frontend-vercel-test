@@ -49,6 +49,11 @@ const common = {
 
 const portal = {
   root: 'Member portal',
+  // shell (portal.dc.html top bar + sidebar)
+  'pill.renew': '{campaign} is open · Renew your membership',
+  'status.voting': '{level} · Voting member',
+  'status.member': '{level} · Member',
+  'status.supporter': 'Supporter',
   // rail groups (rail label = sidebar title on the portal)
   'group.dashboard': 'Dashboard',
   'group.voting': 'Voting',
@@ -94,6 +99,13 @@ const portal = {
 
 const admin = {
   root: 'Admin console',
+  // shell (admin.dc.html sidebar status line)
+  'status.mfa': '{role} · two-step on',
+  'role.CHAPTER_ADMIN': 'Chapter admin',
+  'role.USAFI_FINANCE': 'USAFI finance',
+  'role.CONTENT_EDITOR': 'Content Editor',
+  'role.HUB_CO_AMBASSADOR': 'Hub co-Ambassador',
+  'role.SUPER_ADMIN': 'Super admin',
   // rail labels
   'rail.dashboard': 'Dashboard',
   'rail.people': 'People',

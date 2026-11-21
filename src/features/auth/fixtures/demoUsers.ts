@@ -34,7 +34,8 @@ export const DEMO_USERS: DemoUser[] = [
       fullName: 'Amara Mensah',
       platformRole: 'USER',
       roles: [{ role: 'MEMBER' }, { role: 'COMMITTEE_MEMBER', scopeType: 'COMMITTEE', scopeId: 'grants-selection' }],
-      votingEligible: false,
+      // $510 received of a $1,000 pledge: more than $500 → voting member (portal.dc.html)
+      votingEligible: true,
     },
     twoFactorEnrolled: false,
   },

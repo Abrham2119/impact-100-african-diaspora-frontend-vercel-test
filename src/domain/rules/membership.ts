@@ -1,4 +1,4 @@
-import type { InstallmentPlan, MembershipLevel, MembershipSettings } from '@/domain/entities/membership.types';
+import type { InstallmentPlan, MembershipLevel, MembershipRecord, MembershipSettings, MembershipSummary } from '@/domain/entities/membership.types';
 
 // Membership rules of design-reference/BUSINESS_RULES.md, as pure functions. The thresholds and
 // rounding come from the charter settings (one source), never from literals.
@@ -26,3 +26,19 @@ export function levelForAmount(receivedCents: number, settings: MembershipSettin
 
 export const findLevel = (settings: MembershipSettings, key: string | null | undefined): MembershipLevel | undefined =>
   settings.levels.find((level) => level.key === key);
+
+/** The portal view of a membership: everything computed from what has been received (BUSINESS_RULES). */
+export function summarizeMembership(record: MembershipRecord, settings: MembershipSettings): MembershipSummary {
+  const receivedCents = record.installments.filter((i) => i.status === 'PAID').reduce((sum, i) => sum + i.amountCents, 0);
+  const open = record.installments.filter((i) => i.status === 'DUE' || i.status === 'SCHEDULED').sort((a, b) => a.seq - b.seq);
+  return {
+    record,
+    receivedCents,
+    toGoCents: Math.max(0, record.pledgeCents - receivedCents),
+    levelKey: levelForAmount(receivedCents, settings)?.key ?? null,
+    votingEligible: isVotingAmount(receivedCents, settings),
+    charterUnlocked: receivedCents >= settings.membershipMinimumCents && receivedCents >= record.pledgeCents,
+    nextInstallment: open[0] ?? null,
+    processing: record.installments.find((i) => i.status === 'PROCESSING') ?? null,
+  };
+}

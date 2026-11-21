@@ -6,6 +6,8 @@ export const membershipKeys = {
   settings: () => ['membership', 'settings'] as const,
   joinIntent: (intentId: string) => ['membership', 'join-intent', intentId] as const,
   donationCancel: (token: string) => ['membership', 'donation-cancel', token] as const,
+  mine: () => ['membership', 'me'] as const,
+  myContributions: () => ['membership', 'me', 'contributions'] as const,
 };
 
 /** public campaign totals move with payments: 60 s like the content cache */

@@ -3,14 +3,15 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button, Card } from '@/components/design';
 import { isMockData } from '@/infrastructure/api/dataSource';
+import { resetDemoData } from '@/infrastructure/mock/mockStore';
 import { useT } from '@/i18n/useT';
 import { useAuthStore } from '@/store/authStore';
 import { mockAuthTools } from '../api/mockAuthRepository';
 import { landingFor } from '../lib/resolveLanding';
 
 // Demo role switcher (Part A, FE-3/FE-7): while the data is mock, a collapsed "Demo" button lets
-// reviewers sign in as any demo user (two-step already passed), sign out, or reset the demo auth
-// state. Gone with VITE_DATA_SOURCE=api. `?demo=off` hides it for this browser (screenshots),
+// reviewers sign in as any demo user (two-step already passed), sign out, or reset all demo data
+// (every mock store + the auth state) to the design's dummy data. Gone with VITE_DATA_SOURCE=api. `?demo=off` hides it for this browser (screenshots),
 // `?demo=on` brings it back.
 const HIDDEN_KEY = 'ix_demo_hidden';
 
@@ -53,7 +54,9 @@ function Switcher() {
     setOpen(false);
     navigate('/');
   };
+  // every mock store (portal data, …) and the mock auth state back to the design's dummy data
   const reset = () => {
+    resetDemoData();
     mockAuthTools.reset();
     signOut();
   };
