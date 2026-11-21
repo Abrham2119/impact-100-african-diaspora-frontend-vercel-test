@@ -30,6 +30,7 @@ export default {
     '!./src/features/membership/components/**',
     '!./src/features/governance/components/**',
     '!./src/features/auth/components/**',
+    '!./src/features/portal/components/**',
   ],
   theme: {
     extend: {

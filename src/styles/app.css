@@ -209,6 +209,10 @@
 .ixd_qr_image { width: 120px; height: 120px; flex: none; border-radius: 10px; }
 .ixd_text_black { color: var(--colorBlack) !important; }
 
+/* Member portal (portal*.dc.html inline styles, verbatim) */
+.ixd_title_32 { font-size: 32px !important; font-weight: 800 !important; }
+.ixd_mt4 { margin-top: 4px !important; }
+
 /* Demo role switcher (mock data only, FE-7) — built from design classes; positioned bottom-left,
    clear of the back-to-top button. Colours and radii are the design's own tokens. */
 .ixd_demo_switcher { position: fixed; left: 20px; bottom: 20px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }

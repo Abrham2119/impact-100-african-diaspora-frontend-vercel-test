@@ -5,8 +5,17 @@ import { PermissionRoute } from '@/app/guards/PermissionRoute';
 import { RoutePending } from '@/app/guards/RoutePending';
 import type { ShellRouteMeta } from '@/config/navigation/types';
 import type { Permission } from '@/domain/enums/permission.enum';
+import type { ComponentType } from 'react';
 import { ScreenPlaceholder } from '@/pages/ScreenPlaceholder';
+import { DashboardPage } from '@/features/portal/components/DashboardPage';
+import { HistoryPage } from '@/features/portal/components/HistoryPage';
 import { PATHS } from './paths';
+
+// The built screens by design screen name (FE-8); the rest keep the placeholder until their batch lands.
+const PAGES: Record<string, ComponentType> = {
+  portal: DashboardPage,
+  portal_history: HistoryPage,
+};
 
 // /portal/* — member portal, screens 40–55 (ARCHITECTURE.md §4). Signed-in users only;
 // some pages also need a grant. Business-rule gates (voting eligibility, the signing lock,
@@ -16,12 +25,13 @@ import { PATHS } from './paths';
 type Meta = Omit<ShellRouteMeta<'portal'>, 'namespace'>;
 
 const screen = (path: string | undefined, name: string, meta: Meta, permission?: Permission): RouteObject => {
+  const Page = PAGES[name] ?? ScreenPlaceholder;
   const element = permission ? (
     <PermissionRoute require={permission} fallback={PATHS.portal.dashboard}>
-      <ScreenPlaceholder />
+      <Page />
     </PermissionRoute>
   ) : (
-    <ScreenPlaceholder />
+    <Page />
   );
   const handle = { screen: name, shell: { namespace: 'portal' as const, ...meta } };
   return path === undefined ? { index: true, handle, element } : { path, handle, element };

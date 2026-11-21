@@ -18,7 +18,7 @@ import config from '../../tailwind.config.ts';
 
 const ROOT = new URL('../../', import.meta.url).pathname;
 const SNAPSHOTS = join(ROOT, 'design-reference/snapshots');
-const PUBLIC_FEATURE_COMPONENTS = ['content', 'engagement', 'membership', 'governance', 'auth'].map((slice) => `src/features/${slice}/components`);
+const PUBLIC_FEATURE_COMPONENTS = ['content', 'engagement', 'membership', 'governance', 'auth', 'portal'].map((slice) => `src/features/${slice}/components`);
 const DESIGN_SOURCES = ['src/components/design', 'src/pages/design', ...PUBLIC_FEATURE_COMPONENTS].map((dir) => join(ROOT, dir));
 
 /** Classes Tailwind and Bootstrap define with the same meaning; overlap is harmless. */

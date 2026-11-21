@@ -21,6 +21,8 @@ const SCANNED = [
   'src/features/membership/components',
   'src/features/governance/components',
   'src/features/auth/components',
+  'src/features/portal/components',
+  'src/components/design/portal',
   'src/pages/public',
 ];
 const COPY_ATTRIBUTES = new Set(['alt', 'title', 'placeholder', 'aria-label', 'label']);
