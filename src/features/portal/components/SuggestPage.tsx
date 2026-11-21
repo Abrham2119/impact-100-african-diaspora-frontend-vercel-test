@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { z } from 'zod';
-import { Badge, Field, Input, OptionButton, OptionGroup, Panel, Select, Table, Textarea, type BadgeKind } from '@/components/design';
+import { Badge, type BadgeKind, Field, Input, OptionButton, OptionGroup, Panel, QueryState, Select, Table, Textarea } from '@/components/design';
 import type { Nomination, NominationStatus, NominationType } from '@/domain/entities/governance.types';
 import { useCatalog } from '@/features/content/hooks/useCatalog';
 import { useNominations, useSubmitNomination } from '@/features/governance/hooks/usePortalGovernance';
 import { useMyProfile } from '@/features/profile/hooks/useMyProfile';
 import { useDesignForm } from '@/hooks/useDesignForm';
 import { useT } from '@/i18n/useT';
-import { PortalState } from './PortalState';
 
 // Suggest and nominate (portal_suggest.dc.html): pick Priority / Nominee / Proposal (the title label
 // and fields follow the type; the country is pre-filled from your interests), title + ≥ 20-character
@@ -66,7 +65,7 @@ export function SuggestPage() {
   );
 
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       <Panel title={t('suggest.title')} lead={t('suggest.lead')}>
         <OptionGroup>
           {TYPES.map((key) => (
@@ -122,6 +121,6 @@ export function SuggestPage() {
           ]}
         />
       </Panel>
-    </PortalState>
+    </QueryState>
   );
 }

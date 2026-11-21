@@ -80,3 +80,7 @@ export { AuthCard } from './blocks/AuthCard';
 export { Panel, StatRow } from './portal/Panel';
 export type { StatItem } from './portal/Panel';
 export { Modal } from './primitives/Modal';
+export { QueryState } from './portal/QueryState';
+export { BarRows, barWidth } from './portal/BarRows';
+export type { BarRow } from './portal/BarRows';
+export { Funnel } from './portal/Funnel';

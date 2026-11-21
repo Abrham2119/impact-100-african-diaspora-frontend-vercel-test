@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { z } from 'zod';
-import { Field, Input, Panel, ResultBox, Select } from '@/components/design';
+import { Field, Input, Panel, QueryState, ResultBox, Select } from '@/components/design';
 import type { EmailPrefKey, MemberProfile } from '@/domain/entities/profile.types';
 import { useCatalog } from '@/features/content/hooks/useCatalog';
 import { useMyProfile, useSaveInterests, useSaveProfile, useSetEmailPref } from '@/features/profile/hooks/useMyProfile';
@@ -8,7 +8,6 @@ import { useDesignForm } from '@/hooks/useDesignForm';
 import { useT } from '@/i18n/useT';
 import { cx } from '@/lib/classes';
 import { isEmail, isName } from '@/lib/validation';
-import { PortalState } from './PortalState';
 
 // Profile (portal_profile.dc.html): details (a new email waits for confirmation), interests (saved
 // as they change — they reorder and tag the site, never eligibility) and email preferences
@@ -18,7 +17,7 @@ const PREFS: EmailPrefKey[] = ['receipts', 'votes', 'newsletter', 'hub', 'volunt
 export function ProfilePage() {
   const query = useMyProfile();
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       {query.data && (
         <>
           <DetailsForm key={query.data.userId} profile={query.data} />
@@ -26,7 +25,7 @@ export function ProfilePage() {
           <EmailPrefs profile={query.data} />
         </>
       )}
-    </PortalState>
+    </QueryState>
   );
 }
 

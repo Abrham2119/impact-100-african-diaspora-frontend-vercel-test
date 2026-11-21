@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
-import { Badge, Panel, StatRow, Table } from '@/components/design';
+import { Badge, Panel, QueryState, StatRow, Table } from '@/components/design';
 import type { Contribution } from '@/domain/entities/membership.types';
 import { useCatalog } from '@/features/content/hooks/useCatalog';
 import { useMyContributions, useMyMembership } from '@/features/membership/hooks/useMyMembership';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
+import { downloadCsv, toCsv } from '@/lib/download';
 import { formatDate, formatMoney } from '@/lib/format';
-import { PortalState } from './PortalState';
 
 // Contribution history (portal_history.dc.html): pledge received / donations / receipts, then every
 // confirmed payment newest first — membership installments and direct donations (which never
@@ -28,20 +28,14 @@ export function HistoryPage() {
   const area = (row: Contribution) =>
     row.kind === 'DONATION' && row.portfolioKey ? `${catalog.portfolio(row.portfolioKey).split(' · ')[0]} · ${catalog.country(row.countryKey)}` : t('history.none');
 
-  const downloadCsv = () => {
+  const exportCsv = () => {
     const header = [t('history.date'), t('history.type'), t('history.amount'), t('history.via'), t('history.area'), t('history.status')];
     const lines = rows.map((r) => [formatDate(r.date, locale), type(r), money(r.amountCents), t('history.wazi'), area(r), t('history.confirmed')]);
-    const csv = [header, ...lines].map((cells) => cells.map((c) => `"${c.replace(/"/g, '""')}"`).join(',')).join('\n');
-    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'contribution-history.csv';
-    link.click();
-    URL.revokeObjectURL(url);
+    downloadCsv('contribution-history.csv', toCsv([header, ...lines]));
   };
 
   return (
-    <PortalState isPending={contributions.isPending} isError={contributions.isError} onRetry={() => void contributions.refetch()}>
+    <QueryState isPending={contributions.isPending} isError={contributions.isError} onRetry={() => void contributions.refetch()}>
       <StatRow
         items={[
           { key: 'received', label: t('history.received'), value: money(membership.data?.receivedCents ?? 0), note: t('history.receivedNote') },
@@ -54,7 +48,7 @@ export function HistoryPage() {
         lead={t('history.lead')}
         right={
           <div className="ix_toolbar">
-            <button type="button" className="common_btn ix_btn_sm" onClick={downloadCsv} disabled={rows.length === 0}>
+            <button type="button" className="common_btn ix_btn_sm" onClick={exportCsv} disabled={rows.length === 0}>
               {t('history.csv')}
             </button>
           </div>
@@ -74,6 +68,6 @@ export function HistoryPage() {
           ]}
         />
       </Panel>
-    </PortalState>
+    </QueryState>
   );
 }

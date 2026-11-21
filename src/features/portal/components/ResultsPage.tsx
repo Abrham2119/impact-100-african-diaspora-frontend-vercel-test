@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Badge, Panel, StatRow, Table, type BadgeKind } from '@/components/design';
+import { Badge, type BadgeKind, Panel, QueryState, StatRow, Table } from '@/components/design';
 import { PATHS } from '@/app/routes/paths';
 import type { ClosedVote, VoteOutcome } from '@/domain/entities/governance.types';
 import { outcomeOf } from '@/domain/rules/governance';
@@ -8,7 +8,6 @@ import { usePublicSettings } from '@/features/membership/hooks/useMembership';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatMoney } from '@/lib/format';
-import { PortalState } from './PortalState';
 
 // Results (portal_results.dc.html): last cycle's financial summary and the closed votes; the
 // outcome of each is worked out by the rules engine (quorum → tie → majority), never stored.
@@ -23,7 +22,7 @@ export function ResultsPage() {
   const f = query.data?.financials;
 
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       {f && (
         <Panel title={t('results.summary')} lead={t('results.summaryLead', { cycle: f.cycle })}>
           <StatRow
@@ -67,6 +66,6 @@ export function ResultsPage() {
           ]}
         />
       </Panel>
-    </PortalState>
+    </QueryState>
   );
 }

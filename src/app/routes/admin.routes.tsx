@@ -7,8 +7,21 @@ import { TwoFactorRoute } from '@/app/guards/TwoFactorRoute';
 import type { ShellRouteMeta } from '@/config/navigation/types';
 import type { Permission } from '@/domain/enums/permission.enum';
 import type { UiKey } from '@/features/content/fixtures/en/ui';
+import type { ComponentType } from 'react';
 import { ScreenPlaceholder } from '@/pages/ScreenPlaceholder';
+import { DashboardPage } from '@/features/admin/components/DashboardPage';
+import { ExportsPage } from '@/features/admin/components/ExportsPage';
+import { FinancePage } from '@/features/admin/components/FinancePage';
+import { HubPage } from '@/features/admin/components/HubPage';
 import { PATHS } from './paths';
+
+// The built screens by design screen name (FE-9 / FE-10); the rest keep the placeholder until built.
+const PAGES: Record<string, ComponentType> = {
+  admin: DashboardPage,
+  admin_finance: FinancePage,
+  admin_hub: HubPage,
+  admin_exports: ExportsPage,
+};
 
 // /admin/* — admin console, screens 56–88 (ARCHITECTURE.md §4). Every page needs a grant
 // (ANY of the listed permissions) and, except the hub dashboard and volunteer sign-ups
@@ -31,9 +44,10 @@ const screen = (
   permission: Permission | Permission[],
   { titleKey = labelKey, crumb, twoFactor = true }: Options = {},
 ): RouteObject => {
+  const Page = PAGES[name] ?? ScreenPlaceholder;
   const gated = (
     <PermissionRoute require={permission} mode="any" fallback={PATHS.portal.dashboard}>
-      <ScreenPlaceholder />
+      <Page />
     </PermissionRoute>
   );
   const element = twoFactor ? <TwoFactorRoute>{gated}</TwoFactorRoute> : gated;

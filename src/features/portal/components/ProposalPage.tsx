@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Badge, ButtonLink, EmptyState, Panel, StatRow, Table } from '@/components/design';
+import { Badge, BarRows, ButtonLink, EmptyState, Panel, QueryState, StatRow, Table } from '@/components/design';
 import { PATHS } from '@/app/routes/paths';
 import { useCatalog } from '@/features/content/hooks/useCatalog';
 import { useProposal } from '@/features/governance/hooks/usePortalGovernance';
@@ -7,7 +7,6 @@ import { useMyProfile } from '@/features/profile/hooks/useMyProfile';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatDate, formatMoney } from '@/lib/format';
-import { PortalState } from './PortalState';
 
 // Proposal detail (portal_proposal.dc.html): header (hub badge, voting open), requested / committee
 // score / reach, summary, budget, rubric bars, conflicts, "Ready to vote?". Sections without data
@@ -25,7 +24,7 @@ export function ProposalPage() {
   const money = (cents: number) => formatMoney(cents, locale);
 
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       {!proposal ? (
         <EmptyState>{tc('states.empty')}</EmptyState>
       ) : (
@@ -74,16 +73,15 @@ export function ProposalPage() {
           )}
           {detail && (
             <Panel title={t('proposal.rubric')} lead={t('proposal.rubricLead')}>
-              {detail.rubric.map((row) => (
-                <div key={row.criterion} className="ix_bar_row">
-                  <span>{row.criterion}</span>
-                  <div className="ix_bar">
-                    {/* width is the score out of 5, computed (as in the design) */}
-                    <i className="ix_acc" style={{ width: `${((row.score / 5) * 100).toFixed(1)}%` }} />
-                  </div>
-                  <em>{t('proposal.rubricValue', { score: row.score.toFixed(1) })}</em>
-                </div>
-              ))}
+              <BarRows
+                decimals={1}
+                rows={detail.rubric.map((row) => ({
+                  key: row.criterion,
+                  label: row.criterion,
+                  widthPct: (row.score / 5) * 100,
+                  value: t('proposal.rubricValue', { score: row.score.toFixed(1) }),
+                }))}
+              />
             </Panel>
           )}
           <Panel title={t('proposal.conflicts')}>
@@ -98,6 +96,6 @@ export function ProposalPage() {
           </Panel>
         </>
       )}
-    </PortalState>
+    </QueryState>
   );
 }

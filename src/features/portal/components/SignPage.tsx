@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
-import { ButtonLink, CheckField, Field, Input, KeyValueList, Panel } from '@/components/design';
+import { ButtonLink, CheckField, Field, Input, KeyValueList, Panel, QueryState } from '@/components/design';
 import { PATHS } from '@/app/routes/paths';
 import { typedNameMatches } from '@/domain/rules/governance';
 import { GovernanceError } from '@/features/governance/api/governanceRepository';
@@ -14,7 +14,6 @@ import { useDesignForm } from '@/hooks/useDesignForm';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatMoney } from '@/lib/format';
-import { PortalState } from './PortalState';
 
 // Sign the charter (portal_sign.dc.html): locked until the pledge is paid in full (and at least the
 // membership minimum received); then the member ticks "I have read…" and types their account name
@@ -34,7 +33,7 @@ export function SignPage() {
   if (signature.data?.signature) return <Navigate to={PATHS.portal.signed} replace />;
 
   return (
-    <PortalState
+    <QueryState
       isPending={membership.isPending || signature.isPending}
       isError={membership.isError || signature.isError}
       onRetry={() => void Promise.all([membership.refetch(), signature.refetch()])}
@@ -64,7 +63,7 @@ export function SignPage() {
           </div>
         )}
       </Panel>
-    </PortalState>
+    </QueryState>
   );
 }
 

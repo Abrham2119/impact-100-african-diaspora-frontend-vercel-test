@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Badge, EmptyState, Panel, Timeline } from '@/components/design';
+import { Badge, EmptyState, Panel, QueryState, Timeline } from '@/components/design';
 import type { AmendmentStatus } from '@/domain/entities/governance.types';
 import { useAmendment } from '@/features/governance/hooks/usePortalGovernance';
 import { useLocale } from '@/i18n/useLocale';
@@ -7,7 +7,6 @@ import { useT } from '@/i18n/useT';
 import { formatDate } from '@/lib/format';
 import { AMENDMENT_BADGE } from './DecisionsPage';
 import { Discussion } from './Discussion';
-import { PortalState } from './PortalState';
 
 // Amendment detail (portal_amendment.dc.html): section + status, the change, who proposed it, the
 // current / proposed charter text (when known), where it is in the process, and the discussion.
@@ -25,7 +24,7 @@ export function AmendmentPage() {
   const circulated = a?.circulatedOn ? formatDate(a.circulatedOn, locale) : null;
 
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       {!a ? (
         <EmptyState>{tc('states.empty')}</EmptyState>
       ) : (
@@ -64,6 +63,6 @@ export function AmendmentPage() {
           </Panel>
         </>
       )}
-    </PortalState>
+    </QueryState>
   );
 }

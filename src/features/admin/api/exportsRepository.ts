@@ -13,6 +13,8 @@ import { peopleRepository } from './peopleRepository';
 export interface ExportsRepository {
   list(): Promise<ExportRecord[]>;
   create(input: { dataset: ExportDataset; from: string | null; to: string | null }): Promise<ExportRecord>;
+  /** the file of an export that hasn't expired */
+  download(id: string): Promise<string>;
 }
 export interface AuditRepository {
   list(): Promise<AuditEntry[]>;
@@ -62,6 +64,13 @@ export const mockExportsRepository: ExportsRepository = {
       recordAudit({ action: 'export.created', entity: `${dataset.charAt(0)}${dataset.slice(1).toLowerCase()} · ${record.rows} rows` });
       return record;
     });
+  },
+  download: async (id) => {
+    const record = adminMockStore.read().exports.find((e) => e.id === id);
+    if (!record || record.expired) throw new AdminError('NOT_FOUND');
+    if (record.csv) return record.csv;
+    const csv = csvOf(await datasetRows(record.dataset, null, null));
+    return mockResponse(() => csv);
   },
 };
 

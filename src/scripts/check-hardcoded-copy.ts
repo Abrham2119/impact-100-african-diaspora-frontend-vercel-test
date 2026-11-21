@@ -22,6 +22,7 @@ const SCANNED = [
   'src/features/governance/components',
   'src/features/auth/components',
   'src/features/portal/components',
+  'src/features/admin/components',
   'src/components/design/portal',
   'src/pages/public',
 ];

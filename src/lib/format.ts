@@ -38,3 +38,19 @@ export function formatDayMonth(isoDate: string, locale: string): string {
   const [year, month, day] = isoDate.split('-').map(Number);
   return new Intl.DateTimeFormat(locale, { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(new Date(Date.UTC(year, month - 1, day)));
 }
+
+/** "2026-11-17T09:12" → "Nov 17, 09:12" (en): a logged moment, wall-clock as stored. */
+export function formatStamp(stamp: string, locale: string): string {
+  const [date, time = '00:00'] = stamp.split('T');
+  const [hour, minute] = time.split(':').map(Number);
+  const [year, month, day] = date.split('-').map(Number);
+  const at = new Date(Date.UTC(year, month - 1, day, hour, minute));
+  const dayPart = new Intl.DateTimeFormat(locale, { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(at);
+  const timePart = new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC' }).format(at);
+  return `${dayPart}, ${timePart}`;
+}
+
+/** 8420 → "8,420" */
+export function formatCount(value: number, locale: string): string {
+  return new Intl.NumberFormat(locale).format(value);
+}

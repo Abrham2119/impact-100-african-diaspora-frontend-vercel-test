@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Badge, EmptyState, Panel, StatRow, Timeline, type TimelineItem } from '@/components/design';
+import { Badge, BarRows, EmptyState, Panel, QueryState, StatRow, Timeline, type TimelineItem } from '@/components/design';
 import { outcomeOf, quorumNeeded } from '@/domain/rules/governance';
 import { useResult } from '@/features/governance/hooks/usePortalGovernance';
 import { usePublicSettings } from '@/features/membership/hooks/useMembership';
@@ -7,7 +7,6 @@ import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatDate } from '@/lib/format';
 import { OUTCOME_KIND } from './ResultsPage';
-import { PortalState } from './PortalState';
 
 // Result detail (portal_result.dc.html): the locked published result, its counts and how the rules
 // engine reached the outcome (quorum, then tie, then majority).
@@ -21,7 +20,7 @@ export function ResultPage() {
   const r = query.data;
 
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       {!r ? (
         <EmptyState>{tc('states.empty')}</EmptyState>
       ) : (
@@ -31,7 +30,7 @@ export function ResultPage() {
           const total = yesNo + r.abstain;
           const met = yesNo >= needed;
           const outcome = outcomeOf(r, settings.quorumPct);
-          const width = (n: number) => `${total > 0 ? Math.round((n / total) * 100) : 0}%`;
+          const share = (n: number) => (total > 0 ? (n / total) * 100 : 0);
           const steps: TimelineItem[] = [
             { id: 'quorum', title: t('result.step1'), text: met ? t('result.step1Met', { yesNo, needed }) : t('result.step1NotMet', { yesNo, needed }), done: true },
           ];
@@ -57,22 +56,13 @@ export function ResultPage() {
                 />
               </Panel>
               <Panel title={t('result.counts')}>
-                {(
-                  [
-                    ['yes', t('results.yes'), r.yes, 'ix_acc'],
-                    ['no', t('results.no'), r.no, ''],
-                    ['abstain', t('results.abstain'), r.abstain, ''],
-                  ] as const
-                ).map(([key, label, count, cls]) => (
-                  <div key={key} className="ix_bar_row">
-                    <span>{label}</span>
-                    <div className="ix_bar">
-                      {/* width is the share of ballots, computed (as in the design) */}
-                      <i className={cls} style={{ width: width(count) }} />
-                    </div>
-                    <em>{count}</em>
-                  </div>
-                ))}
+                <BarRows
+                  rows={[
+                    { key: 'yes', label: t('results.yes'), widthPct: share(r.yes), value: r.yes },
+                    { key: 'no', label: t('results.no'), widthPct: share(r.no), value: r.no, accent: false },
+                    { key: 'abstain', label: t('results.abstain'), widthPct: share(r.abstain), value: r.abstain, accent: false },
+                  ]}
+                />
               </Panel>
               <Panel title={t('result.how')} lead={t('result.howLead')}>
                 <Timeline items={steps} />
@@ -82,6 +72,6 @@ export function ResultPage() {
           );
         })()
       )}
-    </PortalState>
+    </QueryState>
   );
 }

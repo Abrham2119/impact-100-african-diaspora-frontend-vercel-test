@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Badge, EmptyState, Field, Panel, ResultBox, Textarea } from '@/components/design';
+import { Badge, EmptyState, Field, Panel, QueryState, ResultBox, Textarea } from '@/components/design';
 import { weightedScore } from '@/domain/rules/governance';
 import { useCatalog } from '@/features/content/hooks/useCatalog';
 import type { ReviewsView } from '@/features/governance/api/governanceRepository';
 import { useRecuse, useReviews, useSaveReview } from '@/features/governance/hooks/usePortalGovernance';
 import { useT } from '@/i18n/useT';
 import { cx } from '@/lib/classes';
-import { PortalState } from './PortalState';
 
 // Score a proposal (portal_score.dc.html): five weighted criteria scored 1–5 (each pick is saved as
 // a draft), the live weighted total, comments, submit (all five needed) or recuse. Submitted and
@@ -21,9 +20,9 @@ export function ScorePage() {
   const assignment = query.data?.assignments.find((a) => a.proposalId === proposalId);
 
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       {query.data && assignment ? <ScoreForm key={assignment.proposalId} criteria={query.data.criteria} assignment={assignment} /> : <EmptyState>{tc('states.empty')}</EmptyState>}
-    </PortalState>
+    </QueryState>
   );
 }
 

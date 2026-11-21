@@ -17,10 +17,27 @@ export interface AdminListOptions<Row> {
   pageSize?: number;
 }
 
+/** Sets several URL params in one navigation (two separate updates would drop the first). */
+function useSetParams() {
+  const [, setParams] = useSearchParams();
+  return useCallback(
+    (changes: Record<string, string | null>) =>
+      setParams(
+        (current) => {
+          const next = new URLSearchParams(current);
+          Object.entries(changes).forEach(([key, value]) => (value === null || value === '' ? next.delete(key) : next.set(key, value)));
+          return next;
+        },
+        { replace: true, preventScrollReset: true },
+      ),
+    [setParams],
+  );
+}
+
 export function useAdminList<Row>(rows: Row[] | undefined, { columns, searchText, filters = {}, pageSize = ADMIN_PAGE_SIZE }: AdminListOptions<Row>) {
-  const [q, setQ] = useSearchParamState('q');
-  const [sortParam, setSortParam] = useSearchParamState('sort');
-  const [, setPage] = useSearchParamState('page');
+  const [q] = useSearchParamState('q');
+  const [sortParam] = useSearchParamState('sort');
+  const setParams = useSetParams();
   const page = usePageParam();
   const [params] = useSearchParams();
   const filterKeys = Object.keys(filters);
@@ -61,32 +78,19 @@ export function useAdminList<Row>(rows: Row[] | undefined, { columns, searchText
   const onSort = useCallback(
     (key: string) => {
       const dir = sort?.key === key && sort.dir === 'asc' ? 'desc' : 'asc';
-      setSortParam(`${key}.${dir}`);
-      setPage(null);
+      setParams({ sort: `${key}.${dir}`, page: null });
     },
-    [sort, setSortParam, setPage],
+    [sort, setParams],
   );
-  const onSearch = useCallback(
-    (value: string) => {
-      setQ(value);
-      setPage(null);
-    },
-    [setQ, setPage],
-  );
+  const onSearch = useCallback((value: string) => setParams({ q: value, page: null }), [setParams]);
 
   return { rows: pageRows, total: filtered.length, page: current, totalPages, sort, onSort, query: q ?? '', onSearch };
 }
 
 /** A URL filter's value and setter (resets the page). */
 export function useListFilter(key: string): [string, (value: string) => void] {
-  const [value, setValue] = useSearchParamState(key);
-  const [, setPage] = useSearchParamState('page');
-  const set = useCallback(
-    (next: string) => {
-      setValue(next);
-      setPage(null);
-    },
-    [setValue, setPage],
-  );
+  const [value] = useSearchParamState(key);
+  const setParams = useSetParams();
+  const set = useCallback((next: string) => setParams({ [key]: next, page: null }), [key, setParams]);
   return [value ?? '', set];
 }

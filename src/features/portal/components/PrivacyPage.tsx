@@ -1,10 +1,9 @@
-import { Panel, ResultBox, Table } from '@/components/design';
+import { Panel, QueryState, ResultBox, Table } from '@/components/design';
 import type { Consent, DataRequest } from '@/domain/entities/profile.types';
 import { useMyProfile, useRequestData } from '@/features/profile/hooks/useMyProfile';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatDate } from '@/lib/format';
-import { PortalState } from './PortalState';
 
 // Privacy (portal_privacy.dc.html): request a data export or deletion (one open request of each
 // type; the confirmation stays while it is open) and the consents I gave, with the wording shown.
@@ -16,7 +15,7 @@ export function PrivacyPage() {
   const open = (type: DataRequest['type']) => query.data?.dataRequests.some((r) => r.type === type && r.status === 'OPEN') ?? false;
 
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       <Panel title={t('privacy.export')} lead={t('privacy.exportLead')}>
         <div className="ix_btn_row ixd_mt0">
           <button type="button" className="common_btn" disabled={request.isPending || open('EXPORT')} onClick={() => request.mutate('EXPORT')}>
@@ -59,6 +58,6 @@ export function PrivacyPage() {
           ]}
         />
       </Panel>
-    </PortalState>
+    </QueryState>
   );
 }

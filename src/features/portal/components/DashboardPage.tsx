@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Badge, ButtonLink, Card, Panel, ResultBox, Table, type BadgeKind } from '@/components/design';
+import { Badge, type BadgeKind, ButtonLink, Card, Panel, QueryState, ResultBox, Table } from '@/components/design';
 import { PATHS } from '@/app/routes/paths';
 import type { Installment, InstallmentStatus } from '@/domain/entities/membership.types';
 import { useCatalog } from '@/features/content/hooks/useCatalog';
@@ -13,7 +13,6 @@ import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatDate, formatLongDate, formatMonthDay, formatMoney } from '@/lib/format';
 import logoLight from '@/assets/images/logo_impact100_light.webp';
-import { PortalState } from './PortalState';
 
 // Portal dashboard (portal.dc.html): campaign header, membership card, pay-next-installment card
 // (the payment shows "Opening WAZIImpact.org…" until the mock WAZI confirms it), four status cards,
@@ -71,7 +70,7 @@ export function DashboardPage() {
           <p className="ixd_mt4">{t('dash.renewNote')}</p>
         </div>
       </div>
-      <PortalState isPending={membership.isPending} isError={membership.isError} onRetry={() => void membership.refetch()}>
+      <QueryState isPending={membership.isPending} isError={membership.isError} onRetry={() => void membership.refetch()}>
         {m ? (
           <>
             <div className="ix_pc_main">
@@ -203,7 +202,7 @@ export function DashboardPage() {
             </Card>
           </div>
         </div>
-      </PortalState>
+      </QueryState>
     </>
   );
 

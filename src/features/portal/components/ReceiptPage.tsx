@@ -1,12 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { ButtonLink, EmptyState, KeyValueList, Panel, ResultBox } from '@/components/design';
+import { ButtonLink, EmptyState, KeyValueList, Panel, QueryState, ResultBox } from '@/components/design';
 import { PATHS } from '@/app/routes/paths';
 import { useParticipation } from '@/features/governance/hooks/usePortalGovernance';
 import { useCampaigns } from '@/features/membership/hooks/useCampaigns';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatDate } from '@/lib/format';
-import { PortalState } from './PortalState';
 
 // Vote receipt (portal_receipt.dc.html): the receipt code of my ballot on one proposal, what it
 // covers, and that the choice is secret. The route id is the proposal (FQ9: no code in the URL).
@@ -20,7 +19,7 @@ export function ReceiptPage() {
   const cycle = active?.[0]?.slug.replace('-', '–') ?? '';
 
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       {!p ? (
         <EmptyState>{t('receipt.notFound')}</EmptyState>
       ) : (
@@ -53,6 +52,6 @@ export function ReceiptPage() {
           </div>
         </Panel>
       )}
-    </PortalState>
+    </QueryState>
   );
 }

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge, Modal, Panel, ResultBox, StatRow } from '@/components/design';
+import { Badge, Modal, Panel, QueryState, ResultBox, StatRow } from '@/components/design';
 import { PATHS } from '@/app/routes/paths';
 import type { BallotProposal, VoteChoice } from '@/domain/entities/governance.types';
 import { quorumNeeded } from '@/domain/rules/governance';
@@ -15,7 +15,6 @@ import { useT } from '@/i18n/useT';
 import { cx } from '@/lib/classes';
 import { formatDayMonth, formatMoney } from '@/lib/format';
 import { Discussion } from './Discussion';
-import { PortalState } from './PortalState';
 
 // Proposals & vote (portal_vote.dc.html): schedule, live turnout vs quorum, the ballot items (your
 // hub first, accordion), the conflict-of-interest dialog before every ballot (no conflict → Yes /
@@ -52,7 +51,7 @@ export function VotePage() {
   };
 
   return (
-    <PortalState isPending={ballotQuery.isPending} isError={ballotQuery.isError} onRetry={() => void ballotQuery.refetch()}>
+    <QueryState isPending={ballotQuery.isPending} isError={ballotQuery.isError} onRetry={() => void ballotQuery.refetch()}>
       {view && (
         <>
           <Panel title={t('vote.schedule')} lead={t('vote.scheduleLead', { cycle })}>
@@ -209,6 +208,6 @@ export function VotePage() {
           )}
         </>
       )}
-    </PortalState>
+    </QueryState>
   );
 }

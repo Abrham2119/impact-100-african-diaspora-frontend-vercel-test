@@ -1,10 +1,9 @@
 import { Navigate } from 'react-router-dom';
-import { ButtonLink, KeyValueList, Panel } from '@/components/design';
+import { ButtonLink, KeyValueList, Panel, QueryState } from '@/components/design';
 import { PATHS } from '@/app/routes/paths';
 import { useSignature } from '@/features/governance/hooks/usePortalGovernance';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
-import { PortalState } from './PortalState';
 
 // Charter signed (portal_signed.dc.html): the signature record — typed name, date and time (ET),
 // charter version and IP address. Members who haven't signed go to the signing screen.
@@ -23,7 +22,7 @@ export function SignedPage() {
   const time = at ? new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: ET }).format(at) : '';
 
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       {s && (
         <Panel bodyClassName="ixd_confirm_body">
           <div className="ix_num ixd_num_xl">
@@ -49,6 +48,6 @@ export function SignedPage() {
           </div>
         </Panel>
       )}
-    </PortalState>
+    </QueryState>
   );
 }

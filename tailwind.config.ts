@@ -31,6 +31,7 @@ export default {
     '!./src/features/governance/components/**',
     '!./src/features/auth/components/**',
     '!./src/features/portal/components/**',
+    '!./src/features/admin/components/**',
   ],
   theme: {
     extend: {

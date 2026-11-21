@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Badge, Card, Panel, StatRow, Table, type BadgeKind } from '@/components/design';
+import { Badge, type BadgeKind, Card, Panel, QueryState, StatRow, Table } from '@/components/design';
 import { PATHS } from '@/app/routes/paths';
 import type { ReviewStatus } from '@/domain/entities/governance.types';
 import { useCatalog } from '@/features/content/hooks/useCatalog';
@@ -8,7 +8,6 @@ import type { ReviewsView } from '@/features/governance/api/governanceRepository
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatDate, formatDayMonth } from '@/lib/format';
-import { PortalState } from './PortalState';
 
 // Committee reviews (portal_reviews.dc.html): assigned / submitted / due, the proposals assigned to
 // me with their review status (Score or View), and the conflict-of-interest reminder.
@@ -24,7 +23,7 @@ export function ReviewsPage() {
   const due = rows.map((r) => r.dueOn).sort()[0];
 
   return (
-    <PortalState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
+    <QueryState isPending={query.isPending} isError={query.isError} onRetry={() => void query.refetch()}>
       <StatRow
         items={[
           { key: 'assigned', label: t('reviews.assigned'), value: String(rows.length) },
@@ -56,6 +55,6 @@ export function ReviewsPage() {
         <h4>{t('reviews.coiTitle')}</h4>
         <p>{t('reviews.coiBody')}</p>
       </Card>
-    </PortalState>
+    </QueryState>
   );
 }

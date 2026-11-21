@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { z } from 'zod';
-import { Badge, Chip, Field, Panel, ResultBox, Select, Table, Textarea, type BadgeKind } from '@/components/design';
+import { Badge, type BadgeKind, Chip, Field, Panel, QueryState, ResultBox, Select, Table, Textarea } from '@/components/design';
 import { PATHS } from '@/app/routes/paths';
 import type { Amendment, AmendmentStatus, VoteChoice } from '@/domain/entities/governance.types';
 import { useAmendments, useCharterSections, useDecisions, useProposeAmendment, useVoteDecision } from '@/features/governance/hooks/usePortalGovernance';
@@ -11,7 +11,6 @@ import { useDesignForm } from '@/hooks/useDesignForm';
 import { useLocale } from '@/i18n/useLocale';
 import { useT } from '@/i18n/useT';
 import { formatDate, formatMoney } from '@/lib/format';
-import { PortalState } from './PortalState';
 
 // Decisions & amendments (portal_decisions.dc.html): open Chapter motions (voting members pick
 // Yes / No / Abstain; others see how much more to pay), the propose-an-amendment form (≥ 10
@@ -37,7 +36,7 @@ export function DecisionsPage() {
   const received = membership?.receivedCents ?? 0;
 
   return (
-    <PortalState isPending={decisions.isPending} isError={decisions.isError} onRetry={() => void decisions.refetch()}>
+    <QueryState isPending={decisions.isPending} isError={decisions.isError} onRetry={() => void decisions.refetch()}>
       <Panel title={t('decisions.open')} lead={t('decisions.openLead')}>
         {(decisions.data ?? []).map((decision) => (
           <div key={decision.id} className="ix_expand ixd_expand_flat">
@@ -83,7 +82,7 @@ export function DecisionsPage() {
           ]}
         />
       </Panel>
-    </PortalState>
+    </QueryState>
   );
 }
 
