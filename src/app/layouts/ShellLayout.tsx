@@ -1,5 +1,5 @@
-import { useMemo, type MouseEvent } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { useMemo, useState, type MouseEvent } from 'react';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { AppShell, ScrollProgressButton, type ShellCrumb, type ShellLink } from '@/components/design';
 import type { ShellMenu, ShellNamespace, ShellRouteMeta } from '@/config/navigation/types';
 import type { Permission } from '@/domain/enums/permission.enum';
@@ -9,6 +9,7 @@ import { useAuthStore } from '@/store/authStore';
 import { PATHS } from '@/app/routes/paths';
 import { useRouteHandle } from '@/app/routes/routeHandle';
 import logoLight from '@/assets/images/logo_impact100_light.webp';
+import { ShellCrumbContext, type ShellCrumbLabel } from './shellCrumb';
 import { useShellIdentity } from './useShellIdentity';
 
 // The one shell layout behind PortalShell and AdminShell (README "Four layouts" #3/#4).
@@ -34,6 +35,8 @@ export function ShellLayout<N extends ShellNamespace>({ menu }: { menu: ShellMen
   const t = useT(menu.namespace);
   const tc = useT('common');
   const params = useParams();
+  const { pathname } = useLocation();
+  const [leafLabel, setLeafLabel] = useState<ShellCrumbLabel | null>(null);
   const permissions = useAuthStore((s) => s.permissions);
   const identity = useShellIdentity(menu.namespace);
   const logout = useAuthLogout(PATHS.auth.signIn);
@@ -78,7 +81,7 @@ export function ShellLayout<N extends ShellNamespace>({ menu }: { menu: ShellMen
     const itemLabel = t(item.labelKey);
     if (crumb === 'item') trail = [root, { label: itemLabel }];
     else {
-      const leaf = 'key' in crumb ? t(crumb.key) : (params[crumb.param] ?? '');
+      const leaf = 'key' in crumb ? t(crumb.key) : leafLabel?.path === pathname ? leafLabel.label : (params[crumb.param] ?? '');
       trail = [root, { label: itemLabel, to: item.to }, { label: leaf }];
     }
   }
@@ -112,7 +115,9 @@ export function ShellLayout<N extends ShellNamespace>({ menu }: { menu: ShellMen
         crumbs={{ label: tc('shell.breadcrumb'), home: { label: tc('shell.home'), to: PATHS.home }, trail }}
         title={meta ? t(meta.titleKey) : ''}
       >
-        <Outlet />
+        <ShellCrumbContext.Provider value={setLeafLabel}>
+          <Outlet />
+        </ShellCrumbContext.Provider>
       </AppShell>
       <ScrollProgressButton label={tc('scroll.top')} />
     </>

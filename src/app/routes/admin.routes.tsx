@@ -13,6 +13,10 @@ import { DashboardPage } from '@/features/admin/components/DashboardPage';
 import { ExportsPage } from '@/features/admin/components/ExportsPage';
 import { FinancePage } from '@/features/admin/components/FinancePage';
 import { HubPage } from '@/features/admin/components/HubPage';
+import { PeoplePage } from '@/features/admin/components/PeoplePage';
+import { PermissionsPage } from '@/features/admin/components/PermissionsPage';
+import { PersonPage } from '@/features/admin/components/PersonPage';
+import { RolesPage } from '@/features/admin/components/RolesPage';
 import { PATHS } from './paths';
 
 // The built screens by design screen name (FE-9 / FE-10); the rest keep the placeholder until built.
@@ -21,6 +25,10 @@ const PAGES: Record<string, ComponentType> = {
   admin_finance: FinancePage,
   admin_hub: HubPage,
   admin_exports: ExportsPage,
+  admin_people: PeoplePage,
+  admin_person: PersonPage,
+  admin_roles: RolesPage,
+  admin_permissions: PermissionsPage,
 };
 
 // /admin/* — admin console, screens 56–88 (ARCHITECTURE.md §4). Every page needs a grant

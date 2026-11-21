@@ -45,7 +45,7 @@ export const PEOPLE: Person[] = [
     email: 'ngozi@example.com',
     usHubKey: 'atlanta',
     joinedOn: '2025-10-01',
-    grants: [grant('CHAPTER_ADMIN', '2025-10-01'), grant('HUB_CO_AMBASSADOR', '2026-09-01', 'Kofi Boateng', { scopeType: 'HUB', scopeId: 'atlanta' })],
+    grants: [grant('CHAPTER_ADMIN', '2025-10-01', 'Kofi Boateng'), grant('HUB_CO_AMBASSADOR', '2026-09-01', 'Kofi Boateng', { scopeType: 'HUB', scopeId: 'atlanta' })],
     listed: false,
   }),
   person({ id: 'u-tunde', fullName: 'Tunde Ade', email: 'tunde@example.com', usHubKey: 'atlanta', joinedOn: '2026-11-16', grants: [], listed: false }),

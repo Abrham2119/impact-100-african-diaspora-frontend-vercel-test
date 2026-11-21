@@ -244,7 +244,8 @@
 .ixd_demo_user span { color: var(--ixMuted); font-size: 13px; }
 
 /* Admin console (FE-9): sortable table headers look exactly like the design's header text */
-.ixd_th_sort {
+.ixd_th_sort,
+.ixd_plain_btn {
   background: none !important;
   border: 0 !important;
   padding: 0 !important;
@@ -256,5 +257,7 @@
   text-align: inherit !important;
   cursor: pointer;
 }
-.ixd_th_sort:focus-visible { outline: 2px solid var(--colorPrimary); outline-offset: 2px; }
+.ixd_plain_btn { cursor: pointer; }
+.ixd_th_sort:focus-visible,
+.ixd_plain_btn:focus-visible { outline: 2px solid var(--colorPrimary); outline-offset: 2px; }
 .ixd_sort_icon { margin-left: 6px; font-size: 11px; }

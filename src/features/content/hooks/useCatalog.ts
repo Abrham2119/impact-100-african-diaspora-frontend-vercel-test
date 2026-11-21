@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { useLocale } from '@/i18n/useLocale';
 import { useCollection } from './useContent';
 
-// Display names of the shared reference data (C:countries, C:portfolios, C:us_hubs) by key, for
+// Display names of the shared reference data (C:countries, C:portfolios, C:us_hubs, C:committees) by key, for
 // screens that hold only keys (portal, admin). "Diaspora Engagement · Impact 100" = portfolio · flagship.
 const ALL = 100;
 
@@ -11,6 +11,7 @@ export function useCatalog() {
   const countries = useCollection({ collection: 'countries', limit: ALL }, locale);
   const portfolios = useCollection({ collection: 'portfolios', limit: ALL }, locale);
   const hubs = useCollection({ collection: 'us_hubs', limit: ALL }, locale);
+  const committees = useCollection({ collection: 'committees', limit: ALL }, locale);
 
   const names = useMemo(() => {
     const pick = (entries: Array<{ key: string; fields: Record<string, unknown> }> | undefined, field: string) =>
@@ -20,19 +21,24 @@ export function useCatalog() {
       portfolios: pick(portfolios.data?.entries, 'name'),
       flagships: pick(portfolios.data?.entries, 'flagship'),
       hubs: pick(hubs.data?.entries, 'name'),
+      committees: pick(committees.data?.entries, 'name'),
       countryList: (countries.data?.entries ?? []).map((e) => e.key),
       /** the three featured hubs (Ghana, Kenya, Zambia) — the countries grants and suggestions are for */
       featuredList: (countries.data?.entries ?? []).filter((e) => e.data?.featured === true).map((e) => e.key),
       portfolioList: (portfolios.data?.entries ?? []).map((e) => e.key),
       hubList: (hubs.data?.entries ?? []).map((e) => e.key),
+      committeeList: (committees.data?.entries ?? []).map((e) => e.key),
     };
-  }, [countries.data, portfolios.data, hubs.data]);
+  }, [countries.data, portfolios.data, hubs.data, committees.data]);
 
   const country = useCallback((key: string | null | undefined) => (key ? (names.countries.get(key) ?? key) : ''), [names]);
   const hub = useCallback((key: string | null | undefined) => (key ? (names.hubs.get(key) ?? key) : ''), [names]);
+  const committee = useCallback((key: string | null | undefined) => (key ? (names.committees.get(key) ?? key) : ''), [names]);
+  /** the portfolio's name without its flagship ("Diaspora Engagement") */
+  const portfolioName = useCallback((key: string | null | undefined) => (key ? (names.portfolios.get(key) ?? key) : ''), [names]);
   const portfolio = useCallback(
     (key: string | null | undefined) => (key ? `${names.portfolios.get(key) ?? key} · ${names.flagships.get(key) ?? ''}` : ''),
     [names],
   );
-  return { country, hub, portfolio, countryKeys: names.countryList, featuredCountryKeys: names.featuredList, portfolioKeys: names.portfolioList, hubKeys: names.hubList };
+  return { country, hub, committee, portfolio, portfolioName, countryKeys: names.countryList, featuredCountryKeys: names.featuredList, portfolioKeys: names.portfolioList, hubKeys: names.hubList, committeeKeys: names.committeeList };
 }
