@@ -17,7 +17,11 @@ function useGovQuery<T>(name: string, fn: () => Promise<T>, enabled = true) {
 
 function useGovMutation<V, R>(fn: (value: V) => Promise<R>) {
   const queryClient = useQueryClient();
-  return useMutation({ mutationFn: fn, onSuccess: () => queryClient.invalidateQueries({ queryKey: KEY }) });
+  // the admin console reads the same records (nominations queue, signature register, review board)
+  return useMutation({
+    mutationFn: fn,
+    onSuccess: () => Promise.all([queryClient.invalidateQueries({ queryKey: KEY }), queryClient.invalidateQueries({ queryKey: ['admin'] })]),
+  });
 }
 
 export const useBallot = () => useGovQuery('ballot', governanceRepository.ballot);

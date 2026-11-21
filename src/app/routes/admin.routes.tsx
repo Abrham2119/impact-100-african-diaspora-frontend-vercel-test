@@ -10,21 +10,36 @@ import type { UiKey } from '@/features/content/fixtures/en/ui';
 import type { ComponentType } from 'react';
 import { ScreenPlaceholder } from '@/pages/ScreenPlaceholder';
 import { ApprovalsPage } from '@/features/admin/components/ApprovalsPage';
+import { AuditEntryPage } from '@/features/admin/components/AuditEntryPage';
+import { AuditPage } from '@/features/admin/components/AuditPage';
+import { BallotsPage } from '@/features/admin/components/BallotsPage';
 import { CampaignsPage } from '@/features/admin/components/CampaignsPage';
 import { DashboardPage } from '@/features/admin/components/DashboardPage';
+import { DecisionsPage } from '@/features/admin/components/DecisionsPage';
+import { DeliveryPage } from '@/features/admin/components/DeliveryPage';
+import { EmailsPage } from '@/features/admin/components/EmailsPage';
 import { ExportsPage } from '@/features/admin/components/ExportsPage';
 import { FinancePage } from '@/features/admin/components/FinancePage';
 import { FlagsPage } from '@/features/admin/components/FlagsPage';
 import { HubPage } from '@/features/admin/components/HubPage';
 import { LedgerPage } from '@/features/admin/components/LedgerPage';
+import { NominationsPage } from '@/features/admin/components/NominationsPage';
 import { OfflinePaymentPage } from '@/features/admin/components/OfflinePaymentPage';
 import { PeoplePage } from '@/features/admin/components/PeoplePage';
 import { PermissionsPage } from '@/features/admin/components/PermissionsPage';
 import { PersonPage } from '@/features/admin/components/PersonPage';
+import { ProposalFormPage } from '@/features/admin/components/ProposalFormPage';
+import { PublishPage } from '@/features/admin/components/PublishPage';
 import { ReconciliationPage } from '@/features/admin/components/ReconciliationPage';
+import { ReviewBoardPage } from '@/features/admin/components/ReviewBoardPage';
 import { RolesPage } from '@/features/admin/components/RolesPage';
+import { RoutingPage } from '@/features/admin/components/RoutingPage';
+import { RubricPage } from '@/features/admin/components/RubricPage';
 import { SettingsHistoryPage } from '@/features/admin/components/SettingsHistoryPage';
 import { SettingsPage } from '@/features/admin/components/SettingsPage';
+import { SignaturesPage } from '@/features/admin/components/SignaturesPage';
+import { SignupsPage } from '@/features/admin/components/SignupsPage';
+import { SubmissionsPage } from '@/features/admin/components/SubmissionsPage';
 import { PATHS } from './paths';
 
 // The built screens by design screen name (FE-9 / FE-10); the rest keep the placeholder until built.
@@ -45,6 +60,21 @@ const PAGES: Record<string, ComponentType> = {
   admin_offline: OfflinePaymentPage,
   admin_flags: FlagsPage,
   admin_reconciliation: ReconciliationPage,
+  admin_ballots: BallotsPage,
+  admin_proposal_form: ProposalFormPage,
+  admin_decisions: DecisionsPage,
+  admin_publish: PublishPage,
+  admin_nominations: NominationsPage,
+  admin_signatures: SignaturesPage,
+  admin_rubric: RubricPage,
+  admin_review_board: ReviewBoardPage,
+  admin_signups: SignupsPage,
+  admin_submissions: SubmissionsPage,
+  admin_routing: RoutingPage,
+  admin_emails: EmailsPage,
+  admin_delivery: DeliveryPage,
+  admin_audit: AuditPage,
+  admin_audit_entry: AuditEntryPage,
 };
 
 // /admin/* — admin console, screens 56–88 (ARCHITECTURE.md §4). Every page needs a grant

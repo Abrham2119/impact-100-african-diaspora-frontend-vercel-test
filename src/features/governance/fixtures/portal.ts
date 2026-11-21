@@ -126,9 +126,12 @@ export const AMENDMENTS: Amendment[] = [
     authorName: 'Efua A.',
     authorLevel: 'Innovator',
     circulatedOn: '2027-01-12',
+    sectionShort: '6. Quorum',
+    changeShort: 'Lower quorum to 40% for non-grant decisions',
   },
-  { id: 'a-student-level', section: '3. Membership and levels', change: 'Add a Student level at $100 with no vote.', status: 'CIRCULATING' },
-  { id: 'a-november-installments', section: '2. Campaign cycle', change: 'Allow installment plans to start in November.', status: 'ADOPTED' },
+  { id: 'a-student-level', section: '3. Membership and levels', change: 'Add a Student level at $100 with no vote.', status: 'CIRCULATING', sectionShort: '3. Membership' },
+  // circulated and adopted into Charter v1.0 (admin_decisions.dc.html)
+  { id: 'a-november-installments', section: '2. Campaign cycle', change: 'Allow installment plans to start in November.', status: 'ADOPTED', sectionShort: '2. Cycle', circulatedOn: '2025-12-01', adoptedIn: 'v1.0' },
 ];
 
 export const FINANCIALS: CycleFinancials = {
@@ -151,12 +154,20 @@ export const CLOSED_VOTES: ClosedVote[] = [
 /** suggestions allowed per member per cycle */
 export const NOMINATION_LIMIT = 10;
 
+// Amara's (portal_suggest) and the other members' in the admin queue (admin_nominations.dc.html), in the queue's order.
 export const NOMINATIONS: Nomination[] = [
   { id: 'n1', userId: 'u-amara', type: 'NOMINEE', title: 'Nairobi youth tech centre', countryKey: 'kenya', status: 'IN_REVIEW', reviewerNote: 'Committee visiting in March' },
+  { id: 'n3', userId: 'u-grace', type: 'PROPOSAL', title: 'Solar power for rural clinics', countryKey: 'zambia', status: 'SUBMITTED', reviewerNote: null },
   { id: 'n2', userId: 'u-amara', type: 'PRIORITY', title: 'More hub events in the South', countryKey: null, status: 'ACCEPTED', reviewerNote: 'Added to the work plan' },
+  { id: 'n4', userId: 'u-david', type: 'PROPOSAL', title: 'Girls’ football league', countryKey: 'ghana', status: 'ACCEPTED', reviewerNote: null, submitterName: 'D. Otieno' },
 ];
 
-export const SIGNATURES: CharterSignature[] = [];
+// The signature register (admin_signatures.dc.html): ET wall clock, newest first. Amara hasn't signed yet.
+export const SIGNATURES: CharterSignature[] = [
+  { userId: 'u-wanjiru', typedName: 'Wanjiru Kamau', signedAt: '2027-01-04T10:12', version: 'v1.0 (2026)', ip: '198.51.100.7' },
+  { userId: 'u-kofi', typedName: 'Kofi Boateng', signedAt: '2026-12-02T21:40', version: 'v1.0 (2026)', ip: '203.0.113.9' },
+  { userId: 'u-ngozi', typedName: 'Ngozi Eze', signedAt: '2026-11-30T08:03', version: 'v1.0 (2026)', ip: '192.0.2.44' },
+];
 export const CHARTER_VERSION = 'v1.0 (2026)';
 
 export const SCORING_CRITERIA: ScoringCriterion[] = [

@@ -15,7 +15,7 @@ export interface MockStore<T> {
 
 const registry: Array<MockStore<unknown>> = [];
 /** bump when a fixture shape changes, so old saved demo data is dropped */
-const VERSION = 1;
+const VERSION = 2;
 
 export function createMockStore<T>(name: string, seed: () => T): MockStore<T> {
   const key = `ix_mock:${name}:v${VERSION}`;
@@ -71,4 +71,12 @@ export function createMockStore<T>(name: string, seed: () => T): MockStore<T> {
 /** Restores every mock store to its fixtures (the demo switcher's "reset demo data"). */
 export function resetDemoData(): void {
   registry.forEach((store) => store.reset());
+  // stores whose module hasn't loaded yet (a lazy screen) still drop their saved data
+  try {
+    Object.keys(localStorage)
+      .filter((key) => key.startsWith('ix_mock:'))
+      .forEach((key) => localStorage.removeItem(key));
+  } catch {
+    // storage unavailable: nothing saved
+  }
 }

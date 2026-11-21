@@ -1,6 +1,8 @@
 import type { Person, PersonRow, SettingsChange } from '@/domain/entities/admin.types';
 import type { ChapterRoleName } from '@/domain/enums/role.enum';
+import { AdminError } from '@/domain/rules/admin';
 import type { useT } from '@/i18n/useT';
+import { formatDate, formatDayMonth } from '@/lib/format';
 
 // Shared admin labels (roles, tags, short hub names) built from the `admin` UiStrings.
 type T = ReturnType<typeof useT<'admin'>>;
@@ -32,3 +34,13 @@ export const shortName = (fullName: string) => {
   const [first = '', ...rest] = fullName.trim().split(/\s+/);
   return rest.length ? `${first.charAt(0)}. ${rest.join(' ')}` : first;
 };
+
+/** The message of a refused admin action (`error.<code>`), or the generic one. */
+export const adminErrorText = (t: T, error: unknown) => (error instanceof AdminError ? t(`error.${error.code}` as 'error.generic') : t('error.generic'));
+
+/** "Feb 15 – Mar 1, 2027" (same year) / "Dec 1, 2026 – Jan 5, 2027" — a ballot window. */
+export const windowText = (t: T, opensOn: string, closesOn: string, locale: string) =>
+  t('decisions.range', { from: opensOn.slice(0, 4) === closesOn.slice(0, 4) ? formatDayMonth(opensOn, locale) : formatDate(opensOn, locale), to: formatDate(closesOn, locale) });
+
+/** "2026-11-17T11:40" → { date: "Nov 17, 2026", time: "11:40" } (ET wall clock, as stored) */
+export const stampParts = (stamp: string, locale: string) => ({ date: formatDate(stamp.slice(0, 10), locale), time: stamp.slice(11, 16) });

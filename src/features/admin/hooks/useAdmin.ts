@@ -1,6 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '@/store/authStore';
 import { charterRepository } from '../api/charterRepository';
+import { engagementAdminRepository } from '../api/engagementAdminRepository';
+import { adminGovernanceRepository as gov } from '../api/governanceAdminRepository';
+import { systemRepository } from '../api/systemRepository';
 import { auditRepository, exportsRepository } from '../api/exportsRepository';
 import { adminOverviewRepository } from '../api/overviewRepository';
 import { paymentsRepository } from '../api/paymentsRepository';
@@ -26,6 +29,7 @@ function useAdminMutation<V, R>(fn: (value: V) => Promise<R>) {
         queryClient.invalidateQueries({ queryKey: ['membership'] }),
         queryClient.invalidateQueries({ queryKey: ['governance'] }),
         queryClient.invalidateQueries({ queryKey: ['profile'] }),
+        queryClient.invalidateQueries({ queryKey: ['engagement'] }),
       ]),
   });
 }
@@ -62,6 +66,42 @@ export const useFinanceFlags = () => useAdminQuery('flags', paymentsRepository.f
 export const useResolveFlag = () => useAdminMutation(paymentsRepository.resolveFlag);
 export const useReconciliation = () => useAdminQuery('reconciliation', paymentsRepository.reconciliation);
 export const useRunReconciliation = () => useAdminMutation(paymentsRepository.runReconciliation);
-// Audit (screens in FE-10)
+// Governance (FE-10)
+export const useAdminBallots = () => useAdminQuery('ballots', gov.ballots);
+export const useOpenBallot = () => useAdminMutation(gov.openBallot);
+export const useEditBallotWindow = () => useAdminMutation(gov.editWindow);
+export const useAdminProposal = (id: string | null) => useAdminQuery(`proposal:${id}`, () => gov.proposal(id ?? ''), id !== null);
+export const useSaveProposal = () => useAdminMutation(gov.saveProposal);
+export const useAdminDecisions = () => useAdminQuery('decisions', gov.decisions);
+export const useCreateDecision = () => useAdminMutation(gov.createDecision);
+export const usePlaceOnBallot = () => useAdminMutation(gov.placeOnBallot);
+export const usePublications = () => useAdminQuery('publications', gov.publications);
+export const usePublishResult = () => useAdminMutation(gov.publish);
+export const useAddNotice = () => useAdminMutation(gov.addNotice);
+export const useNominationQueue = () => useAdminQuery('nominations', gov.nominations);
+export const useSetNominationStatus = () => useAdminMutation(gov.setNominationStatus);
+export const useConvertNomination = () => useAdminMutation(gov.convertNomination);
+export const useSignatureRegister = () => useAdminQuery('signatures', gov.signatures);
+export const useExportSignatures = () => useAdminMutation(gov.exportSignatures);
+export const useRubric = () => useAdminQuery('rubric', gov.rubric);
+export const useSaveRubric = () => useAdminMutation(gov.saveRubric);
+export const useReviewBoard = () => useAdminQuery('board', gov.board);
+export const useReviewerPool = () => useAdminQuery('reviewers', gov.reviewers);
+export const useAssignReviewer = () => useAdminMutation(gov.assignReviewer);
+export const useMoveToBallot = () => useAdminMutation(gov.moveToBallot);
+// Engagement (FE-10)
+export const useVolunteerSignups = () => useAdminQuery('signups', engagementAdminRepository.signups);
+export const useExportSignups = () => useAdminMutation(engagementAdminRepository.exportSignups);
+export const useSubmissions = () => useAdminQuery('submissions', engagementAdminRepository.submissions);
+export const useApproveStory = () => useAdminMutation(engagementAdminRepository.approveStory);
+export const useRoutingRules = () => useAdminQuery('routing', engagementAdminRepository.rules);
+export const useSaveRoutingRule = () => useAdminMutation(engagementAdminRepository.saveRule);
+// System (FE-10)
+export const useEmailTemplates = () => useAdminQuery('templates', systemRepository.templates);
+export const useSaveTemplate = () => useAdminMutation(systemRepository.saveTemplate);
+export const useSendTestEmail = () => useAdminMutation(systemRepository.sendTest);
+export const useDeliveries = () => useAdminQuery('deliveries', systemRepository.deliveries);
 export const useAuditLog = () => useAdminQuery('audit', auditRepository.list);
 export const useAuditEntry = (id: string | undefined) => useAdminQuery(`audit:${id}`, () => auditRepository.entry(id ?? ''), id !== undefined);
+export const useAuditChain = () => useAdminQuery('audit:chain', auditRepository.verifyChain);
+export const useExportAudit = () => useAdminMutation(auditRepository.exportCsv);

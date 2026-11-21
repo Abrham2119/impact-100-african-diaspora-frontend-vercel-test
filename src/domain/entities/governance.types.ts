@@ -83,6 +83,11 @@ export interface Amendment {
   authorName?: string;
   authorLevel?: string;
   circulatedOn?: string;
+  /** the admin table's short forms (admin_decisions: "6. Quorum"); default: section / change */
+  sectionShort?: string;
+  changeShort?: string;
+  /** the charter version an adopted amendment went into */
+  adoptedIn?: string;
 }
 
 export interface ClosedVote {
@@ -121,6 +126,31 @@ export interface Nomination {
   contact?: string;
   status: NominationStatus;
   reviewerNote: string | null;
+  /** how the queue names the submitter when the design shows it differently (admin_nominations "D. Otieno") */
+  submitterName?: string;
+  /** the proposal draft an accepted proposal idea was converted to */
+  draftProposalId?: string;
+}
+
+export type AdminProposalStatus = 'DRAFT' | 'PUBLISHED';
+/**
+ * A proposal written in the admin console (admin_proposal_form). Published ones join the grant
+ * ballot in the portal and the Grants page's "Under review".
+ */
+export interface AdminProposal {
+  id: string;
+  orgName: string;
+  countryKey: string;
+  portfolioKey: string;
+  budgetCents: number;
+  summary: string;
+  conflicts: string;
+  /** "2027-02-15T09:00" (datetime-local, ET) or '' */
+  opensAt: string;
+  closesAt: string;
+  status: AdminProposalStatus;
+  createdOn: string;
+  fromNominationId: string | null;
 }
 
 export interface CharterSignature {

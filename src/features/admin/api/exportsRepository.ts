@@ -1,9 +1,11 @@
 import type { AuditEntry, ExportDataset, ExportRecord } from '@/domain/entities/admin.types';
 import { AdminError } from '@/domain/rules/admin';
+import { auditHash, chainLinksHold } from '@/domain/rules/audit';
 import { governanceRepository } from '@/features/governance/api/governanceRepository';
 import { ledgerMockStore } from '@/features/membership/api/ledgerStore';
 import { mockResponse } from '@/infrastructure/api/mock';
 import { HUB_SIGNUPS } from '../fixtures/chapter';
+import { AUDIT } from '../fixtures/exports';
 import { actor, adminMockStore, auditMockStore, nowStamp, recordAudit } from './adminMockStore';
 import { peopleRepository } from './peopleRepository';
 
@@ -19,6 +21,10 @@ export interface ExportsRepository {
 export interface AuditRepository {
   list(): Promise<AuditEntry[]>;
   entry(id: string): Promise<AuditEntry | null>;
+  /** the chain holds: every entry links to the one before, and no entry was changed */
+  verifyChain(): Promise<boolean>;
+  /** a CSV of the entries shown (audited) */
+  exportCsv(ids: string[]): Promise<string>;
 }
 
 const csvOf = (rows: Array<Array<string | number>>) => rows.map((cells) => cells.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
@@ -74,9 +80,27 @@ export const mockExportsRepository: ExportsRepository = {
   },
 };
 
+/** Seeded entries carry the server's hashes; entries made in the demo are re-hashed to verify them. */
+const SEED_AUDIT_IDS = new Set(AUDIT.map((e) => e.id));
+
 export const mockAuditRepository: AuditRepository = {
   list: () => mockResponse(() => auditMockStore.read().entries),
   entry: (id) => mockResponse(() => auditMockStore.read().entries.find((e) => e.id === id) ?? null),
+  verifyChain: () =>
+    mockResponse(() => {
+      const entries = auditMockStore.read().entries;
+      return chainLinksHold(entries) && entries.filter((e) => !SEED_AUDIT_IDS.has(e.id)).every(({ hash, ...rest }) => auditHash(rest) === hash);
+    }),
+  exportCsv: (ids) =>
+    mockResponse(() => {
+      const wanted = new Set(ids);
+      const rows = auditMockStore
+        .read()
+        .entries.filter((e) => wanted.has(e.id))
+        .map((e) => [e.id, e.at, e.actorName, e.action, e.entity, e.hash]);
+      recordAudit({ action: 'export.created', entity: `Audit log · ${rows.length} rows` });
+      return csvOf([['id', 'when', 'actor', 'action', 'entity', 'hash'], ...rows]);
+    }),
 };
 
 /** The exports and audit repositories of the configured data source (INT-4 adds the HTTP implementations). */

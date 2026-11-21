@@ -1,5 +1,6 @@
 // The admin console's data (admin*.dc.html, BUSINESS_RULES "Admin"). Framework-free.
 import type { ChapterRole } from '@/domain/enums/role.enum';
+import type { VoteOutcome } from '@/domain/entities/governance.types';
 
 // ── People ────────────────────────────────────────────────────────────────────────────────────
 
@@ -211,6 +212,111 @@ export interface AuditEntry {
   subjectId: string | null;
   before: string | null;
   after: string | null;
+  /** the entry page's fuller wording of the entity, when it differs from the list (admin_audit_entry) */
+  entityDetail?: string;
+  /** hash chain: this entry's hash, over its content and the previous entry's hash */
+  hash: string;
+  prevHash: string | null;
+}
+
+// ── Governance ───────────────────────────────────────────────────────────────────────────────
+
+export type BallotSubject = 'PROPOSALS' | 'DECISION' | 'AMENDMENT';
+export type AdminBallotStatus = 'SCHEDULED' | 'OPEN' | 'CLOSED' | 'PUBLISHED';
+/** A ballot window (admin_ballots): opening starts voting; closing freezes the eligible-voter count. */
+export interface AdminBallot {
+  id: string;
+  title: string;
+  subject: BallotSubject;
+  /** the decision or amendment on the ballot (null for the grant ballot, whose items are its proposals) */
+  subjectId: string | null;
+  /** ISO dates */
+  opensOn: string;
+  closesOn: string;
+  /** eligible voters frozen at close; null while the count is live */
+  frozenEligible: number | null;
+  status: AdminBallotStatus;
+}
+export interface AdminBallotRow extends AdminBallot {
+  /** proposals on a grant ballot */
+  proposals: number;
+  /** frozen, or the live voting-eligible count */
+  eligible: number;
+}
+
+/** A closed ballot's result (admin_publish): counts from the rules engine, published once, never edited. */
+export interface ResultPublication {
+  id: string;
+  /** the ballot it closes (published together) */
+  ballotId: string | null;
+  title: string;
+  eligible: number;
+  yes: number;
+  no: number;
+  abstain: number;
+  /** members who took part (must equal yes + no + abstain) */
+  participations: number;
+  /** the quorum it is decided under */
+  quorumPct: number;
+  status: 'READY' | 'PUBLISHED';
+  publishedOn: string | null;
+  /** a correction notice added after publishing */
+  notice: string | null;
+  noticeOn: string | null;
+}
+export interface PublicationRow extends ResultPublication {
+  outcome: VoteOutcome;
+}
+
+export type BoardStatus = 'UNDER_REVIEW' | 'SCORED' | 'ON_BALLOT';
+/** The review board's figures per proposal (admin_review_board), before the demo's reviews. */
+export interface BoardBaseline {
+  proposalId: string;
+  reviewers: number;
+  submitted: number;
+  recused: number;
+  /** the committee's weighted total so far (null until scored) */
+  weightedTotal: number | null;
+  movedToBallot: boolean;
+}
+export interface BoardRow {
+  proposalId: string;
+  title: string;
+  reviewers: number;
+  submitted: number;
+  recused: number;
+  weightedTotal: number | null;
+  status: BoardStatus;
+  /** people assigned in the portal (can't be assigned twice) */
+  assignedIds: string[];
+}
+
+// ── System ───────────────────────────────────────────────────────────────────────────────────
+
+export type TemplateCategory = 'TRANSACTIONAL' | 'VOTE_NOTICES';
+export interface EmailTemplate {
+  id: string;
+  name: string;
+  category: TemplateCategory;
+  attachment: 'ICS' | 'PDF' | null;
+  /** ISO date */
+  editedOn: string;
+  subject: string;
+  body: string;
+  /** the [variables] a template may use */
+  variables: string[];
+}
+
+export type DeliveryStatus = 'DELIVERED' | 'RETRYING' | 'BOUNCED' | 'SUPPRESSED';
+/** A send (admin_delivery). No personal data: recipients are record numbers. */
+export interface Delivery {
+  id: string;
+  /** ISO date-time (ET wall clock) */
+  sentAt: string;
+  templateId: string;
+  recipient: { type: 'MEMBER' | 'VISITOR'; ref: string } | { type: 'TEST' };
+  status: DeliveryStatus;
+  attempts: number;
 }
 
 // ── Overview ─────────────────────────────────────────────────────────────────────────────────

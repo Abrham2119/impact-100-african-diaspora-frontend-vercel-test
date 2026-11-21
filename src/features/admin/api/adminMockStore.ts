@@ -1,6 +1,7 @@
-import type { AdminCampaign, AuditEntry, ExportRecord, FinanceFlag, MatrixRow, Person, PersonActivity, ReconciliationRun } from '@/domain/entities/admin.types';
+import type { AdminCampaign, AuditEntry, Delivery, EmailTemplate, ExportRecord, FinanceFlag, MatrixRow, Person, PersonActivity, ReconciliationRun } from '@/domain/entities/admin.types';
 import type { ChapterRole } from '@/domain/enums/role.enum';
 import type { SessionUser } from '@/domain/entities/session.types';
+import { auditHash } from '@/domain/rules/audit';
 import { summarizeMembership } from '@/domain/rules/membership';
 import { membershipMockStore } from '@/features/membership/api/memberRepository';
 import { settingsService } from '@/features/membership/api/settingsService';
@@ -13,6 +14,7 @@ import { AUDIT, EXPORTS } from '../fixtures/exports';
 import { FLAGS, RECONCILIATION_RUNS } from '../fixtures/payments';
 import { MATRIX } from '../fixtures/permissions';
 import { ACTIVITY, PEOPLE } from '../fixtures/people';
+import { DELIVERIES, TEMPLATES } from '../fixtures/system';
 
 // The admin console's mock data (FE-9): people and their role grants, campaigns, finance flags,
 // reconciliation runs, exports, the permission matrix and the audit log. Seeded with the design's
@@ -27,6 +29,8 @@ export const adminMockStore = createMockStore('admin', () => ({
   matrix: MATRIX as MatrixRow[],
 }));
 export const auditMockStore = createMockStore('audit', () => ({ entries: AUDIT as AuditEntry[] }));
+/** Email templates and the delivery log (FE-10). */
+export const systemMockStore = createMockStore('system', () => ({ templates: TEMPLATES as EmailTemplate[], deliveries: DELIVERIES as Delivery[] }));
 
 export const today = () => new Date().toISOString().slice(0, 10);
 /** "2026-11-21T14:05" — local wall clock, as the audit log and exports show it */
@@ -56,13 +60,14 @@ export function actor(): { id: string | null; name: string; role: string | null 
   return { id, name: person ? withProfile(person).fullName : (session?.fullName ?? ''), role };
 }
 
-/** Appends an entry to the audit log (append-only; ids continue the design's numbering). */
+/** Appends an entry to the audit log (append-only, hash-chained; ids continue the design's numbering). */
 export function recordAudit(entry: Pick<AuditEntry, 'action' | 'entity'> & Partial<Pick<AuditEntry, 'subjectId' | 'before' | 'after'>>): void {
   const who = actor();
   auditMockStore.mutate((db) => {
     const next = db.entries.reduce((max, e) => Math.max(max, Number(e.id) || 0), 0) + 1;
-    db.entries.unshift({
+    const record: Omit<AuditEntry, 'hash'> = {
       id: String(next),
+      prevHash: db.entries[0]?.hash ?? null,
       at: nowStamp(),
       actorId: who.id,
       actorName: who.name,
@@ -72,7 +77,8 @@ export function recordAudit(entry: Pick<AuditEntry, 'action' | 'entity'> & Parti
       after: entry.after ?? null,
       action: entry.action,
       entity: entry.entity,
-    });
+    };
+    db.entries.unshift({ ...record, hash: auditHash(record) });
   });
 }
 

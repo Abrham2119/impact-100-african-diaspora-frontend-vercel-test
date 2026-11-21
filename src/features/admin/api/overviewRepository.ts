@@ -6,6 +6,9 @@ import { mockResponse } from '@/infrastructure/api/mock';
 import { CHAPTER, HUB_EVENTS, HUB_SIGNUPS, HUBS } from '../fixtures/chapter';
 import { adminMockStore, withProfile } from './adminMockStore';
 import { demoDelta } from './chapterFigures';
+import { pendingStories, SEED_PENDING_STORIES } from './engagementAdminRepository';
+import { SEED_NOMINATIONS_IN_REVIEW } from './governanceAdminRepository';
+import { governanceMockStore } from '@/features/governance/api/governanceRepository';
 
 // Overview (backend §4.7 admin dashboard, funnel, finance, hub summary): the chapter dashboard,
 // finance overview and a hub's dashboard. Contract for INT-4 + the mock (design baseline + the demo's changes).
@@ -39,8 +42,9 @@ export const mockAdminOverviewRepository: AdminOverviewRepository = {
         attention: {
           approvals: charterSettingsMockStore.read().changes.filter((c) => c.status === 'PENDING').length,
           flags: pos(CHAPTER.attention.flags + d.openFlags),
-          nominations: CHAPTER.attention.nominations,
-          stories: CHAPTER.attention.stories,
+          // the design's figures, moved by the queues' changes in the demo (FE-10)
+          nominations: pos(CHAPTER.attention.nominations + governanceMockStore.read().nominations.filter((n) => n.status === 'IN_REVIEW').length - SEED_NOMINATIONS_IN_REVIEW),
+          stories: pos(CHAPTER.attention.stories + pendingStories() - SEED_PENDING_STORIES),
         },
       };
     });

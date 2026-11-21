@@ -17,7 +17,17 @@ export type AdminErrorCode =
   | 'NOT_FOUND'
   | 'EMAIL_TAKEN'
   | 'NO_PLEDGE'
-  | 'AMOUNT';
+  | 'AMOUNT'
+  // governance, engagement, system (FE-10)
+  | 'STATE'
+  | 'DUPLICATE'
+  | 'WINDOW'
+  | 'RUBRIC_TOTAL'
+  | 'NOT_CIRCULATED'
+  | 'COUNTS'
+  | 'UNKNOWN_VARIABLE'
+  | 'ALREADY_ASSIGNED'
+  | 'REQUIRED';
 
 export class AdminError extends Error {
   constructor(public readonly code: AdminErrorCode) {
@@ -114,3 +124,30 @@ export function checkAdminRemoval(people: Person[], target: Person): void {
   if (!holds(target, 'CHAPTER_ADMIN')) return;
   if (people.filter((p) => holds(p, 'CHAPTER_ADMIN')).length <= MIN_CHAPTER_ADMINS) throw new AdminError('LAST_ADMINS');
 }
+
+// ── Governance (FE-10) ───────────────────────────────────────────────────────────────────────
+
+/** Where a ballot window stands on a date: before it opens, open, or closed. */
+export const windowStatus = (opensOn: string, closesOn: string, on: string): 'SCHEDULED' | 'OPEN' | 'CLOSED' =>
+  on < opensOn ? 'SCHEDULED' : on <= closesOn ? 'OPEN' : 'CLOSED';
+
+/** A ballot window must close after it opens. */
+export function checkWindow(opensOn: string, closesOn: string): void {
+  const date = /^\d{4}-\d{2}-\d{2}/;
+  if (!date.test(opensOn) || !date.test(closesOn) || closesOn <= opensOn) throw new AdminError('WINDOW');
+}
+
+/** Rubric weights are whole percentages that add up to 100 (set by the Grants Selection committee). */
+export const rubricTotal = (weights: number[]): number => weights.reduce((sum, w) => sum + (Number.isFinite(w) ? w : 0), 0);
+export function checkRubric(weights: number[]): void {
+  if (weights.some((w) => !Number.isInteger(w) || w < 0 || w > 100) || rubricTotal(weights) !== 100) throw new AdminError('RUBRIC_TOTAL');
+}
+
+/** Results reconcile when Yes + No + Abstain equals the participations. */
+export const countsReconcile = (r: { yes: number; no: number; abstain: number; participations: number }): boolean => r.yes + r.no + r.abstain === r.participations;
+
+// ── System (FE-10) ───────────────────────────────────────────────────────────────────────────
+
+/** The [variables] used in a template text that the template doesn't offer (must resolve before sending). */
+export const unknownVariables = (text: string, allowed: string[]): string[] =>
+  [...new Set([...text.matchAll(/\[([a-z_]+)\]/g)].map((m) => m[1]))].filter((v) => !allowed.includes(v));

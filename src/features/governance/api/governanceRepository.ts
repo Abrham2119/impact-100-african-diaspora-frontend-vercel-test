@@ -22,6 +22,7 @@ import { profileMockStore } from '@/features/profile/api/profileRepository';
 import { mockResponse } from '@/infrastructure/api/mock';
 import { currentMockUserId } from '@/infrastructure/mock/currentUser';
 import { createMockStore } from '@/infrastructure/mock/mockStore';
+import { currentBallot, currentRubric, publishedBallotProposals } from './governanceAdminStore';
 import {
   AMENDMENTS,
   BALLOT,
@@ -36,7 +37,6 @@ import {
   PARTICIPATIONS,
   PROPOSALS,
   REVIEWS,
-  SCORING_CRITERIA,
   SIGNATURES,
   receiptFor,
 } from '../fixtures/portal';
@@ -106,6 +106,8 @@ const store = createMockStore('governance', () => ({
   reviews: REVIEWS,
 }));
 
+/** The grant ballot's items: the design's proposals, then the ones published in the admin console. */
+const ballotProposals = (): BallotProposal[] => [...PROPOSALS, ...publishedBallotProposals()];
 const today = () => new Date().toISOString().slice(0, 10);
 const me = () => {
   const id = currentMockUserId();
@@ -133,20 +135,20 @@ export const mockGovernanceRepository: GovernanceRepository = {
       const extra = Object.values(db.tallies);
       return {
         // an open ballot is counted under the charter settings in force (closed votes keep theirs)
-        ballot: { ...BALLOT, quorumPct: settingsService.seed().quorumPct },
-        proposals: PROPOSALS,
+        ballot: { ...currentBallot(), quorumPct: settingsService.seed().quorumPct },
+        proposals: ballotProposals(),
         mine: Object.fromEntries(db.participations.filter((p) => p.userId === userId).map((p) => [p.proposalId, p])),
         yesNo: BALLOT.baseYesNo + extra.reduce((sum, t) => sum + t.YES + t.NO, 0),
         abstain: BALLOT.baseAbstain + extra.reduce((sum, t) => sum + t.ABSTAIN, 0),
       };
     }),
-  proposal: (id) => mockResponse(() => PROPOSALS.find((p) => p.id === id) ?? null),
+  proposal: (id) => mockResponse(() => ballotProposals().find((p) => p.id === id) ?? null),
   castVote: ({ proposalId, choice }) =>
     mockResponse(() => {
       const userId = me();
       if (!membershipOf(userId)?.votingEligible) throw new GovernanceError('NOT_ELIGIBLE');
       if (store.read().participations.some((p) => p.userId === userId && p.proposalId === proposalId)) throw new GovernanceError('ALREADY_VOTED');
-      const index = PROPOSALS.findIndex((p) => p.id === proposalId);
+      const index = ballotProposals().findIndex((p) => p.id === proposalId);
       const participation: Participation = { userId, proposalId, receipt: receiptFor(Math.max(0, index)), castOn: today() };
       store.mutate((db) => {
         db.participations.push(participation);
@@ -158,7 +160,7 @@ export const mockGovernanceRepository: GovernanceRepository = {
   participation: (id) =>
     mockResponse(() => {
       const p = store.read().participations.find((x) => x.proposalId === id && x.userId === currentMockUserId());
-      const proposal = p && PROPOSALS.find((x) => x.id === p.proposalId);
+      const proposal = p && ballotProposals().find((x) => x.id === p.proposalId);
       return p && proposal ? { ...p, proposal } : null;
     }),
   comments: (targetId) => mockResponse(() => store.read().comments.filter((c) => c.targetId === targetId)),
@@ -236,11 +238,14 @@ export const mockGovernanceRepository: GovernanceRepository = {
     }),
   reviews: () =>
     mockResponse(() => ({
-      criteria: SCORING_CRITERIA,
+      criteria: currentRubric(),
       assignments: store
         .read()
         .reviews.filter((r) => r.reviewerId === currentMockUserId())
-        .map((r) => ({ ...r, proposal: PROPOSALS.find((p) => p.id === r.proposalId) as BallotProposal })),
+        .flatMap((r) => {
+          const proposal = ballotProposals().find((p) => p.id === r.proposalId);
+          return proposal ? [{ ...r, proposal }] : [];
+        }),
     })),
   saveReview: ({ proposalId, scores, comment, submit }) =>
     mockResponse(() => {

@@ -3,6 +3,7 @@ import { collectionsEn } from '@/features/content/fixtures/en/collections';
 import { mockResponse } from '@/infrastructure/api/mock';
 import type { PublicProposalDto, PublicProposalQueryDto } from '@/types/governance.dto';
 import { PUBLISHED, perCountry } from '../fixtures/proposals';
+import { publishedPublicProposals } from './governanceAdminStore';
 
 // Public proposals (`GET governance/proposals/public`). Mocked until Step 13: with a country the
 // mock answers the design's per-country sample, without one the published list.
@@ -21,7 +22,8 @@ function countryName(key: string): string {
 }
 
 function query(params: PublicProposalQueryDto): PublicProposal[] {
-  const list = params.country_key ? perCountry(params.country_key, countryName(params.country_key)) : PUBLISHED;
+  // the published list = the design's proposals + those published in the admin console (FE-10)
+  const list = params.country_key ? perCountry(params.country_key, countryName(params.country_key)) : [...PUBLISHED, ...publishedPublicProposals()];
   return list.filter((p) => !params.portfolio_key || p.portfolio_key === params.portfolio_key).map(toProposal);
 }
 
