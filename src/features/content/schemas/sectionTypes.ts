@@ -341,6 +341,10 @@ export const formBlock = defineSection('form_block', {
     consent_link: o(f.link()),
     /** a plain text link (`.ix_link`) under the side card */
     side_link: o(f.link()),
+    /** the "pay securely on WAZIImpact.org" line (shown with a lock icon) */
+    secure_note: o(f.text()),
+    /** a summary line with `{tokens}` filled by the component (donate: the gift summary) */
+    summary: o(f.text()),
     actions: o(f.links()),
   },
   media: { image: o(m.image()) },
@@ -348,6 +352,9 @@ export const formBlock = defineSection('form_block', {
     form_key: s.enumOf(FORM_KEYS, 'contact'),
     source: o(s.source('')),
     default_key: o(s.string()),
+    /** preset amounts in whole currency units (donate) and the preselected one */
+    amounts: o(s.numbers()),
+    default_amount: o(s.number()),
   },
   item: {
     fields: { title: o(f.text()), body: o(f.rich()), link: o(f.link()), value: o(f.text()) },

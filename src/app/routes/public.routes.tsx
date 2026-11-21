@@ -48,6 +48,8 @@ const CMS_COMPOSED = new Set<CmsPageKey>([
   'contact',
   'volunteer',
   'share_story',
+  'join',
+  'donate',
 ]);
 
 const page = (path: string | undefined, handle: RouteHandle): RouteObject => {

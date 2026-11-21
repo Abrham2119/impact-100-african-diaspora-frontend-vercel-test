@@ -31,10 +31,10 @@ function Inline({ node }: { node: RichInline }): ReactNode {
 
 const inlines = (nodes: RichInline[]) => nodes.map((node, i) => <Inline key={i} node={node} />);
 
-function Block({ block, plainLists }: { block: RichBlock; plainLists: boolean }) {
+function Block({ block, plainLists, paragraphClassName }: { block: RichBlock; plainLists: boolean; paragraphClassName?: string }) {
   switch (block.type) {
     case 'paragraph':
-      return <p>{inlines(block.children)}</p>;
+      return <p className={paragraphClassName}>{inlines(block.children)}</p>;
     case 'heading':
       return block.level === 3 ? <h3>{inlines(block.children)}</h3> : <h4>{inlines(block.children)}</h4>;
     case 'list': {
@@ -74,13 +74,16 @@ function Block({ block, plainLists }: { block: RichBlock; plainLists: boolean })
   }
 }
 
-/** `plainLists`: lists without `ix_list` (the template's article bodies: campaign, event, news details). */
-export function RichText({ value, plainLists = false }: { value: RichTextAst; plainLists?: boolean }) {
+/**
+ * `plainLists`: lists without `ix_list` (the template's article bodies: campaign, event, news details).
+ * `paragraphClassName`: a design class on every paragraph (e.g. the join "Done" text column).
+ */
+export function RichText({ value, plainLists = false, paragraphClassName }: { value: RichTextAst; plainLists?: boolean; paragraphClassName?: string }) {
   return (
     <>
       {value.map((block, i) => (
         <Fragment key={i}>
-          <Block block={block} plainLists={plainLists} />
+          <Block block={block} plainLists={plainLists} paragraphClassName={paragraphClassName} />
         </Fragment>
       ))}
     </>

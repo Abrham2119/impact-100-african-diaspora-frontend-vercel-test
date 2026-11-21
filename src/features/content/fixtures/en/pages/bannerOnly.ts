@@ -18,8 +18,6 @@ const only = (
 ): [string, PageTreeDto] => [key, page(key, path, { title: `Impact100 — ${seoTitle}` }, [banner(title, trail)])];
 
 export const bannerOnlyPagesEn: Record<string, PageTreeDto> = Object.fromEntries([
-  only('join', P.join, 'Become a member', 'Become a member', [['Opportunities', P.volunteer], 'Become a member']),
-  only('donate', P.donate, 'Donate', 'Donate', [['Opportunities', P.volunteer], 'Donate']),
   only('grants', P.grants, 'Grants', 'Grants & the Africa map', ['Grants']),
   only('auth_sign_in', A.signIn, 'Sign in', 'Member login', ['Member login']),
   only('auth_sign_up', A.signUp, 'Sign up', 'sign up', ['sign up']),

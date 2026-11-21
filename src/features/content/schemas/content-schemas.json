@@ -2064,6 +2064,18 @@
             "default_key": {
               "type": "string",
               "x-kind": "string"
+            },
+            "amounts": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "default": [],
+              "x-kind": "number_list"
+            },
+            "default_amount": {
+              "type": "number",
+              "x-kind": "number"
             }
           },
           "required": [],
@@ -2159,6 +2171,14 @@
             "side_link": {
               "$ref": "#/definitions/LocalizedLink",
               "x-kind": "link"
+            },
+            "secure_note": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "summary": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
             },
             "actions": {
               "$ref": "#/definitions/LocalizedLinkList",

@@ -26,3 +26,9 @@ export function formatLongDate(isoDate: string, locale: string): string {
     new Date(Date.UTC(year, month - 1, day)),
   );
 }
+
+/** "03-31" (a cycle boundary, MM-DD) → "March 31" (en). */
+export function formatMonthDay(monthDay: string, locale: string): string {
+  const [month, day] = monthDay.split('-').map(Number);
+  return new Intl.DateTimeFormat(locale, { month: 'long', day: 'numeric', timeZone: 'UTC' }).format(new Date(Date.UTC(2000, month - 1, day)));
+}

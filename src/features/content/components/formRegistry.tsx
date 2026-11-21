@@ -5,6 +5,8 @@ import { HubJoin } from '@/features/engagement/components/HubJoin';
 import { RoleBrowser } from '@/features/engagement/components/RoleBrowser';
 import { ShareStoryForm } from '@/features/engagement/components/ShareStoryForm';
 import { CancelGift } from '@/features/membership/components/CancelGift';
+import { DonateForm } from '@/features/membership/components/DonateForm';
+import { JoinWizard } from '@/features/membership/components/JoinWizard';
 import type { SectionData } from '../schemas/defineSection';
 import type { FORM_KEYS, formBlock } from '../schemas/sectionTypes';
 
@@ -20,4 +22,6 @@ export const FORM_REGISTRY: Partial<Record<(typeof FORM_KEYS)[number], FormBlock
   contact: ContactForm,
   volunteer: RoleBrowser,
   share_story: ShareStoryForm,
+  join: JoinWizard,
+  donate: DonateForm,
 };

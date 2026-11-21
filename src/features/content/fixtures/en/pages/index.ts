@@ -17,6 +17,7 @@ import {
 } from './eventsNews';
 import { contactPageEn, shareStoryPageEn, volunteerPageEn } from './forms';
 import { homeEn } from './home';
+import { donatePageEn, joinPageEn } from './joinDonate';
 import { donorsPageEn, faqPageEn, photosPageEn, testimonialsPageEn, videosPageEn, volunteersPageEn } from './lists';
 import { newsletterConfirmedEn, newsletterUnsubscribedEn, privacyEn } from './notices';
 import { nonprofitsEn } from './nonprofits';
@@ -56,4 +57,6 @@ export const pagesEn: Record<string, PageTreeDto> = {
   contact: contactPageEn,
   volunteer: volunteerPageEn,
   share_story: shareStoryPageEn,
+  join: joinPageEn,
+  donate: donatePageEn,
 };
