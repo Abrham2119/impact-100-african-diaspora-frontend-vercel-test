@@ -228,6 +228,10 @@
 .ixd_cursor_default { cursor: default !important; }
 .ixd_pt18 { padding-top: 18px !important; }
 .ixd_mt0 { margin-top: 0 !important; }
+.ixd_lock_title { margin-top: 16px !important; font-weight: 800 !important; }
+.ixd_lock_text { max-width: 520px !important; margin: 10px auto 0 !important; }
+.ixd_sign_input { font-family: var(--cursiveFont) !important; font-size: 26px !important; }
+.ixd_signed_name { font-family: var(--cursiveFont) !important; font-size: 24px !important; color: var(--colorBlack) !important; }
 .ixd_result_center { text-align: left !important; max-width: 620px !important; margin: 24px auto 0 !important; }
 
 /* Demo role switcher (mock data only, FE-7) — built from design classes; positioned bottom-left,

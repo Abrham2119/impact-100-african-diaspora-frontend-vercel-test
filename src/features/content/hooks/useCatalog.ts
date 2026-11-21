@@ -21,6 +21,8 @@ export function useCatalog() {
       flagships: pick(portfolios.data?.entries, 'flagship'),
       hubs: pick(hubs.data?.entries, 'name'),
       countryList: (countries.data?.entries ?? []).map((e) => e.key),
+      /** the three featured hubs (Ghana, Kenya, Zambia) — the countries grants and suggestions are for */
+      featuredList: (countries.data?.entries ?? []).filter((e) => e.data?.featured === true).map((e) => e.key),
       portfolioList: (portfolios.data?.entries ?? []).map((e) => e.key),
       hubList: (hubs.data?.entries ?? []).map((e) => e.key),
     };
@@ -32,5 +34,5 @@ export function useCatalog() {
     (key: string | null | undefined) => (key ? `${names.portfolios.get(key) ?? key} · ${names.flagships.get(key) ?? ''}` : ''),
     [names],
   );
-  return { country, hub, portfolio, countryKeys: names.countryList, portfolioKeys: names.portfolioList, hubKeys: names.hubList };
+  return { country, hub, portfolio, countryKeys: names.countryList, featuredCountryKeys: names.featuredList, portfolioKeys: names.portfolioList, hubKeys: names.hubList };
 }

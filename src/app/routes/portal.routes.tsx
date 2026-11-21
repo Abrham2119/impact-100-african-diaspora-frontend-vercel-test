@@ -15,6 +15,9 @@ import { ProposalPage } from '@/features/portal/components/ProposalPage';
 import { ReceiptPage } from '@/features/portal/components/ReceiptPage';
 import { ResultPage } from '@/features/portal/components/ResultPage';
 import { ResultsPage } from '@/features/portal/components/ResultsPage';
+import { SignedPage } from '@/features/portal/components/SignedPage';
+import { SignPage } from '@/features/portal/components/SignPage';
+import { SuggestPage } from '@/features/portal/components/SuggestPage';
 import { VotePage } from '@/features/portal/components/VotePage';
 import { PATHS } from './paths';
 
@@ -29,6 +32,9 @@ const PAGES: Record<string, ComponentType> = {
   portal_amendment: AmendmentPage,
   portal_results: ResultsPage,
   portal_result: ResultPage,
+  portal_suggest: SuggestPage,
+  portal_sign: SignPage,
+  portal_signed: SignedPage,
 };
 
 // /portal/* — member portal, screens 40–55 (ARCHITECTURE.md §4). Signed-in users only;
