@@ -9,10 +9,13 @@ import type { Permission } from '@/domain/enums/permission.enum';
 export function PermissionRoute({
   require,
   mode = 'all',
+  fallback = PATHS.app.dashboard,
   children,
 }: {
   require: Permission | Permission[];
   mode?: 'all' | 'any';
+  /** where a user without the grant is sent (the design areas pass the portal) */
+  fallback?: string;
   children: ReactNode;
 }) {
   const canAll = useAuthStore((s) => s.canAll);
@@ -20,6 +23,6 @@ export function PermissionRoute({
   const required = Array.isArray(require) ? require : [require];
 
   const allowed = mode === 'all' ? canAll(required) : canAny(required);
-  if (!allowed) return <Navigate to={PATHS.app.dashboard} replace />;
+  if (!allowed) return <Navigate to={fallback} replace />;
   return <>{children}</>;
 }

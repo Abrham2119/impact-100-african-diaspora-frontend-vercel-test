@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "feature": "ts-node --esm src/scripts/create-feature.ts",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "check:css": "node src/scripts/check-css-collisions.ts"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.0",

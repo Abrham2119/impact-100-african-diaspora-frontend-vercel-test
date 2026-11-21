@@ -11,7 +11,7 @@ export function useVerifyOtp() {
     mutationFn: (payload: VerifyOtpPayload) => authService.verifyOtp(payload),
     meta: { successMessage: 'Email verified. Please sign in.' },
     onSuccess: () => {
-      navigate(PATHS.auth.signIn, { replace: true });
+      navigate(PATHS.legacyAuth.signIn, { replace: true });
     },
   });
 }

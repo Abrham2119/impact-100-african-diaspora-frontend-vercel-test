@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Impact100 — Set up two-step verification</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../assets/css/impact100.css">
+<link rel="stylesheet" href="../assets/css/icons.css">
+<link rel="stylesheet" href="../assets/css/impact100-ext.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&amp;family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.sc-interp{all:inherit!important;display:contents!important}
+.bg_breadcrumb{background:url(../assets/images/breadcrumb_bg.webp)}
+.bg_footer{background:url(../assets/images/footer_bg.webp)}
+</style>
+</helmet>
+<div>
+<header>
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6 d-none d-lg-block">
+<ul class="header_info">
+<li><span><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17" fill="none" class="img-fluid" aria-hidden="true"><path d="M14.2353 16H5.41176C2.76471 16 1 14.6765 1 11.5882V5.41176C1 2.32353 2.76471 1 5.41176 1H14.2353C16.8824 1 18.6471 2.32353 18.6471 5.41176V11.5882C18.6471 14.6765 16.8824 16 14.2353 16Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path><path d="M14.2356 5.85278L11.4739 8.05867C10.565 8.78219 9.07387 8.78219 8.16505 8.05867L5.41211 5.85278" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>example@gmail.com</li>
+<li><span><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" class="img-fluid" aria-hidden="true"><path d="M15.9775 13.2475C15.9775 13.5175 15.9175 13.795 15.79 14.065C15.6625 14.335 15.4975 14.59 15.28 14.83C14.9125 15.235 14.5075 15.5275 14.05 15.715C13.6 15.9025 13.1125 16 12.5875 16C11.8225 16 11.005 15.82 10.1425 15.4525C9.28 15.085 8.4175 14.59 7.5625 13.9675C6.7 13.3375 5.8825 12.64 5.1025 11.8675C4.33 11.0875 3.6325 10.27 3.01 9.415C2.395 8.56 1.9 7.705 1.54 6.8575C1.18 6.0025 1 5.185 1 4.405C1 3.895 1.09 3.4075 1.27 2.9575C1.45 2.5 1.735 2.08 2.1325 1.705C2.6125 1.2325 3.1375 1 3.6925 1C3.9025 1 4.1125 1.045 4.3 1.135C4.495 1.225 4.6675 1.36 4.8025 1.555L6.5425 4.0075C6.6775 4.195 6.775 4.3675 6.8425 4.5325C6.91 4.69 6.9475 4.8475 6.9475 4.99C6.9475 5.17 6.895 5.35 6.79 5.5225C6.6925 5.695 6.55 5.875 6.37 6.055L5.8 6.6475C5.7175 6.73 5.68 6.8275 5.68 6.9475C5.68 7.0075 5.6875 7.06 5.7025 7.12C5.725 7.18 5.7475 7.225 5.7625 7.27C5.8975 7.5175 6.13 7.84 6.46 8.23C6.7975 8.62 7.1575 9.0175 7.5475 9.415C7.9525 9.8125 8.3425 10.18 8.74 10.5175C9.13 10.8475 9.4525 11.0725 9.7075 11.2075C9.745 11.2225 9.79 11.245 9.8425 11.2675C9.9025 11.29 9.9625 11.2975 10.03 11.2975C10.1575 11.2975 10.255 11.2525 10.3375 11.17L10.9075 10.6075C11.095 10.42 11.275 10.2775 11.4475 10.1875C11.62 10.0825 11.7925 10.03 11.98 10.03C12.1225 10.03 12.2725 10.06 12.4375 10.1275C12.6025 10.195 12.775 10.2925 12.9625 10.42L15.445 12.1825C15.64 12.3175 15.775 12.475 15.8575 12.6625C15.9325 12.85 15.9775 13.0375 15.9775 13.2475Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"></path><path d="M13.3745 6.25C13.3745 5.8 13.022 5.11 12.497 4.5475C12.017 4.03 11.3795 3.625 10.7495 3.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15.9995 6.25C15.9995 3.3475 13.652 1 10.7495 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>+965 088 6578 654 87</li>
+</ul>
+</div>
+<div class="col-lg-6">
+<div class="header_right">
+<ul class="icon d-none d-sm-flex">
+<li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+<li><a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+<li><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li>
+<li><a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+<li><a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+</ul>
+<ul class="language_currency">
+<li><div class="{{langCls}}" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="{{langOpen}}" onClick="{{toggleLang}}"><span class="current">{{lang}}</span><ul class="list" role="listbox"><sc-for list="{{langs}}" as="o" hint-placeholder-count="5"><li class="{{o.cls}}" role="option" onClick="{{o.pick}}">{{o.label}}</li></sc-for></ul></div></li>
+<li><div class="{{curCls}}" tabindex="0" role="button" aria-haspopup="listbox" aria-expanded="{{curOpen}}" onClick="{{toggleCur}}"><span class="current">{{cur}}</span><ul class="list" role="listbox"><sc-for list="{{curs}}" as="o" hint-placeholder-count="5"><li class="{{o.cls}}" role="option" onClick="{{o.pick}}">{{o.label}}</li></sc-for></ul></div></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</header>
+
+<nav class="{{navCls}}">
+<div class="container">
+<a class="navbar-brand" href="index.dc.html"><img src="../assets/images/logo_impact100.webp" alt="Impact100 African Diaspora USA — home" class="img-fluid w-100"></a>
+<button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="{{menuOpen}}" aria-label="Toggle navigation" onClick="{{toggleMenu}}"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5"></path></svg></button>
+<div class="{{menuCls}}" id="navbarSupportedContent">
+<ul class="navbar-nav m-auto">
+<li class="nav-item"><a class="nav-link" href="about_us.dc.html">About <i class="far fa-chevron-down" aria-hidden="true"></i></a>
+<ul class="sub_menu ix_mega ix_mega_2"><li class="ix_mega_col"><h6>Who we are</h6><ul><li><a href="about_us.dc.html"><span class="ix_mi"><i class="far fa-info-circle" aria-hidden="true"></i>About Us</span></a></li><li><a href="committees.dc.html"><span class="ix_mi"><i class="far fa-users" aria-hidden="true"></i>Committees</span></a></li><li><a href="charter.dc.html"><span class="ix_mi"><i class="far fa-file-alt" aria-hidden="true"></i>Charter</span></a></li><li><a href="volunteers.dc.html"><span class="ix_mi"><i class="far fa-hands-helping" aria-hidden="true"></i>Our Volunteers</span></a></li><li><a href="testimonial.dc.html"><span class="ix_mi"><i class="far fa-comment-alt" aria-hidden="true"></i>Testimonials</span></a></li></ul></li><li class="ix_mega_col"><h6>Explore &amp; connect</h6><ul><li><a href="donot_list.dc.html"><span class="ix_mi"><i class="far fa-heart" aria-hidden="true"></i>Donor List</span></a></li><li><a href="photo_gallery.dc.html"><span class="ix_mi"><i class="far fa-images" aria-hidden="true"></i>Photo Gallery</span></a></li><li><a href="video_gallery.dc.html"><span class="ix_mi"><i class="far fa-video" aria-hidden="true"></i>Video Gallery</span></a></li><li><a href="faq.dc.html"><span class="ix_mi"><i class="far fa-question-circle" aria-hidden="true"></i>FAQ's</span></a></li><li><a href="contact.dc.html"><span class="ix_mi"><i class="far fa-envelope" aria-hidden="true"></i>Contact</span></a></li></ul></li></ul></li>
+<li class="nav-item"><a class="nav-link" href="our_model.dc.html">Our model</a></li>
+<li class="nav-item"><a class="nav-link" href="volunteer.dc.html" aria-haspopup="true">Opportunities <i class="far fa-chevron-down" aria-hidden="true"></i></a>
+<ul class="sub_menu ix_mega"><li class="ix_mega_col"><h6>Ways to take part</h6><ul><li><a href="join.dc.html"><span>Become a member<small>Individuals · from $250 a cycle</small></span></a></li><li><a href="donate.dc.html"><span>Donate<small>Everyone · no account needed</small></span></a></li><li><a href="volunteer.dc.html"><span>Volunteer<small>Everyone · 19 open roles</small></span></a></li><li><a href="hubs.dc.html"><span>Join a US hub<small>People living in the US</small></span></a></li><li><a href="nonprofits.dc.html"><span>Partner with us<small>Nonprofit organizations</small></span></a></li><li><a href="contact.dc.html#topic=sponsorship"><span>Sponsor the Chapter<small>Companies and funders</small></span></a></li><li><a href="share_story.dc.html"><span>Share a story<small>Members</small></span></a></li></ul></li><li class="ix_mega_col"><h6>Volunteer areas</h6><ul><li><a href="volunteer.dc.html#area=chapter"><span>Chapter</span><span class="ix_count">6</span></a></li><li><a href="volunteer.dc.html#area=us"><span>US hubs</span><span class="ix_count">5</span></a></li><li><a href="volunteer.dc.html#area=usafi"><span>USAFI portfolios</span><span class="ix_count">4</span></a></li><li><a href="volunteer.dc.html#area=africa"><span>African hubs</span><span class="ix_count">4</span></a></li><li><a href="volunteer.dc.html"><span>All open roles</span><span class="ix_count">19</span></a></li></ul></li></ul></li>
+<li class="nav-item"><a class="nav-link" href="grants.dc.html">Grants <i class="far fa-chevron-down" aria-hidden="true"></i></a>
+<ul class="sub_menu"><li><a href="grants.dc.html">Grants & Africa Map</a></li><li><a href="campaign_list.dc.html">Campaigns</a></li><li><a href="category.dc.html">Categories</a></li></ul></li>
+<li class="nav-item"><a class="nav-link" href="nonprofits.dc.html">Nonprofits</a></li>
+<li class="nav-item"><a class="nav-link" href="event.dc.html">Events <i class="far fa-chevron-down" aria-hidden="true"></i></a>
+<ul class="sub_menu"><li><a href="event.dc.html">Events</a></li><li><a href="hubs.dc.html">US Regional Hubs</a></li></ul></li>
+<li class="nav-item"><a class="nav-link" href="blogs.dc.html">News <i class="far fa-chevron-down" aria-hidden="true"></i></a>
+<ul class="sub_menu"><li><a href="blogs.dc.html">News</a></li><li><a href="share_story.dc.html">Share a Story</a></li></ul></li>
+</ul>
+<div class="menu_right">
+<a href="donate.dc.html" class="common_btn ix_btn_dark ix_hide_md">donate</a>
+<a href="join.dc.html" class="common_btn">become a member</a>
+<div class="user_icon">
+<a class="user_link" href="sign_in.dc.html" aria-label="Member login"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path></svg></a>
+<ul><li><a href="sign_in.dc.html">Member Login</a></li><li><a href="join.dc.html">Become a Member</a></li><li><a href="portal.dc.html">Member Portal</a></li><li><a href="admin.dc.html">Admin Console</a></li></ul>
+</div>
+</div>
+</div>
+</div>
+</nav>
+
+<section class="breadcrumb bg_breadcrumb">
+<div class="breadcrumb_overlay">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="breadcrumb_text">
+<h1>Set up two-step</h1>
+<ul>
+<li><a href="index.dc.html">Home</a></li><li><a href="sign_in.dc.html">Member login</a></li><li>Set up two-step verification</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="sign_up mt_100"><div class="container"><div class="row">
+<div class="col-lg-6 col-xl-7"><div class="sign_up_img"><img src="../assets/images/registration_img_2.webp" alt="" class="img-fluid w-100"></div></div>
+<div class="col-lg-6 col-xl-5"><div class="sign_up_contant">
+<p class="ix_kicker">Required for your role</p><h2>Protect your account</h2><p>Your role (Chapter admin, USAFI finance or Content Editor) needs two-step verification. Scan the code with an authenticator app, then enter the 6-digit code it shows.</p>
+<div class="ix_card ix_card_soft" style="height:auto;margin-top:20px;display:flex;gap:20px;align-items:center;flex-wrap:wrap"><div style="width:120px;height:120px;flex:none;background:repeating-conic-gradient(var(--colorBlack) 0 25%,#fff 0 50%) 0 0/24px 24px;border-radius:10px" role="img" aria-label="QR code for your authenticator app"></div><div><b style="color:var(--colorBlack)">Can’t scan?</b><p class="ix_note">Enter this key: <span class="ix_code">JBSW Y3DP EHPK 3PXP</span></p></div></div><form action="#" class="login_form" onSubmit="{{noSubmit}}"><label for="te_code" class="ix_sr">6-digit code</label><input id="te_code" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit code"><a class="common_btn" href="admin.dc.html" style="display:block;margin-top:20px">turn on two-step verification</a></form>
+<p class="ix_note">You will need a code each time you sign in to admin pages.</p>
+</div></div>
+</div></div></section>
+
+<footer class="mt_100 bg_footer">
+<div class="footer_overlay pt_80">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<div class="footer_top">
+<a class="footer_logo" href="index.dc.html"><img src="../assets/images/logo_impact100_light.webp" alt="Logo" class="img-fluid w-100"></a>
+<ul>
+<li><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path></svg></div><h4>29M</h4><p>Number of supporters</p></li>
+<li><div class="icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path></svg></div><h4>$60000+</h4><p>Fund raised of supporters</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row justify-content-between">
+<div class="col-lg-2 col-sm-6"><div class="footer_link"><h3>chapter</h3><ul><li><a href="about_us.dc.html">About Us</a></li><li><a href="our_model.dc.html">Our Model</a></li><li><a href="charter.dc.html">Charter</a></li><li><a href="grants.dc.html">Grants</a></li><li><a href="blogs.dc.html">News</a></li></ul></div></div>
+<div class="col-lg-2 col-sm-6"><div class="footer_link"><h3>get involved</h3><ul><li><a href="join.dc.html">Become a Member</a></li><li><a href="donate.dc.html">Donate</a></li><li><a href="volunteer.dc.html">Volunteer</a></li><li><a href="hubs.dc.html">Join a Hub</a></li><li><a href="nonprofits.dc.html">Nonprofits</a></li></ul></div></div>
+<div class="col-lg-3 col-md-6">
+<div class="footer_contact"><h3>contact us</h3><ul>
+<li><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"></path></svg></span>example@gmail.com</li>
+<li><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 3.75 18 6m0 0 2.25 2.25M18 6l2.25-2.25M18 6l-2.25 2.25m1.5 13.5c-8.284 0-15-6.716-15-15V4.5A2.25 2.25 0 0 1 4.5 2.25h1.372c.516 0 .966.351 1.091.852l1.106 4.423c.11.44-.054.902-.417 1.173l-1.293.97a1.062 1.062 0 0 0-.38 1.21 12.035 12.035 0 0 0 7.143 7.143c.441.162.928-.004 1.21-.38l.97-1.293a1.125 1.125 0 0 1 1.173-.417l4.423 1.106c.5.125.852.575.852 1.091V19.5a2.25 2.25 0 0 1-2.25 2.25h-2.25Z"></path></svg></span>+(446) 256 234 98</li>
+<li><span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"></path></svg></span>Sleepy Hollow Street 68/210. New York 1423</li>
+</ul></div>
+</div>
+<div class="col-lg-3 col-md-6">
+<div class="footer_newsletter"><h3>newsletter</h3>
+<form action="newsletter_confirmed.dc.html"><label for="dc_nl" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Email</label><input id="dc_nl" type="email" placeholder="Your email for the newsletter" value=""><a class="ix_nl_btn" href="newsletter_confirmed.dc.html" aria-label="Subscribe to the newsletter"><i class="far fa-paper-plane" aria-hidden="true"></i></a></form>
+<ul>
+<li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+<li><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a></li>
+<li><a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+<li><a href="#" aria-label="Behance"><i class="fab fa-behance" aria-hidden="true"></i></a></li>
+<li><a href="#" aria-label="Google Plus"><i class="fab fa-google-plus-g" aria-hidden="true"></i></a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="footer_botton"><div class="container"><div class="row"><div class="col-12"><div class="footer_botton_text"><p>Copyright © 2026 All Rights Reserved by Impact100 African Diaspora USA</p><ul><li><a href="privacy.dc.html">Privacy &amp; Cookies</a></li><li><a href="faq.dc.html">FAQ's</a></li><li><a href="contact.dc.html">Contact Us</a></li></ul></div></div></div></div></div>
+</div>
+</footer>
+
+<button type="button" class="{{progCls}}" aria-label="Back to top" onClick="{{toTop}}" style="padding: 0; border: 0;">
+<svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" aria-hidden="true"><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: {{progOffset}};"></path></svg>
+</button>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 2000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = Object.assign({ fix: false, prog: 0, progOn: false, menu: false, langOpen: false, curOpen: false, lang: 'English', cur: '$USD' }, {});
+  }
+  componentDidMount() {
+    const onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      this.setState({ fix: y > 0, progOn: y > 50, prog: h > 0 ? y / h : 0 });
+    };
+    this._onScroll = onScroll;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    const hash = {};
+    try { (window.location.hash || '').replace(/^#/, '').split('&').forEach((p) => { const [k, v] = p.split('='); if (k) hash[decodeURIComponent(k)] = decodeURIComponent(v || ''); }); } catch (e) {}
+    this.onHash(hash);
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this._onScroll); }
+  onHash(hash) {  }
+  set(k) { return (e) => this.setState({ [k]: e && e.target ? (e.target.type === 'checkbox' ? e.target.checked : e.target.value) : e }); }
+
+  renderVals() {
+    const s = this.state;
+    const opts = (list, val, key) => list.map((l) => ({ label: l, cls: 'option' + (l === val ? ' selected' : ''), pick: () => this.setState({ [key]: l }) }));
+    const on = (c, k) => c + (k ? ' ix_on' : '');
+    const money = (n) => '$' + Number(n).toLocaleString('en-US');
+
+    return Object.assign({
+      navCls: 'navbar navbar-expand-lg main_menu' + (s.fix ? ' menu_fix' : ''),
+      menuOpen: s.menu ? 'true' : 'false', menuCls: 'collapse navbar-collapse' + (s.menu ? ' show' : ''), toggleMenu: () => this.setState({ menu: !s.menu }),
+      lang: s.lang, cur: s.cur, langOpen: s.langOpen ? 'true' : 'false', curOpen: s.curOpen ? 'true' : 'false',
+      langCls: 'nice-select select_js' + (s.langOpen ? ' open' : ''), curCls: 'nice-select select_js' + (s.curOpen ? ' open' : ''),
+      toggleLang: () => this.setState({ langOpen: !s.langOpen, curOpen: false }), toggleCur: () => this.setState({ curOpen: !s.curOpen, langOpen: false }),
+      langs: opts(['English', 'Japanese', 'Korean', 'Chinese', 'Urdu'], s.lang, 'lang'), curs: opts(['$USD', '₹INR', '¥CNY', '€EUR', '฿THB'], s.cur, 'cur'),
+      progCls: 'progress-wrap' + (s.progOn ? ' active-progress' : ''), progOffset: String(307.919 - s.prog * 307.919),
+      toTop: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+      noSubmit: (e) => e.preventDefault()
+    }, {
+
+    });
+  }
+}
+</script>
+</body>
+</html>

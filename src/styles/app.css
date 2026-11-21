@@ -1,0 +1,154 @@
+/* =============================================================================
+   Global rules the design declares outside its three stylesheets — ARCHITECTURE.md §1.1
+   -----------------------------------------------------------------------------
+   Only rules that every design page declares inline (its <helmet> <style>) or
+   that the template's jQuery plugins applied as inline styles. Nothing here adds
+   a colour, font, radius or shadow; values are copied verbatim from the design.
+   The design stylesheets themselves (src/assets/css) are never edited.
+   ========================================================================== */
+
+/* <helmet> of every public page: default banner and footer backgrounds.
+   A CMS-provided breadcrumb image overrides this per page (inline style). */
+.bg_breadcrumb {
+  background: url(../assets/images/breadcrumb_bg.webp);
+}
+
+.bg_footer {
+  background: url(../assets/images/footer_bg.webp);
+}
+
+/* <helmet> of index / about_us / campaign_details: the slick-replacement track
+   (used by <Slider>). */
+.dc_track {
+  display: flex;
+}
+
+.dc_track::before,
+.dc_track::after {
+  display: none;
+}
+
+/* <helmet> of index / about_us (Step 5), verbatim. The CMS can replace any of these
+   backgrounds per section (inline background-image; the design CSS keeps size/position). */
+.bg_banner_1{background:url(../assets/images/banner_bg_1.webp)}
+.bg_banner_2{background:url(../assets/images/banner_bg_2.webp)}
+.bg_banner_3{background:url(../assets/images/banner_bg_3.webp)}
+.bg_banner_4{background:url(../assets/images/banner_bg_4.webp)}
+.bg_donation_video{background:url(../assets/images/donation_video_bg.webp)}
+.bg_counter{background:url(../assets/images/counter_bg.webp)}
+.bg_become{background:url(../assets/images/become_volanteer_bg.webp)}
+.bg_volunteer{background:url(../assets/images/volunteer_bg.webp)}
+.dc_marquee{display:flex;width:max-content;animation:dc_marquee 25s linear infinite}
+.marquee_animi:hover .dc_marquee{animation-play-state:paused}
+@keyframes dc_marquee{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media (min-height:1400px){.banner{height:937px}}
+
+/* Accessibility (not in the design): honour reduced motion for the endless marquee. */
+@media (prefers-reduced-motion: reduce) {
+  .dc_marquee { animation: none; }
+}
+
+/* Remaining page-level <helmet> rules arrive with their blocks (Step 6):
+   blog_details/event_details .sticky_sidebar{position:sticky;top:90px}; grants .ix_hp_block,
+   .ix_hp_row. Design-tool placeholders (.ph, .dc_map, .dc_video, .cmp_*) are not product CSS. */
+
+/* barfiller plugin: it set these inline on every progress bar
+   (impact100.css hides .tipWrap by default and forces the fill colour itself). */
+.barfiller .tipWrap {
+  display: inline;
+}
+
+.barfiller .fill {
+  transition: width 1s ease-in-out;
+}
+
+.barfiller .tip {
+  transition: left 1s ease-in-out;
+}
+
+/* Decision F3 (ARCHITECTURE.md §0.2): the top bar renders the language select only. The template
+   sizes the LAST select of `.language_currency` for the currency list (65px); without it the
+   language select would become the last child and shrink. Keep the language select's own width
+   (impact100.css: `.header_right .language_currency .nice-select { width: 85px }`). */
+.header_right .language_currency li:only-child .nice-select {
+  width: 85px;
+}
+
+/* =============================================================================
+   Inline styles of the design pages as named classes (Step 5) — values copied verbatim
+   from the `style="…"` attributes of design-reference/pages/*.dc.html. `!important` keeps the
+   precedence the inline style had over the design's own selectors (e.g. `.ix_card h3`).
+   Prefix `ixd_` (never used by the design or Tailwind; `npm run check:css`).
+   Values that change per render (slider offsets, progress widths, marquee duration) stay inline.
+   ========================================================================== */
+
+/* spacing used on headings and rows */
+.ixd_mt6 { margin-top: 6px !important; }
+.ixd_mt8 { margin-top: 8px !important; }
+.ixd_mt12 { margin-top: 12px !important; }
+.ixd_mt14 { margin-top: 14px !important; }
+.ixd_mt16 { margin-top: 16px !important; }
+.ixd_mt30 { margin-top: 30px !important; }
+.ixd_mb50 { margin-bottom: 50px !important; }
+.ixd_h_auto { height: auto !important; }
+
+/* slick slides: `<div class="col-xl-3" style="width: 100%; display: inline-block;">` */
+.ixd_slide_col { width: 100% !important; display: inline-block !important; }
+
+/* hero: button row and the ghost button on the dark banner (also the our-model band) */
+.ixd_hero_actions { display: flex !important; flex-wrap: wrap !important; gap: 12px !important; }
+.ixd_btn_on_dark { border-color: #ffffff !important; color: #ffffff !important; }
+
+/* ix_card contents */
+.ixd_num_pill { width: auto !important; min-width: 48px !important; padding: 0 14px !important; border-radius: 24px !important; }
+.ixd_price { font-size: 40px !important; font-weight: 800 !important; margin-top: 6px !important; color: var(--colorBlack) !important; }
+.ixd_price_on_dark { color: #fff !important; }
+.ixd_row_center { justify-content: center !important; }
+.ixd_row_end { justify-content: flex-end !important; }
+
+/* .ix_band */
+.ixd_band_title { font-size: 40px !important; font-weight: 800 !important; }
+.ixd_band_text { font-size: 18px !important; line-height: 1.7 !important; }
+
+/* video & donate: the visually hidden amount label */
+.ixd_sr_label { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; }
+
+/* services slider kicker */
+.ixd_kicker_block { display: block !important; margin-bottom: 6px !important; }
+
+/* event card */
+.ixd_em_plain { font-style: normal !important; text-transform: none !important; }
+.ixd_event_text { color: #fff !important; font-size: 14px !important; line-height: 1.5 !important; margin-top: 6px !important; }
+
+/* text marquee */
+.ixd_overflow_hidden { overflow: hidden !important; }
+.ixd_marquee_copy { margin-right: 25px !important; }
+
+/* become-volunteer band kicker */
+.ixd_kicker_on_dark { color: #fff !important; margin-bottom: 10px !important; }
+
+/* committees accordion (about) */
+.ixd_help_btn { display: inline-block !important; margin-top: 18px !important; }
+
+/* charter + privacy */
+.ixd_toc_kicker { padding: 0 12px 10px !important; }
+.ixd_px12 { padding: 0 12px !important; }
+.ixd_charter_head { gap: 12px !important; margin-bottom: 24px !important; }
+.ixd_title_34 { font-size: 34px !important; font-weight: 800 !important; }
+.ixd_title_36 { font-size: 36px !important; font-weight: 800 !important; }
+.ixd_notice { margin: 0 0 24px !important; }
+.ixd_charter_intro { font-size: 18px !important; line-height: 1.7 !important; margin: -8px 0 30px !important; }
+
+/* newsletter status card */
+.ixd_status_card { text-align: center !important; padding: 50px 40px !important; }
+.ixd_num_xl { width: 80px !important; height: 80px !important; line-height: 80px !important; font-size: 34px !important; }
+.ixd_title_38 { font-size: 38px !important; font-weight: 800 !important; margin-top: 24px !important; }
+
+/* photo lightbox (venobox markup of photo_gallery.dc.html) */
+.ixd_vbox_overlay { background: rgba(23, 23, 23, 0.85) !important; }
+.ixd_vbox_container { display: flex !important; align-items: center !important; }
+.ixd_vbox_content { opacity: 1 !important; }
+.ixd_vbox_img { display: block !important; margin: 0 auto !important; }
+.ixd_vbox_num { color: #ffffff !important; }
+.ixd_vbox_close { background: transparent !important; border: 0 !important; color: #ffffff !important; }
+.ixd_vbox_arrow { background: transparent !important; border: 0 !important; padding: 0 !important; }

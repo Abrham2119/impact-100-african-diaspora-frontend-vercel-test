@@ -15,7 +15,7 @@ export function useForgotPassword() {
     mutationFn: (payload: ForgotPasswordPayload) => authService.forgotPassword(payload),
     meta: { successMessage: 'Reset code sent — check your email.' },
     onSuccess: (_result, variables) => {
-      navigate(PATHS.auth.resetPassword, { state: { email: variables.email } });
+      navigate(PATHS.legacyAuth.resetPassword, { state: { email: variables.email } });
     },
   });
 }
@@ -28,7 +28,7 @@ export function useResetPassword() {
     mutationFn: (payload: ResetPasswordPayload) => authService.resetPassword(payload),
     meta: { successMessage: 'Password reset. Please sign in.' },
     onSuccess: () => {
-      navigate(PATHS.auth.signIn, { replace: true });
+      navigate(PATHS.legacyAuth.signIn, { replace: true });
     },
   });
 }

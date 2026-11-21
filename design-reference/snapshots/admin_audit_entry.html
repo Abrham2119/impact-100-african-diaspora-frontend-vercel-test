@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>Impact100 — Audit entry</title>
+<style>x-dc{display:none!important}</style>
+<link rel="stylesheet" href="../assets/css/impact100.css">
+<link rel="stylesheet" href="../assets/css/icons.css">
+<link rel="stylesheet" href="../assets/css/impact100-ext.css">
+<link rel="preconnect" href="https://fonts.googleapis.com" data-dc-tpl="1"><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&amp;family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap" rel="stylesheet" data-dc-tpl="2"><style data-dc-tpl="3">
+body{margin:0}
+.sc-interp{all:inherit!important;display:contents!important}
+.bg_breadcrumb{background:url(../assets/images/breadcrumb_bg.webp)}
+.bg_footer{background:url(../assets/images/footer_bg.webp)}
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="admin_audit_entry"><div data-dc-tpl="4"><header data-dc-tpl="5" class="ix_top"><a data-dc-tpl="6" class="ix_top_logo" href="index.html"><img data-dc-tpl="7" src="../assets/images/logo_impact100_light.webp" alt="Impact100 African Diaspora USA — website"></a><a data-dc-tpl="8" class="ix_top_pill" href="admin_ballots.html">Grant ballot opens Feb 15 · Manage ballots <i data-dc-tpl="9" class="far fa-arrow-right" aria-hidden="true"></i></a><div data-dc-tpl="10" class="ix_top_right"><a data-dc-tpl="11" class="ix_top_btn" href="donate.html"><i data-dc-tpl="12" class="far fa-heart" aria-hidden="true"></i><span data-dc-tpl="13">Donate</span></a><a data-dc-tpl="14" class="ix_top_icon" href="admin_approvals.html" aria-label="Notifications"><i data-dc-tpl="15" class="far fa-bell" aria-hidden="true"></i><em data-dc-tpl="16">3</em></a><a data-dc-tpl="17" class="ix_top_icon ix_top_avatar" href="admin_people.html" aria-label="Your account">KB</a></div></header><div data-dc-tpl="18" class="ix_app"><nav data-dc-tpl="19" class="ix_rail" aria-label="Main"><a data-dc-tpl="20" class="ix_rail_item" href="admin.html"><i data-dc-tpl="21" class="far fa-th-large" aria-hidden="true"></i><span data-dc-tpl="22">Dashboard</span></a><a data-dc-tpl="23" class="ix_rail_item" href="admin_people.html"><i data-dc-tpl="24" class="far fa-users" aria-hidden="true"></i><span data-dc-tpl="25">People</span></a><a data-dc-tpl="26" class="ix_rail_item" href="admin_cycles.html"><i data-dc-tpl="27" class="far fa-sliders-h" aria-hidden="true"></i><span data-dc-tpl="28">Rules</span></a><a data-dc-tpl="29" class="ix_rail_item" href="admin_ledger.html"><i data-dc-tpl="30" class="far fa-wallet" aria-hidden="true"></i><span data-dc-tpl="31">Payments</span></a><a data-dc-tpl="32" class="ix_rail_item" href="admin_ballots.html"><i data-dc-tpl="33" class="far fa-gavel" aria-hidden="true"></i><span data-dc-tpl="34">Governance</span></a><a data-dc-tpl="35" class="ix_rail_item" href="admin_signups.html"><i data-dc-tpl="36" class="far fa-hands-helping" aria-hidden="true"></i><span data-dc-tpl="37">Engage</span></a><a data-dc-tpl="38" class="ix_rail_item" href="admin_cms.html"><i data-dc-tpl="39" class="far fa-pen-nib" aria-hidden="true"></i><span data-dc-tpl="40">Content</span></a><a data-dc-tpl="41" class="ix_rail_item ix_on" href="admin_emails.html" aria-current="page"><i data-dc-tpl="42" class="far fa-cog" aria-hidden="true"></i><span data-dc-tpl="43">System</span></a><a data-dc-tpl="44" class="ix_rail_item" href="index.html"><i data-dc-tpl="45" class="far fa-globe-africa" aria-hidden="true"></i><span data-dc-tpl="46">Website</span></a><a data-dc-tpl="47" class="ix_rail_item" href="portal.html"><i data-dc-tpl="48" class="far fa-id-card" aria-hidden="true"></i><span data-dc-tpl="49">Portal</span></a></nav><aside data-dc-tpl="50" class="ix_side" aria-label="System menu"><div data-dc-tpl="51" class="ix_side_user"><img data-dc-tpl="52" src="../assets/images/volunteer_img_4.webp" alt=""><div data-dc-tpl="53"><b data-dc-tpl="54">Kofi Boateng</b><span data-dc-tpl="55">Chapter admin · two-step on</span></div></div><p data-dc-tpl="56" class="ix_side_title">System</p><ul data-dc-tpl="57"><li data-dc-tpl="58"><a data-dc-tpl="59" class="ix_side_item" href="admin_emails.html"><span data-dc-tpl="60">Email templates</span></a></li><li data-dc-tpl="61"><a data-dc-tpl="62" class="ix_side_item" href="admin_delivery.html"><span data-dc-tpl="63">Delivery log</span></a></li><li data-dc-tpl="64"><a data-dc-tpl="65" class="ix_side_item ix_on" href="admin_audit.html" aria-current="page"><span data-dc-tpl="66">Audit log</span></a></li><li data-dc-tpl="67"><a data-dc-tpl="68" class="ix_side_item" href="sign_in.html"><i data-dc-tpl="69" class="far fa-sign-out" aria-hidden="true"></i><span data-dc-tpl="70">Log out</span></a></li></ul></aside><main data-dc-tpl="71" class="ix_app_main"><nav data-dc-tpl="72" class="ix_crumbs" aria-label="Breadcrumb"><a data-dc-tpl="73" href="index.html" aria-label="Website home"><i data-dc-tpl="74" class="far fa-home" aria-hidden="true"></i></a><i data-dc-tpl="75" class="far fa-chevron-right ix_sep" aria-hidden="true"></i><a data-dc-tpl="76" href="admin.html">Admin console</a><i data-dc-tpl="77" class="far fa-chevron-right ix_sep" aria-hidden="true"></i><a data-dc-tpl="78" href="admin_audit.html">Audit log</a><i data-dc-tpl="79" class="far fa-chevron-right ix_sep" aria-hidden="true"></i><b data-dc-tpl="80">Entry</b></nav><h1 data-dc-tpl="81" class="ix_app_title">Audit entry</h1><div data-dc-tpl="82" class="dashboard_contant"><div data-dc-tpl="83" class="dashboard_contant_top"><div data-dc-tpl="84" class="dashboard_heading"><h5 data-dc-tpl="85">Audit entry #48213</h5><p data-dc-tpl="86">comment.hidden · Nov 17, 2026 · 11:40 ET</p></div></div><div data-dc-tpl="87" class="ix_dash_body"><dl data-dc-tpl="88" class="ix_kv"><dt data-dc-tpl="89">Actor</dt><dd data-dc-tpl="90">Ngozi Eze (Chapter admin)</dd><dt data-dc-tpl="91">Action</dt><dd data-dc-tpl="92">comment.hidden</dd><dt data-dc-tpl="93">Entity</dt><dd data-dc-tpl="94">Comment #331 on “Youth digital skills programme”</dd><dt data-dc-tpl="95">Hash</dt><dd data-dc-tpl="96"><span data-dc-tpl="97" class="ix_code">9f2c…a71e</span> · chain verified</dd></dl></div></div><div data-dc-tpl="98" class="ix_diff mt_30"><div data-dc-tpl="99" class="ix_old"><b data-dc-tpl="100">Before</b><p data-dc-tpl="101">visible · “This partner has a poor track record — avoid.” (posted by D. Otieno, Initiator)</p></div><div data-dc-tpl="102" class="ix_new"><b data-dc-tpl="103">After</b><p data-dc-tpl="104">hidden · reason: personal attack, against discussion guidelines</p></div></div></main></div><button data-dc-tpl="105" type="button" class="progress-wrap" aria-label="Back to top" style="padding: 0px; border: 0px;"><svg data-dc-tpl="106" class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" aria-hidden="true"><path data-dc-tpl="107" d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 307.919;"></path></svg></button></div></div></div>
+
+
+
+</body></html>

@@ -5,8 +5,9 @@ import { useAuthStore } from '@/store/authStore';
 import { PATHS } from '@/app/routes/paths';
 
 // Logout: call the API (best-effort), clear the store + storage token,
-// drop all cached server state, then redirect home.
-export function useAuthLogout() {
+// drop all cached server state, then redirect (home by default; the design shells
+// send the user to the design sign-in, as their "Log out" link does).
+export function useAuthLogout(redirectTo: string = PATHS.home) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const clearSession = useAuthStore((s) => s.clearSession);
@@ -19,6 +20,6 @@ export function useAuthLogout() {
     }
     clearSession();
     queryClient.clear();
-    navigate(PATHS.home, { replace: true });
+    navigate(redirectTo, { replace: true });
   };
 }

@@ -22,7 +22,7 @@ export function useLogin() {
 
       if (isTwoFactorChallenge(result)) {
         // No session yet — collect the authenticator code first.
-        navigate(PATHS.auth.twoFactor, {
+        navigate(PATHS.legacyAuth.twoFactor, {
           replace: true,
           state: { tempToken: result.tempToken, message: result.message, from },
         });

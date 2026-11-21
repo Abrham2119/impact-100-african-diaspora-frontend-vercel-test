@@ -11,7 +11,7 @@ export function useRegister() {
     mutationFn: (payload: RegisterPayload) => authService.register(payload),
     meta: { successMessage: 'Account created — check your email for a code.' },
     onSuccess: (_result, variables) => {
-      navigate(PATHS.auth.verifyOtp, { state: { email: variables.email }, replace: true });
+      navigate(PATHS.legacyAuth.verifyOtp, { state: { email: variables.email }, replace: true });
     },
   });
 }

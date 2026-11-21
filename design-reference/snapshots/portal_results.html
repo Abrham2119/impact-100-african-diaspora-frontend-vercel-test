@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en"><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<title>Impact100 — Results</title>
+<style>x-dc{display:none!important}</style>
+<link rel="stylesheet" href="../assets/css/impact100.css">
+<link rel="stylesheet" href="../assets/css/icons.css">
+<link rel="stylesheet" href="../assets/css/impact100-ext.css">
+<link rel="preconnect" href="https://fonts.googleapis.com" data-dc-tpl="1"><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&amp;family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap" rel="stylesheet" data-dc-tpl="2"><style data-dc-tpl="3">
+body{margin:0}
+.sc-interp{all:inherit!important;display:contents!important}
+.bg_breadcrumb{background:url(../assets/images/breadcrumb_bg.webp)}
+.bg_footer{background:url(../assets/images/footer_bg.webp)}
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="portal_results"><div data-dc-tpl="4"><header data-dc-tpl="5" class="ix_top"><a data-dc-tpl="6" class="ix_top_logo" href="index.html"><img data-dc-tpl="7" src="../assets/images/logo_impact100_light.webp" alt="Impact100 African Diaspora USA — website"></a><a data-dc-tpl="8" class="ix_top_pill" href="campaign_list.html">2026–27 Campaign is open · Renew your membership <i data-dc-tpl="9" class="far fa-arrow-right" aria-hidden="true"></i></a><div data-dc-tpl="10" class="ix_top_right"><a data-dc-tpl="11" class="ix_top_btn" href="donate.html"><i data-dc-tpl="12" class="far fa-heart" aria-hidden="true"></i><span data-dc-tpl="13">Donate</span></a><a data-dc-tpl="14" class="ix_top_icon" href="portal_vote.html" aria-label="Notifications"><i data-dc-tpl="15" class="far fa-bell" aria-hidden="true"></i><em data-dc-tpl="16">3</em></a><a data-dc-tpl="17" class="ix_top_icon ix_top_avatar" href="portal_profile.html" aria-label="Your account">AM</a></div></header><div data-dc-tpl="18" class="ix_app"><nav data-dc-tpl="19" class="ix_rail" aria-label="Main"><a data-dc-tpl="20" class="ix_rail_item" href="portal.html"><i data-dc-tpl="21" class="far fa-th-large" aria-hidden="true"></i><span data-dc-tpl="22">Dashboard</span></a><a data-dc-tpl="23" class="ix_rail_item ix_on" href="portal_vote.html" aria-current="page"><i data-dc-tpl="24" class="far fa-vote-yea" aria-hidden="true"></i><span data-dc-tpl="25">Voting</span></a><a data-dc-tpl="26" class="ix_rail_item" href="portal_sign.html"><i data-dc-tpl="27" class="far fa-file-signature" aria-hidden="true"></i><span data-dc-tpl="28">Charter</span></a><a data-dc-tpl="29" class="ix_rail_item" href="portal_reviews.html"><i data-dc-tpl="30" class="far fa-clipboard-check" aria-hidden="true"></i><span data-dc-tpl="31">Reviews</span></a><a data-dc-tpl="32" class="ix_rail_item" href="portal_profile.html"><i data-dc-tpl="33" class="far fa-user-cog" aria-hidden="true"></i><span data-dc-tpl="34">Account</span></a><a data-dc-tpl="35" class="ix_rail_item" href="index.html"><i data-dc-tpl="36" class="far fa-globe-africa" aria-hidden="true"></i><span data-dc-tpl="37">Website</span></a></nav><aside data-dc-tpl="38" class="ix_side" aria-label="Voting menu"><div data-dc-tpl="39" class="ix_side_user"><img data-dc-tpl="40" src="../assets/images/volunteer_img_2.webp" alt=""><div data-dc-tpl="41"><b data-dc-tpl="42">Amara Mensah</b><span data-dc-tpl="43">Incubator · Voting member</span></div></div><p data-dc-tpl="44" class="ix_side_title">Voting</p><ul data-dc-tpl="45"><li data-dc-tpl="46"><a data-dc-tpl="47" class="ix_side_item" href="portal_vote.html"><i data-dc-tpl="48" class="far fa-vote-yea" aria-hidden="true"></i><span data-dc-tpl="49">Proposals and vote</span><em data-dc-tpl="50" class="ix_count">3</em></a></li><li data-dc-tpl="51"><a data-dc-tpl="52" class="ix_side_item" href="portal_decisions.html"><i data-dc-tpl="53" class="far fa-gavel" aria-hidden="true"></i><span data-dc-tpl="54">Chapter decisions</span><em data-dc-tpl="55" class="ix_count">2</em></a></li><li data-dc-tpl="56"><a data-dc-tpl="57" class="ix_side_item ix_on" href="portal_results.html" aria-current="page"><i data-dc-tpl="58" class="far fa-chart-bar" aria-hidden="true"></i><span data-dc-tpl="59">Results</span></a></li><li data-dc-tpl="60"><a data-dc-tpl="61" class="ix_side_item" href="portal_suggest.html"><i data-dc-tpl="62" class="far fa-lightbulb" aria-hidden="true"></i><span data-dc-tpl="63">Suggest and nominate</span></a></li><li data-dc-tpl="64"><a data-dc-tpl="65" class="ix_side_item" href="sign_in.html"><i data-dc-tpl="66" class="far fa-sign-out" aria-hidden="true"></i><span data-dc-tpl="67">Log out</span></a></li></ul></aside><main data-dc-tpl="68" class="ix_app_main"><nav data-dc-tpl="69" class="ix_crumbs" aria-label="Breadcrumb"><a data-dc-tpl="70" href="index.html" aria-label="Website home"><i data-dc-tpl="71" class="far fa-home" aria-hidden="true"></i></a><i data-dc-tpl="72" class="far fa-chevron-right ix_sep" aria-hidden="true"></i><a data-dc-tpl="73" href="portal.html">Member portal</a><i data-dc-tpl="74" class="far fa-chevron-right ix_sep" aria-hidden="true"></i><b data-dc-tpl="75">Results</b></nav><h1 data-dc-tpl="76" class="ix_app_title">Results</h1><div data-dc-tpl="77" class="dashboard_contant"><div data-dc-tpl="78" class="dashboard_contant_top"><div data-dc-tpl="79" class="dashboard_heading"><h5 data-dc-tpl="80">Cycle financial summary</h5><p data-dc-tpl="81">2025–26 cycle · generated from the ledger when results were published</p></div></div><div data-dc-tpl="82" class="ix_dash_body"><div data-dc-tpl="83" class="row ix_gap"><div data-dc-tpl="84" class="col-md-3 col-6"><div data-dc-tpl="85" class="ix_stat"><p data-dc-tpl="86">Pledged</p><h3 data-dc-tpl="87">$96,500</h3></div></div><div data-dc-tpl="88" class="col-md-3 col-6"><div data-dc-tpl="89" class="ix_stat"><p data-dc-tpl="90">Received</p><h3 data-dc-tpl="91">$91,250</h3></div></div><div data-dc-tpl="92" class="col-md-3 col-6"><div data-dc-tpl="93" class="ix_stat"><p data-dc-tpl="94">Donations</p><h3 data-dc-tpl="95">$14,300</h3><span data-dc-tpl="96">By fund: general $8.1k · hubs $6.2k</span></div></div><div data-dc-tpl="97" class="col-md-3 col-6"><div data-dc-tpl="98" class="ix_stat"><p data-dc-tpl="99">Granted</p><h3 data-dc-tpl="100">$85,000</h3><span data-dc-tpl="101">4 partners</span></div></div></div></div></div><div data-dc-tpl="102" class="dashboard_contant"><div data-dc-tpl="103" class="dashboard_contant_top"><div data-dc-tpl="104" class="dashboard_heading"><h5 data-dc-tpl="105">Closed votes</h5><p data-dc-tpl="106">Abstentions are shown but don’t count toward quorum or the vote count. Published results can’t be edited.</p></div></div><div data-dc-tpl="107" class="ix_dash_body"><div data-dc-tpl="108" class="ix_table_wrap"><table data-dc-tpl="109" class="ix_table "><thead data-dc-tpl="110"><tr data-dc-tpl="111"><th data-dc-tpl="112" scope="col">Vote</th><th data-dc-tpl="113" scope="col">Eligible</th><th data-dc-tpl="114" scope="col">Turnout</th><th data-dc-tpl="115" scope="col">Yes</th><th data-dc-tpl="116" scope="col">No</th><th data-dc-tpl="117" scope="col">Abstain</th><th data-dc-tpl="118" scope="col">Outcome</th><th data-dc-tpl="119" scope="col"></th></tr></thead><tbody data-dc-tpl="120"><tr data-dc-tpl="121"><td data-dc-tpl="122">Grant ballot 2025–26 · Water and sanitation, Zambia</td><td data-dc-tpl="123">88</td><td data-dc-tpl="124">61 (69%)</td><td data-dc-tpl="125">44</td><td data-dc-tpl="126">15</td><td data-dc-tpl="127">2</td><td data-dc-tpl="128"><span data-dc-tpl="129" class="ix_badge ix_b_ok">Passed</span></td><td data-dc-tpl="130"><a data-dc-tpl="131" href="portal_result.html">Details</a></td></tr><tr data-dc-tpl="132"><td data-dc-tpl="133">Adopt installment plans from November</td><td data-dc-tpl="134">84</td><td data-dc-tpl="135">45 (54%)</td><td data-dc-tpl="136">30</td><td data-dc-tpl="137">12</td><td data-dc-tpl="138">3</td><td data-dc-tpl="139"><span data-dc-tpl="140" class="ix_badge ix_b_ok">Passed</span></td><td data-dc-tpl="141"><a data-dc-tpl="142" href="portal_result.html">Details</a></td></tr><tr data-dc-tpl="143"><td data-dc-tpl="144">Add a second Atlanta co-Ambassador seat</td><td data-dc-tpl="145">84</td><td data-dc-tpl="146">38 (45%)</td><td data-dc-tpl="147">25</td><td data-dc-tpl="148">10</td><td data-dc-tpl="149">3</td><td data-dc-tpl="150"><span data-dc-tpl="151" class="ix_badge ix_b_bad">Failed — no quorum</span></td><td data-dc-tpl="152"><a data-dc-tpl="153" href="portal_result.html">Details</a></td></tr><tr data-dc-tpl="154"><td data-dc-tpl="155">Move the AGM online</td><td data-dc-tpl="156">84</td><td data-dc-tpl="157">48 (57%)</td><td data-dc-tpl="158">22</td><td data-dc-tpl="159">22</td><td data-dc-tpl="160">4</td><td data-dc-tpl="161"><span data-dc-tpl="162" class="ix_badge ix_b_bad">Failed — tie</span></td><td data-dc-tpl="163"><a data-dc-tpl="164" href="portal_result.html">Details</a></td></tr></tbody></table></div></div></div></main></div><button data-dc-tpl="165" type="button" class="progress-wrap" aria-label="Back to top" style="padding: 0px; border: 0px;"><svg data-dc-tpl="166" class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" aria-hidden="true"><path data-dc-tpl="167" d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: 307.919;"></path></svg></button></div></div></div>
+
+
+
+</body></html>

@@ -1,22 +1,11 @@
-import { Outlet, Link } from 'react-router-dom';
-import { PATHS } from '@/app/routes/paths';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { PublicLayout } from './PublicLayout';
 
-// Centered card shell for sign-in / sign-up / verify-otp.
+// Sign-in screens (README "Four layouts" #2: sign in, sign up, forgot password, check your
+// email, two-step). In the design they render inside the full public chrome — top bar, main
+// menu (nothing active), breadcrumb banner, footer — with the card as page content
+// (ARCHITECTURE.md §0.3 fact 2), so the layout IS the public chrome. Guards are per route
+// (public-only vs. signed-in for two-step set-up). The starter's centred-card layout lives on
+// as StarterAuthLayout for the legacy password screens.
 export function AuthLayout() {
-  return (
-    <div className="flex min-h-screen flex-col">
-      <header className="flex items-center justify-between px-6 py-4">
-        <Link to={PATHS.home} className="text-lg font-bold text-primary">
-          ⬡ Express Auth
-        </Link>
-        <ThemeToggle />
-      </header>
-      <main className="flex flex-1 items-center justify-center px-4 py-10">
-        <div className="w-full max-w-md">
-          <Outlet />
-        </div>
-      </main>
-    </div>
-  );
+  return <PublicLayout />;
 }

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Impact100 — Exports</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="../assets/css/impact100.css">
+<link rel="stylesheet" href="../assets/css/icons.css">
+<link rel="stylesheet" href="../assets/css/impact100-ext.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&amp;family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&amp;family=Nunito:ital,wght@0,200..1000;1,200..1000&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.sc-interp{all:inherit!important;display:contents!important}
+.bg_breadcrumb{background:url(../assets/images/breadcrumb_bg.webp)}
+.bg_footer{background:url(../assets/images/footer_bg.webp)}
+</style>
+</helmet>
+<div>
+<header class="ix_top">
+<a class="ix_top_logo" href="index.dc.html"><img src="../assets/images/logo_impact100_light.webp" alt="Impact100 African Diaspora USA — website"></a>
+<a class="ix_top_pill" href="admin_ballots.dc.html">Grant ballot opens Feb 15 · Manage ballots <i class="far fa-arrow-right" aria-hidden="true"></i></a>
+<div class="ix_top_right">
+<a class="ix_top_btn" href="donate.dc.html"><i class="far fa-heart" aria-hidden="true"></i><span>Donate</span></a>
+<a class="ix_top_icon" href="admin_approvals.dc.html" aria-label="Notifications"><i class="far fa-bell" aria-hidden="true"></i><em>3</em></a>
+<a class="ix_top_icon ix_top_avatar" href="admin_people.dc.html" aria-label="Your account">KB</a>
+</div>
+</header>
+<div class="ix_app">
+<nav class="ix_rail" aria-label="Main"><a class="ix_rail_item ix_on" href="admin.dc.html" aria-current="page"><i class="far fa-th-large" aria-hidden="true"></i><span>Dashboard</span></a><a class="ix_rail_item" href="admin_people.dc.html"><i class="far fa-users" aria-hidden="true"></i><span>People</span></a><a class="ix_rail_item" href="admin_cycles.dc.html"><i class="far fa-sliders-h" aria-hidden="true"></i><span>Rules</span></a><a class="ix_rail_item" href="admin_ledger.dc.html"><i class="far fa-wallet" aria-hidden="true"></i><span>Payments</span></a><a class="ix_rail_item" href="admin_ballots.dc.html"><i class="far fa-gavel" aria-hidden="true"></i><span>Governance</span></a><a class="ix_rail_item" href="admin_signups.dc.html"><i class="far fa-hands-helping" aria-hidden="true"></i><span>Engage</span></a><a class="ix_rail_item" href="admin_cms.dc.html"><i class="far fa-pen-nib" aria-hidden="true"></i><span>Content</span></a><a class="ix_rail_item" href="admin_emails.dc.html"><i class="far fa-cog" aria-hidden="true"></i><span>System</span></a><a class="ix_rail_item" href="index.dc.html"><i class="far fa-globe-africa" aria-hidden="true"></i><span>Website</span></a><a class="ix_rail_item" href="portal.dc.html"><i class="far fa-id-card" aria-hidden="true"></i><span>Portal</span></a></nav>
+<aside class="ix_side" aria-label="Overview menu"><div class="ix_side_user"><img src="../assets/images/volunteer_img_4.webp" alt=""><div><b>Kofi Boateng</b><span>Chapter admin · two-step on</span></div></div><p class="ix_side_title">Overview</p><ul><li><a class="ix_side_item" href="admin.dc.html"><span>Chapter dashboard</span></a></li><li><a class="ix_side_item" href="admin_finance.dc.html"><span>Finance dashboard</span></a></li><li><a class="ix_side_item" href="admin_hub.dc.html"><span>Hub dashboard</span></a></li><li><a class="ix_side_item ix_on" href="admin_exports.dc.html" aria-current="page"><span>Exports</span></a></li><li><a class="ix_side_item" href="sign_in.dc.html"><i class="far fa-sign-out" aria-hidden="true"></i><span>Log out</span></a></li></ul></aside>
+<main class="ix_app_main">
+<nav class="ix_crumbs" aria-label="Breadcrumb"><a href="index.dc.html" aria-label="Website home"><i class="far fa-home" aria-hidden="true"></i></a><i class="far fa-chevron-right ix_sep" aria-hidden="true"></i><a href="admin.dc.html">Admin console</a><i class="far fa-chevron-right ix_sep" aria-hidden="true"></i><b>Exports</b></nav>
+<h1 class="ix_app_title">Exports</h1>
+
+<div class="dashboard_contant">
+<div class="dashboard_contant_top"><div class="dashboard_heading"><h5>Create an export</h5><p>CSV files reflect the on-screen filters. Download links expire after 24 hours. Individual vote choices are never exportable.</p></div></div>
+<div class="ix_dash_body"><div class="row"><div class="col-md-4"><div class="contact_input"><label for="ex_ds">Dataset</label><select id="ex_ds" class="ix_select" ><option value="Members">Members</option><option value="Payments">Payments</option><option value="Donations">Donations</option><option value="Sign-ups">Sign-ups</option><option value="Results">Results</option></select></div></div><div class="col-md-4"><div class="contact_input"><label for="ex_c">Cycle</label><select id="ex_c" class="ix_select" ><option value="c">2026–27 (current)</option><option value="p">2025–26</option></select></div></div><div class="col-md-2"><div class="contact_input"><label for="ex_from">From</label><input id="ex_from" type="date" placeholder="" ></div></div><div class="col-md-2"><div class="contact_input"><label for="ex_to">To</label><input id="ex_to" type="date" placeholder="" ></div></div></div><div class="ix_btn_row"><button type="button" class="common_btn">create csv</button></div></div>
+</div>
+<div class="dashboard_contant">
+<div class="dashboard_contant_top"><div class="dashboard_heading"><h5>Recent exports</h5><p>Each export is logged with who asked and how many rows.</p></div></div>
+<div class="ix_dash_body"><div class="ix_table_wrap"><table class="ix_table "><thead><tr><th scope="col">Dataset</th><th scope="col">Requested by</th><th scope="col">Rows</th><th scope="col">Created</th><th scope="col">Link</th></tr></thead><tbody><tr><td>Payments</td><td>USAFI finance · A. Diallo</td><td>412</td><td>Nov 17, 09:12</td><td><a href="#">Download</a></td></tr><tr><td>Sign-ups</td><td>Atlanta co-Ambassador</td><td>14</td><td>Nov 16, 18:40</td><td><a href="#">Download</a></td></tr><tr><td>Members</td><td>Kofi Boateng</td><td>126</td><td>Nov 12, 11:03</td><td><span class="ix_badge">Expired</span></td></tr></tbody></table></div></div>
+</div>
+
+</main>
+</div>
+
+<button type="button" class="{{progCls}}" aria-label="Back to top" onClick="{{toTop}}" style="padding: 0; border: 0;">
+<svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102" aria-hidden="true"><path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" style="transition: stroke-dashoffset 10ms linear; stroke-dasharray: 307.919, 307.919; stroke-dashoffset: {{progOffset}};"></path></svg>
+</button>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 2000}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = Object.assign({ fix: false, prog: 0, progOn: false, menu: false, langOpen: false, curOpen: false, lang: 'English', cur: '$USD' }, {});
+  }
+  componentDidMount() {
+    const onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop;
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      this.setState({ fix: y > 0, progOn: y > 50, prog: h > 0 ? y / h : 0 });
+    };
+    this._onScroll = onScroll;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    const hash = {};
+    try { (window.location.hash || '').replace(/^#/, '').split('&').forEach((p) => { const [k, v] = p.split('='); if (k) hash[decodeURIComponent(k)] = decodeURIComponent(v || ''); }); } catch (e) {}
+    this.onHash(hash);
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this._onScroll); }
+  onHash(hash) {  }
+  set(k) { return (e) => this.setState({ [k]: e && e.target ? (e.target.type === 'checkbox' ? e.target.checked : e.target.value) : e }); }
+
+  renderVals() {
+    const s = this.state;
+    const opts = (list, val, key) => list.map((l) => ({ label: l, cls: 'option' + (l === val ? ' selected' : ''), pick: () => this.setState({ [key]: l }) }));
+    const on = (c, k) => c + (k ? ' ix_on' : '');
+    const money = (n) => '$' + Number(n).toLocaleString('en-US');
+
+    return Object.assign({
+      navCls: 'navbar navbar-expand-lg main_menu' + (s.fix ? ' menu_fix' : ''),
+      menuOpen: s.menu ? 'true' : 'false', menuCls: 'collapse navbar-collapse' + (s.menu ? ' show' : ''), toggleMenu: () => this.setState({ menu: !s.menu }),
+      lang: s.lang, cur: s.cur, langOpen: s.langOpen ? 'true' : 'false', curOpen: s.curOpen ? 'true' : 'false',
+      langCls: 'nice-select select_js' + (s.langOpen ? ' open' : ''), curCls: 'nice-select select_js' + (s.curOpen ? ' open' : ''),
+      toggleLang: () => this.setState({ langOpen: !s.langOpen, curOpen: false }), toggleCur: () => this.setState({ curOpen: !s.curOpen, langOpen: false }),
+      langs: opts(['English', 'Japanese', 'Korean', 'Chinese', 'Urdu'], s.lang, 'lang'), curs: opts(['$USD', '₹INR', '¥CNY', '€EUR', '฿THB'], s.cur, 'cur'),
+      progCls: 'progress-wrap' + (s.progOn ? ' active-progress' : ''), progOffset: String(307.919 - s.prog * 307.919),
+      toTop: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+      noSubmit: (e) => e.preventDefault()
+    }, {
+
+    });
+  }
+}
+</script>
+</body>
+</html>

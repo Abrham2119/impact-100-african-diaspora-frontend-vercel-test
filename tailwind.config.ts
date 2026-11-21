@@ -2,9 +2,28 @@ import type { Config } from 'tailwindcss';
 
 // Design tokens exposed as CSS variables (see src/index.css) so light/dark
 // themes swap without touching component classes.
+//
+// Coexistence with the design CSS (ARCHITECTURE.md §1): Tailwind serves only the
+// starter screens, which render inside <TwScope> (.tw-root).
+//  - preflight off: the reset would restyle every design page. A scoped copy lives
+//    in src/styles/tw-scope.css.
+//  - important: true: impact100.css bundles Bootstrap 5, whose utilities (p-4, border,
+//    rounded, bg-primary …) are `!important` and share names with Tailwind's. Marking
+//    Tailwind's utilities important (loaded later) restores the starter's values.
+//  - content excludes design code, and the design classes `container`/`collapse` are
+//    blocklisted, so Tailwind never emits a class that design markup uses
+//    (enforced by `npm run check:css`).
 export default {
   darkMode: ['class'],
-  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  important: true,
+  corePlugins: { preflight: false },
+  blocklist: ['container', 'collapse'],
+  content: [
+    './index.html',
+    './src/**/*.{ts,tsx}',
+    '!./src/components/design/**',
+    '!./src/pages/design/**',
+  ],
   theme: {
     extend: {
       colors: {

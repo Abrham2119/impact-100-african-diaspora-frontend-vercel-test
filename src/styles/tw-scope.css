@@ -1,0 +1,234 @@
+/* =============================================================================
+   Starter scope (.tw-root) — ARCHITECTURE.md §1.3
+   -----------------------------------------------------------------------------
+   The design CSS is global: Bootstrap 5 reboot + the template theme style bare
+   elements (`* {margin:0;padding:0}`, `header {position:fixed}`,
+   `input,textarea {border-radius:30px…}`, `a {display:inline-block}`,
+   `footer::before {…}`, heading fonts/colours …). The starter screens were built
+   on Tailwind's preflight instead, so inside <TwScope>:
+
+   1. every element property set by the design CSS is reverted to the browser
+      default (`all: revert`). SVG subtrees are skipped so presentation
+      attributes such as lucide's fill="none" keep working;
+   2. Tailwind v3.4 preflight is re-applied, scoped to .tw-root.
+
+   Every selector here has specificity (0,1,0) or (0,1,1). This file loads after
+   the design CSS (so it wins over element rules) and before src/index.css (so the
+   starter's own component classes and the important utilities still win), which
+   preserves Tailwind's normal cascade order.
+   Load order is set in src/main.tsx. Do not reorder.
+   ========================================================================== */
+
+/* 1 · Neutralise the design CSS inside the starter scope ------------------- */
+.tw-root *:where(:not(svg, svg *)),
+.tw-root *:where(:not(svg, svg *))::before,
+.tw-root *:where(:not(svg, svg *))::after {
+  all: revert;
+}
+
+/* Inherited text properties normally come from <body>, which the design styles. */
+.tw-root {
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: normal;
+  text-align: start;
+  text-transform: none;
+  scroll-behavior: auto;
+}
+
+/* 2 · Tailwind preflight (v3.4), scoped ----------------------------------- */
+.tw-root *,
+.tw-root ::before,
+.tw-root ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: theme('borderColor.DEFAULT', currentColor);
+}
+
+.tw-root ::before,
+.tw-root ::after {
+  --tw-content: '';
+}
+
+/* `html` + `body` rules apply to the scope root itself */
+.tw-root {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  font-family: theme('fontFamily.sans');
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+}
+
+.tw-root :where(hr) {
+  height: 0;
+  color: inherit;
+  border-top-width: 1px;
+}
+
+.tw-root :where(abbr[title]) {
+  text-decoration: underline dotted;
+}
+
+.tw-root :where(h1, h2, h3, h4, h5, h6) {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.tw-root :where(a) {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.tw-root :where(b, strong) {
+  font-weight: bolder;
+}
+
+.tw-root :where(code, kbd, samp, pre) {
+  font-family: theme('fontFamily.mono');
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  font-size: 1em;
+}
+
+.tw-root :where(small) {
+  font-size: 80%;
+}
+
+.tw-root :where(sub, sup) {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.tw-root :where(sub) {
+  bottom: -0.25em;
+}
+
+.tw-root :where(sup) {
+  top: -0.5em;
+}
+
+.tw-root :where(table) {
+  text-indent: 0;
+  border-color: inherit;
+  border-collapse: collapse;
+}
+
+.tw-root :where(button, input, optgroup, select, textarea) {
+  font-family: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.tw-root :where(button, select) {
+  text-transform: none;
+}
+
+.tw-root :where(button, input[type='button'], input[type='reset'], input[type='submit']) {
+  -webkit-appearance: button;
+  background-color: transparent;
+  background-image: none;
+}
+
+.tw-root :where(:-moz-focusring) {
+  outline: auto;
+}
+
+.tw-root :where(:-moz-ui-invalid) {
+  box-shadow: none;
+}
+
+.tw-root :where(progress) {
+  vertical-align: baseline;
+}
+
+.tw-root ::-webkit-inner-spin-button,
+.tw-root ::-webkit-outer-spin-button {
+  height: auto;
+}
+
+.tw-root :where([type='search']) {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+.tw-root ::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.tw-root ::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+.tw-root :where(summary) {
+  display: list-item;
+}
+
+.tw-root :where(blockquote, dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre) {
+  margin: 0;
+}
+
+.tw-root :where(fieldset) {
+  margin: 0;
+  padding: 0;
+}
+
+.tw-root :where(legend) {
+  padding: 0;
+}
+
+.tw-root :where(ol, ul, menu) {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tw-root :where(dialog) {
+  padding: 0;
+}
+
+.tw-root :where(textarea) {
+  resize: vertical;
+}
+
+.tw-root :where(input, textarea)::placeholder {
+  opacity: 1;
+  color: theme('colors.gray.400');
+}
+
+.tw-root :where(button, [role='button']) {
+  cursor: pointer;
+}
+
+.tw-root :where(:disabled) {
+  cursor: default;
+}
+
+.tw-root :where(img, svg, video, canvas, audio, iframe, embed, object) {
+  display: block;
+  vertical-align: middle;
+}
+
+.tw-root :where(img, video) {
+  max-width: 100%;
+  height: auto;
+}
+
+.tw-root :where([hidden]:not([hidden='until-found'])) {
+  display: none;
+}
