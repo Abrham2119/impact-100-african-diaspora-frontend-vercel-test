@@ -43,7 +43,7 @@ export const ourModelEn = page('our_model', P.ourModel, { title: 'Impact100 — 
         fields: {
           num: '3',
           title: 'Vote and fund',
-          body: para('Voting members decide. One member, one vote per ballot, whatever the member’s level. Grants go to partners in USAFI hubs across Sub-Saharan Africa.'),
+          body: para('Voting members decide. One member, one vote per ballot, whatever the member’s level. Grants go to partners in USAFI hubs across Africa.'),
         },
       },
     ],
@@ -144,7 +144,7 @@ export const ourModelEn = page('our_model', P.ourModel, { title: 'Impact100 — 
     settings: { split: '7_5' },
     fields: {
       title: 'Where the money goes',
-      body: 'USAFI Impact is our fiscal sponsor: it issues every receipt and keeps the official financial records. Payments are processed by WAZIImpact.org — no card details ever touch our site. Grants support partners in USAFI hubs across Sub-Saharan Africa, in four funding portfolios.',
+      body: 'USAFI Impact is our fiscal sponsor: it issues every receipt and keeps the official financial records. Payments are processed by WAZIImpact.org — no card details ever touch our site. Grants support partners in USAFI hubs across Africa, in four funding portfolios.',
       actions: [link('become a member', P.join), link('see our grants', P.grants, 'ghost_light')],
     },
   }),

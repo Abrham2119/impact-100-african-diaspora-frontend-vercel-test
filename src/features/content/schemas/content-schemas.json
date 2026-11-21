@@ -2833,7 +2833,7 @@
               "$ref": "#/definitions/LocalizedText",
               "x-kind": "text"
             },
-            "legend_mine": {
+            "legend_sub_saharan": {
               "$ref": "#/definitions/LocalizedText",
               "x-kind": "text"
             },
@@ -2856,6 +2856,14 @@
             "country_actions": {
               "$ref": "#/definitions/LocalizedLinkList",
               "x-kind": "link_list"
+            },
+            "north_title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "north_body": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
             },
             "interest_label": {
               "$ref": "#/definitions/LocalizedText",
@@ -2908,7 +2916,7 @@
             "region_sub_saharan",
             "legend_north",
             "legend_hub",
-            "legend_mine",
+            "legend_sub_saharan",
             "list_kicker",
             "country_title",
             "country_body",
@@ -2930,6 +2938,50 @@
           "properties": {},
           "required": [],
           "additionalProperties": false
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "settings": {
+                "type": "object",
+                "properties": {
+                  "map_key": {
+                    "type": "string",
+                    "x-kind": "string"
+                  }
+                },
+                "required": [
+                  "map_key"
+                ],
+                "additionalProperties": false
+              },
+              "fields": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/LocalizedText",
+                    "x-kind": "text"
+                  },
+                  "capital": {
+                    "$ref": "#/definitions/LocalizedText",
+                    "x-kind": "text"
+                  }
+                },
+                "required": [
+                  "name"
+                ],
+                "additionalProperties": false
+              },
+              "media": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              }
+            }
+          }
         }
       }
     },

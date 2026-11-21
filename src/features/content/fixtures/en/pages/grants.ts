@@ -15,19 +15,21 @@ export const grantsPageEn = page('grants', P.grants, { title: 'Impact100 — Gra
     settings: { default_hub: DEFAULT_HUB },
     fields: {
       kicker: 'Where we fund',
-      title: 'USAFI hubs across Sub-Saharan Africa',
+      title: 'USAFI hubs across Africa',
       lead: 'Choose a hub on the map or with the buttons — both do the same thing. Pick an interest area too: we save it to your profile (or for this visit, until you join) and use it to tailor what you see.',
       map_label: 'Map of Africa showing North Africa, Sub-Saharan Africa and the USAFI hubs in Ghana, Kenya and Zambia',
       region_north: 'North Africa',
       region_sub_saharan: 'Sub-Saharan Africa',
       legend_north: 'North Africa',
-      legend_hub: 'USAFI hub — every Sub-Saharan country (click to choose)',
-      legend_mine: 'Your hub',
-      boundaries_note: 'Boundaries: Natural Earth 1:50m (public domain), hosted on our own servers.',
+      legend_hub: 'USAFI hub · click to select',
+      legend_sub_saharan: 'Sub-Saharan Africa',
       list_kicker: 'Hubs — text list',
       country_title: '{name} hub · Sub-Saharan Africa',
       country_body: '{name} is a USAFI hub. Choose an interest area below to save it, nominate a partner here, or tell us about local work.',
       country_actions: [link('nominate a partner', PATHS.portal.suggest), link('contact us', `${P.contact}?topic=partner`, 'dark')],
+      // Not in the design (North African countries selectable — requested change); editable placeholders.
+      north_title: '{name} · not a USAFI hub yet',
+      north_body: 'Our hubs are in Sub-Saharan Africa for now. Nominate a partner or tell us about local work in {name} — it helps us plan future hubs.',
       interest_label: 'Interest area (portfolio)',
       projects_kicker: 'Projects under review here',
       roles_kicker: 'Volunteer roles for you',
@@ -40,6 +42,17 @@ export const grantsPageEn = page('grants', P.grants, { title: 'Impact100 — Gra
       unsaved_body: 'Your choice orders proposals, tags volunteer roles and pre-fills nominations.',
       cta: link('join and save my interests', P.join),
     },
+    // North African countries on the map (requested change): Natural Earth names, as for C:countries.
+    items: (
+      [
+        ['c504', 'Morocco', 'Rabat'],
+        ['c732', 'W. Sahara', null],
+        ['c012', 'Algeria', 'Algiers'],
+        ['c788', 'Tunisia', 'Tunis'],
+        ['c434', 'Libya', 'Tripoli'],
+        ['c818', 'Egypt', 'Cairo'],
+      ] as const
+    ).map(([map_key, name, capital]) => ({ fields: capital ? { name, capital } : { name }, settings: { map_key } })),
   }),
   section('split_feature', 'selection', {
     fields: {

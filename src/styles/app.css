@@ -166,8 +166,10 @@
 .ixd_mt20 { margin-top: 20px !important; }
 /* grants map legend swatches (grants.dc.html inline backgrounds, verbatim) */
 .ixd_swatch_north { background: var(--ixMapNorth) !important; }
-.ixd_swatch_hub { background: var(--ixMapLand) !important; }
-.ixd_swatch_mine { background: var(--ixMapSelected) !important; }
+.ixd_swatch_hub { background: var(--ixMapHub) !important; }
+.ixd_swatch_land { background: var(--ixMapLand) !important; }
+/* grants map legend: one entry per line */
+.ixd_legend_column { flex-direction: column !important; gap: 8px !important; }
 /* grants hub list: chips stacked full width, muted capital */
 .ixd_chip_column { margin-top: 12px !important; flex-direction: column !important; align-items: stretch !important; }
 .ixd_fw600 { font-weight: 600 !important; }
@@ -282,7 +284,14 @@
 
 .ixd_map_canvas { position: relative; }
 
-.ix_map .ix_north { fill: var(--ixMapNorth); }
+.ix_map .ix_north { fill: var(--ixMapNorth); stroke: var(--ixMapStroke); stroke-width: 0.6; cursor: pointer; transition: fill 0.2s; }
+.ix_map .ix_north:hover { fill: var(--ixMapLandHover); }
+.ix_map .ix_north:focus { outline: none; }
+.ix_map .ix_north:focus-visible { stroke: var(--ixMapSelected); stroke-width: 1.6; }
+.ix_map .ix_north.ix_on,
+.ix_map .ix_north.ix_on:hover { fill: var(--ixMapSelected); }
+/* region labels: white halo, readable on any fill (incl. a selected country) */
+.ix_map .ix_region_lbl { paint-order: stroke; stroke: var(--ixMapStroke); stroke-width: 3px; stroke-linejoin: round; }
 .ix_map .ix_country,
 .ix_map .ix_hub { stroke: var(--ixMapStroke); stroke-width: 0.8; cursor: pointer; transition: fill 0.2s, filter 0.2s; }
 .ix_map .ix_country { fill: var(--ixMapLand); }

@@ -305,12 +305,15 @@ export const hubMap = defineSection('hub_map', {
     region_sub_saharan: f.text(),
     legend_north: f.text(),
     legend_hub: f.text(),
-    legend_mine: f.text(),
+    legend_sub_saharan: f.text(),
     boundaries_note: o(f.text()),
     list_kicker: f.text(),
     country_title: f.text(),
     country_body: f.text(),
     country_actions: o(f.links()),
+    /** a North African country selected on the map (not a hub; `{name}`); its buttons are country_actions */
+    north_title: o(f.text()),
+    north_body: o(f.text()),
     interest_label: f.text(),
     projects_kicker: f.text(),
     roles_kicker: f.text(),
@@ -324,6 +327,8 @@ export const hubMap = defineSection('hub_map', {
     cta: o(f.link()),
   },
   settings: { default_hub: s.string() },
+  /** the North African countries on the map (context only, not hubs); map_key = shape id (`c504`…) */
+  item: { fields: { name: f.text(), capital: o(f.text()) }, settings: { map_key: s.string() } },
 });
 
 /** grants "How grants are selected": heading + text + button beside a card of rubric rows. */

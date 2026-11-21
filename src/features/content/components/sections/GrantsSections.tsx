@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { AfricaMap, Badge, ButtonRow, Card, Chip, FlowSteps, ResultBox, Select, Timeline } from '@/components/design';
+import { AfricaMap, isNorthAfricaKey, Badge, ButtonRow, Card, Chip, FlowSteps, ResultBox, Select, Timeline } from '@/components/design';
 import { PATHS } from '@/app/routes/paths';
 import { usePublicProposals } from '@/features/governance/hooks/usePublicProposals';
 import { useSearchParamState } from '@/hooks/useSearchParamState';
@@ -27,16 +27,18 @@ function useSelectedHub(defaultHub: string | undefined) {
   const [param, setParam] = useSearchParamState('hub');
   const find = (value: string | null | undefined) =>
     value ? all.entries.find((c) => c.key === value || c.data.map_key === value || c.fields.name.toLowerCase() === value.toLowerCase()) : undefined;
-  const hub = find(param) ?? find(defaultHub);
-  return { all, hub, select: (key: string) => setParam(key) };
+  // `?hub=c504`… selects a North African country: no hub (and no fallback to the default hub)
+  const north = isNorthAfricaKey(param) ? param : null;
+  const hub = north ? undefined : (find(param) ?? find(defaultHub));
+  return { all, hub, north, select: (key: string) => setParam(key) };
 }
 
 // hub_map — map, hub list, other-country select, interests, proposals and roles for the hub.
 export function HubMapSection({ section }: { section: SectionData<typeof hubMap> }) {
-  const { fields: c } = section;
+  const { fields: c, items: northCountries } = section;
   const t = useT('site');
   const { locale, toPath } = useLocale();
-  const { all, hub, select } = useSelectedHub(section.settings.default_hub);
+  const { all, hub, north, select } = useSelectedHub(section.settings.default_hub);
   const pf = useSectionEntries(portfolios, { collection: 'portfolios' });
   const [portfolioKey, setPortfolio] = useSearchParamState('portfolio');
   const portfolio = pf.entries.find((p) => p.key === portfolioKey);
@@ -44,14 +46,34 @@ export function HubMapSection({ section }: { section: SectionData<typeof hubMap>
 
   const featured = all.entries.filter((country) => country.data.featured);
   const others = all.entries.filter((country) => !country.data.featured);
-  const names = useMemo(() => Object.fromEntries(all.entries.map((country) => [country.data.map_key, country.fields.name])), [all.entries]);
+  const names = useMemo(
+    () => ({
+      ...Object.fromEntries(all.entries.map((country) => [country.data.map_key, country.fields.name])),
+      ...Object.fromEntries(northCountries.map((country) => [country.settings.map_key, country.fields.name])),
+    }),
+    [all.entries, northCountries],
+  );
   const hubLabels = useMemo(
     () => Object.fromEntries(featured.map((country) => [country.data.map_key, t('grants.hubLabel', { name: country.fields.name, capital: country.fields.capital })])),
     [featured, t],
   );
-  const capitals = useMemo(() => Object.fromEntries(all.entries.map((country) => [country.data.map_key, country.fields.capital])), [all.entries]);
+  const capitals = useMemo(
+    () => ({
+      ...Object.fromEntries(all.entries.map((country) => [country.data.map_key, country.fields.capital])),
+      ...Object.fromEntries(northCountries.flatMap((country) => (country.fields.capital ? [[country.settings.map_key, country.fields.capital]] : []))),
+    }),
+    [all.entries, northCountries],
+  );
+  const northName = north ? (northCountries.find((country) => country.settings.map_key === north)?.fields.name ?? '') : '';
   const mapTip = useMemo(
-    () => ({ capital: t('grants.mapTip.capital'), featured: t('grants.mapTip.featured'), selected: t('grants.mapTip.selected'), hint: t('grants.mapTip.hint') }),
+    () => ({
+      capital: t('grants.mapTip.capital'),
+      featured: t('grants.mapTip.featured'),
+      selected: t('grants.mapTip.selected'),
+      hint: t('grants.mapTip.hint'),
+      northNote: t('grants.mapTip.northNote'),
+      northHint: t('grants.mapTip.northHint'),
+    }),
     [t],
   );
   const values = { name: hub?.fields.name ?? '', capital: hub?.fields.capital ?? '' };
@@ -63,6 +85,7 @@ export function HubMapSection({ section }: { section: SectionData<typeof hubMap>
   }, [hub, portfolio]);
 
   const byMapKey = (mapKey: string) => {
+    if (isNorthAfricaKey(mapKey)) return select(mapKey);
     const country = all.entries.find((entry) => entry.data.map_key === mapKey);
     if (country) select(country.key);
   };
@@ -76,7 +99,7 @@ export function HubMapSection({ section }: { section: SectionData<typeof hubMap>
             <div className="ix_map">
               <AfricaMap
                 label={c.map_label}
-                selected={hub?.data.map_key ?? null}
+                selected={north ?? hub?.data.map_key ?? null}
                 onSelect={byMapKey}
                 names={names}
                 hubLabels={hubLabels}
@@ -84,18 +107,18 @@ export function HubMapSection({ section }: { section: SectionData<typeof hubMap>
                 capitals={capitals}
                 tip={mapTip}
               />
-              <div className="ix_map_legend">
-                <span>
-                  <i className="ixd_swatch_north" />
-                  {c.legend_north}
-                </span>
+              <div className="ix_map_legend ixd_legend_column">
                 <span>
                   <i className="ixd_swatch_hub" />
                   {c.legend_hub}
                 </span>
                 <span>
-                  <i className="ixd_swatch_mine" />
-                  {c.legend_mine}
+                  <i className="ixd_swatch_land" />
+                  {c.legend_sub_saharan}
+                </span>
+                <span>
+                  <i className="ixd_swatch_north" />
+                  {c.legend_north}
                 </span>
               </div>
               {c.boundaries_note !== undefined && <p className="ix_note">{c.boundaries_note}</p>}
@@ -123,6 +146,21 @@ export function HubMapSection({ section }: { section: SectionData<typeof hubMap>
                     ))}
                   </Select>
                 </div>
+                {north && c.north_title !== undefined && (
+                  <ResultBox
+                    kind="wait"
+                    title={fill(c.north_title, { name: northName })}
+                    extra={
+                      c.country_actions && (
+                        <ButtonRow className="ixd_mt14">
+                          <CmsButtons links={c.country_actions} size="sm" />
+                        </ButtonRow>
+                      )
+                    }
+                  >
+                    {c.north_body !== undefined && fill(c.north_body, { name: northName })}
+                  </ResultBox>
+                )}
                 {hub && !hub.data.featured && (
                   <ResultBox
                     kind="wait"
@@ -153,27 +191,32 @@ export function HubMapSection({ section }: { section: SectionData<typeof hubMap>
                     ))}
                   </div>
                 </div>
-                <div className="ix_hp_block">
-                  <p className="ix_kicker">{c.projects_kicker}</p>
-                  {(proposals.data ?? []).map((proposal) => (
-                    <Link key={proposal.id} className="ix_hp_row" to={toPath(PATHS.portal.proposal(proposal.id))}>
-                      <span>
-                        <b>{proposal.title}</b>
-                        <small>{pf.entries.find((p) => p.key === proposal.portfolioKey)?.fields.name}</small>
-                      </span>
-                      <em>{t('grants.where', { ...values, country: values.name, amount: formatMoney(proposal.budgetCents, locale) })}</em>
-                    </Link>
-                  ))}
-                </div>
-                <div className="ix_hp_block">
-                  <p className="ix_kicker">{c.roles_kicker}</p>
-                  <Link className="ix_hp_row" to={toPath(c.role_link.href)}>
-                    <span>
-                      <b>{fill(c.role_title, values)}</b>
-                    </span>
-                    <em>{fill(c.role_where, values)}</em>
-                  </Link>
-                </div>
+                {/* projects and roles belong to a hub — hidden while a North African country is selected */}
+                {!north && (
+                  <>
+                    <div className="ix_hp_block">
+                      <p className="ix_kicker">{c.projects_kicker}</p>
+                      {(proposals.data ?? []).map((proposal) => (
+                        <Link key={proposal.id} className="ix_hp_row" to={toPath(PATHS.portal.proposal(proposal.id))}>
+                          <span>
+                            <b>{proposal.title}</b>
+                            <small>{pf.entries.find((p) => p.key === proposal.portfolioKey)?.fields.name}</small>
+                          </span>
+                          <em>{t('grants.where', { ...values, country: values.name, amount: formatMoney(proposal.budgetCents, locale) })}</em>
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="ix_hp_block">
+                      <p className="ix_kicker">{c.roles_kicker}</p>
+                      <Link className="ix_hp_row" to={toPath(c.role_link.href)}>
+                        <span>
+                          <b>{fill(c.role_title, values)}</b>
+                        </span>
+                        <em>{fill(c.role_where, values)}</em>
+                      </Link>
+                    </div>
+                  </>
+                )}
                 <ResultBox kind="ok" className="ixd_mt18" title={saved ? c.saved_title : c.unsaved_title}>
                   {saved && portfolio
                     ? fill(c.saved_body, { ...values, portfolio: portfolio.fields.name, flagship: portfolio.fields.flagship })

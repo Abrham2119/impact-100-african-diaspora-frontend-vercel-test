@@ -1,12 +1,12 @@
 import { memo, useCallback, useRef, useState, type FocusEvent, type KeyboardEvent, type PointerEvent } from 'react';
 import { cx } from '@/lib/classes';
-import { AFRICA_VIEWBOX, COUNTRY_PATHS, HUB_PATHS, HUB_PINS, NORTH_AFRICA_PATH, REGION_LABEL_ANCHORS } from './africaMap.paths';
+import { AFRICA_VIEWBOX, COUNTRY_PATHS, HUB_PATHS, HUB_PINS, NORTH_COUNTRY_PATHS, REGION_LABEL_ANCHORS, isNorthAfricaKey } from './africaMap.paths';
 
-// The grants map (grants.dc.html `.ix_map svg`), markup verbatim: North Africa (context only), the
-// 47 selectable Sub-Saharan countries (click; the country <select> next to the map is their
+// The grants map (grants.dc.html `.ix_map svg`): the six North African countries (selectable one by
+// one, but not hubs — the panel says so), the 47 selectable Sub-Saharan countries (click; the country <select> next to the map is their
 // keyboard equivalent — "both do the same thing") and the three featured hubs (focusable buttons
 // with pins and labels). Every Sub-Saharan country is a hub, incl. Sudan and Somaliland.
-// Hovering a country (or focusing a hub) shows a custom tooltip with its name and capital.
+// Hovering a country (or focusing a hub / North African country) shows a custom tooltip with its name and capital.
 // All text (names, labels, accessible names) arrives as props from the CMS / UiStrings.
 export interface AfricaMapTipStrings {
   /** "Capital: {capital}" */
@@ -17,15 +17,19 @@ export interface AfricaMapTipStrings {
   selected: string;
   /** call to action on an unselected country */
   hint: string;
+  /** North African country: note under the name ("not a hub") */
+  northNote: string;
+  /** North African country: call to action when not selected */
+  northHint: string;
 }
 
 export interface AfricaMapProps {
   /** accessible name of the whole map */
   label: string;
-  /** selected map key (`c404`… or a hub key), if any */
+  /** selected map key (`c404`…, a hub key or a North African `c504`…), if any */
   selected: string | null;
   onSelect: (mapKey: string) => void;
-  /** country / hub names by map key (the <title> of each shape and the pin labels) */
+  /** country / hub / region names by map key (the <title> of each shape, the pin labels, the tooltip) */
   names: Record<string, string>;
   /** accessible names of the hub buttons by hub key, e.g. "Kenya hub — capital Nairobi" */
   hubLabels: Record<string, string>;
@@ -59,7 +63,23 @@ const MapShapes = memo(function MapShapes({ selected, onSelect, names, hubLabels
   };
   return (
     <>
-      <path className="ix_north" d={NORTH_AFRICA_PATH} />
+      {NORTH_COUNTRY_PATHS.map(([key, d]) => (
+        <path
+          key={key}
+          d={d}
+          className={cx('ix_north', selected === key && 'ix_on')}
+          data-k={key}
+          tabIndex={0}
+          role="button"
+          aria-label={names[key]}
+          aria-pressed={selected === key}
+          onClick={() => onSelect(key)}
+          onKeyDown={(event) => onHubKey(event, key)}
+          onFocus={onFocusHub}
+        >
+          {withTitles && <title>{names[key]}</title>}
+        </path>
+      ))}
       {COUNTRY_PATHS.map(([key, d]) => (
         <path
           key={key}
@@ -130,21 +150,26 @@ export function AfricaMap({ label, selected, onSelect, names, hubLabels, regionL
 
   const onFocusHub = useCallback(
     (event: FocusEvent<SVGPathElement>) => {
-      const key = event.currentTarget.dataset.k;
-      const pin = key ? HUB_PINS[key] : undefined;
-      const svg = event.currentTarget.ownerSVGElement;
-      if (!key || !pin || !svg) return;
+      const shape = event.currentTarget;
+      const key = shape.dataset.k;
+      const svg = shape.ownerSVGElement;
+      if (!key || !svg) return;
+      // anchor: the hub's pin, else the centre of the country's outline (viewBox units)
+      const pin = HUB_PINS[key];
+      const outline = pin ? null : shape.getBBox();
+      const anchor = pin ?? (outline ? { cx: outline.x + outline.width / 2, cy: outline.y + outline.height / 2 } : null);
+      if (!anchor) return;
       setTipKey(key);
-      // anchor the tooltip on the hub's pin (viewBox → screen)
+      // viewBox → screen
       const box = svg.getBoundingClientRect();
       const [, , vw, vh] = AFRICA_VIEWBOX.split(' ').map(Number);
-      requestAnimationFrame(() => place(box.left + (pin.cx / vw) * box.width, box.top + (pin.cy / vh) * box.height));
+      requestAnimationFrame(() => place(box.left + (anchor.cx / vw) * box.width, box.top + (anchor.cy / vh) * box.height));
     },
     [place],
   );
 
   // One handler for the whole map: the shape under the pointer (pins and labels let it through)
-  // picks the tooltip; North Africa and the gaps between countries clear it.
+  // picks the tooltip; the gaps between shapes clear it.
   const onMove = (event: PointerEvent<HTMLDivElement>) => {
     if (event.pointerType === 'touch') return;
     const shape = event.target instanceof Element ? event.target.closest('[data-k]') : null;
@@ -157,6 +182,7 @@ export function AfricaMap({ label, selected, onSelect, names, hubLabels, regionL
   const tipCapital = tipKey ? capitals?.[tipKey] : undefined;
   const tipOn = Boolean(tip && tipName);
   const isHub = tipKey ? tipKey in HUB_PINS : false;
+  const isNorth = isNorthAfricaKey(tipKey);
   const isSelected = tipKey !== null && tipKey === selected;
 
   return (
@@ -180,12 +206,13 @@ export function AfricaMap({ label, selected, onSelect, names, hubLabels, regionL
       </svg>
       {tip && (
         <div ref={tipRef} className={cx('ixd_map_tip', tipOn && 'ixd_map_tip_on')} role="tooltip" aria-hidden={!tipOn}>
-          {(isHub || isSelected) && (
+          {!isNorth && (isHub || isSelected) && (
             <span className="ixd_map_tip_badge">{isSelected ? tip.selected : tip.featured}</span>
           )}
           <strong className="ixd_map_tip_name">{tipName}</strong>
           {tipCapital && <span className="ixd_map_tip_meta">{fill(tip.capital, { capital: tipCapital })}</span>}
-          {!isSelected && <span className="ixd_map_tip_hint">{tip.hint}</span>}
+          {isNorth && <span className="ixd_map_tip_meta">{tip.northNote}</span>}
+          {!isSelected && <span className="ixd_map_tip_hint">{isNorth ? tip.northHint : tip.hint}</span>}
         </div>
       )}
     </div>

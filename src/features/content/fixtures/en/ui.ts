@@ -1406,6 +1406,8 @@ const site = {
   'grants.mapTip.featured': 'Featured hub',
   'grants.mapTip.selected': 'Your hub',
   'grants.mapTip.hint': 'Click to choose this hub',
+  'grants.mapTip.northNote': 'Not a USAFI hub yet',
+  'grants.mapTip.northHint': 'Click for details',
   'grants.where': '{capital}, {country} · {amount}',
   'grants.proposalKicker': '{country} · {portfolio} · {flagship}',
 };
