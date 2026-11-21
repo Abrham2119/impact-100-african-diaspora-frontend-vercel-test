@@ -32,13 +32,14 @@ const level = (kicker: string, title: string, price: string, body: string, key: 
 export const homeEn = page('home', PATHS.home, { title: 'Impact100 — Home' }, [
   section('hero_slider', 'hero', {
     settings: { autoplay_ms: 4000 },
-    fields: { circle_text: 'take the worldwide best online course' },
+    fields: { circle_text: 'Giving together back home' },
     items: [heroSlide(1), heroSlide(2), heroSlide(3)],
   }),
-  section('category_carousel', 'categories', {
-    settings: { source: { collection: 'campaign_categories' }, href: P.campaigns },
-    fields: { kicker: 'Campaigns Category', title: 'Browse by Category' },
-  }),
+  // "Browse by Category" — hidden for now (client request, Nov 21 2026); uncomment to show it again.
+  // section('category_carousel', 'categories', {
+  //   settings: { source: { collection: 'campaign_categories' }, href: P.campaigns },
+  //   fields: { kicker: 'Campaigns Category', title: 'Browse by Category' },
+  // }),
   section('about_block', 'about', {
     fields: {
       kicker: 'About the Chapter',

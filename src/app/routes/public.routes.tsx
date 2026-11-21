@@ -84,7 +84,8 @@ const publicChildren = (): RouteObject[] => [
   page('volunteer/thanks', { screen: 'volunteer_thanks', pageKey: 'volunteer_thanks', nav: 'opportunities' }),
   page('grants', { screen: 'grants', pageKey: 'grants', nav: 'grants.map' }),
   page('campaigns', { screen: 'campaign_list', pageKey: 'campaigns', nav: 'grants.campaigns' }),
-  page('campaigns/category/:slug?', { screen: 'category', pageKey: 'campaign_category', nav: 'grants.categories' }),
+  // Campaign categories page — hidden for now (client request, Nov 21 2026); uncomment to restore.
+  // page('campaigns/category/:slug?', { screen: 'category', pageKey: 'campaign_category', nav: 'grants.categories' }),
   page('campaigns/:slug', { screen: 'campaign_details', pageKey: 'campaign_detail', nav: 'grants' }),
   page('nonprofits', { screen: 'nonprofits', pageKey: 'nonprofits', nav: 'nonprofits' }),
   page('events', { screen: 'event', pageKey: 'events', nav: 'events.events' }),

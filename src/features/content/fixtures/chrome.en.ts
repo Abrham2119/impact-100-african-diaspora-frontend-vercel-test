@@ -101,7 +101,8 @@ export const chromeEn: PublicChrome = {
           links: [
             { id: 'grants.map', label: 'Grants', to: P.grants },
             { id: 'grants.campaigns', label: 'Campaigns', to: P.campaigns },
-            { id: 'grants.categories', label: 'Categories', to: P.campaignCategory() },
+            // "Categories" — hidden with the categories page (client request, Nov 21 2026)
+            // { id: 'grants.categories', label: 'Categories', to: P.campaignCategory() },
           ],
         },
       },
