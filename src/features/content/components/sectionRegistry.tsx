@@ -12,6 +12,8 @@ import { CharterDocumentSection } from './sections/CharterSection';
 import { CommitteeGridSection } from './sections/CommitteeGridSection';
 import { DecisionTableSection, LegalTextSection } from './sections/DocumentSections';
 import { FaqSection } from './sections/FaqSection';
+import { FlowStepsSection } from './sections/FlowStepsSection';
+import { FormBlockSection } from './sections/FormBlockSection';
 import { HeroSliderSection } from './sections/HeroSliderSection';
 import { DonorListSection, PhotoGallerySection, VideoGallerySection } from './sections/ListSections';
 import { NewsListSection } from './sections/NewsListSection';
@@ -78,6 +80,8 @@ const REGISTRY = new Map<string, SectionRenderer>([
   entry(T.photoGallery, PhotoGallerySection),
   entry(T.videoGallery, VideoGallerySection),
   entry(T.statusCard, StatusCardSection),
+  entry(T.flowSteps, FlowStepsSection),
+  entry(T.formBlock, FormBlockSection),
 ]);
 
 /** Section types rendered outside the page body (the layout draws the banner). */

@@ -139,6 +139,10 @@
 .ixd_notice { margin: 0 0 24px !important; }
 .ixd_charter_intro { font-size: 18px !important; line-height: 1.7 !important; margin: -8px 0 30px !important; }
 
+/* Step 6 */
+.ixd_mb16 { margin-bottom: 16px !important; }
+.ixd_text_left { text-align: left !important; }
+
 /* newsletter status card */
 .ixd_status_card { text-align: center !important; padding: 50px 40px !important; }
 .ixd_num_xl { width: 80px !important; height: 80px !important; line-height: 80px !important; font-size: 34px !important; }

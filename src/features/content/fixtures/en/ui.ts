@@ -176,7 +176,32 @@ const site = {
   'charter.oldBody': 'This version is kept for reference. The current version is the {current}.',
 };
 
-const source = { common, portal, admin, site };
+// Public form microcopy (Step 6): field labels, placeholders and error messages. Errors are the
+// design's exact wording where the design has them (join / volunteer / donate .dc.html); the ones
+// marked "placeholder" are not in the design and await the client's wording (decision of Step 6).
+const forms = {
+  // design: join.dc.html
+  'error.nameMin': 'Your name needs at least 2 characters.',
+  'error.emailFormat': 'That email doesn’t look right — check it has an @ and a domain, like name@example.com.',
+  'error.cityOrHub': 'Add your city or choose a US hub.',
+  // design: volunteer.dc.html (also used by the other public forms)
+  'error.name': 'Enter your name — at least 2 characters.',
+  'error.email': 'Enter a valid email address, like name@example.com.',
+  'error.location': 'Tell us where you are based.',
+  'error.tray': 'Add at least one role to your tray.',
+  // design: donate.dc.html
+  'error.amount': 'Enter an amount greater than $0.',
+  'error.donor': 'Enter your name (2+ characters) and a valid email.',
+  // placeholder — client wording pending
+  'error.message': 'Write a message between 10 and 5,000 characters.',
+  'error.consent': 'Please confirm you have read the privacy notice.',
+  'error.title': 'Add a title for your story.',
+  'error.story': 'Write your story — between 10 and 5,000 characters.',
+  'error.photoAlt': 'Describe the photo for people who can’t see it.',
+  'error.submit': 'We couldn’t send this. Please try again.',
+};
+
+const source = { common, portal, admin, site, forms };
 
 export type UiNamespace = keyof typeof source;
 export type UiKey<N extends UiNamespace> = keyof (typeof source)[N] & string;

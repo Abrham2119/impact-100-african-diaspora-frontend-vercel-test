@@ -25,6 +25,10 @@ export default {
     '!./src/pages/design/**',
     // CMS section components render design markup only (Step 5)
     '!./src/features/content/components/**',
+    // public-site feature components (Step 6): design markup only
+    '!./src/features/engagement/components/**',
+    '!./src/features/membership/components/**',
+    '!./src/features/governance/components/**',
   ],
   theme: {
     extend: {

@@ -711,6 +711,23 @@ governanceKeys.currentBallot(locale) · governanceKeys.proposal(id, locale) · g
 >   starter screens (`pages/auth/legacy`, `features/auth|dashboard`) are out of scope until Steps 14–15 replace them.
 >   No allowlist file is needed: glyph-only text (`$`, `×`, `·`) has no letters and passes.
 
+> **As built in Step 6 (public pages B).**
+> - **Public APIs, mocked:** typed services per slice: `features/engagement/api/engagementService.ts`,
+>   `features/membership/api/{settings,campaign,join,donation}Service.ts` and `features/governance/api/proposalService.ts`.
+>   They return the documented backend shapes (`src/types/*.dto.ts`) through `infrastructure/api/mock.ts`. Endpoint
+>   strings are already in `API_ENDPOINTS.{engagement,membership,governance}`, so in Step 13 only the service bodies
+>   change.
+> - **Rules:** `domain/rules/membership.ts` holds the installment plan, level from amount and voting threshold, read
+>   from the charter settings (`GET /settings/public`, `usePublicSettings`).
+> - **Forms:** `useDesignForm` (react-hook-form + the local `zodResolver`; errors show after the first submit, as in
+>   the design). Error copy lives in the UiStrings `forms` namespace: the design's wording where the design has it,
+>   otherwise flagged placeholders. Errors render through `<Field error>`.
+> - **`form_block`** sections render `FORM_REGISTRY[form_key]` (`features/content/components/formRegistry.tsx`).
+>   `status_card` can show the form's last submission (`infrastructure/storage/submission.storage.ts`, sessionStorage)
+>   on the thanks pages.
+> - The engagement / membership / governance `components/` folders render design markup only. They are therefore
+>   excluded from Tailwind's content scan, and covered by `check:css` and `check:copy`.
+
 ### 7.1 Shared, typed field schemas
 
 - **The contract is JSON Schema** for every section type and collection schema, as served by

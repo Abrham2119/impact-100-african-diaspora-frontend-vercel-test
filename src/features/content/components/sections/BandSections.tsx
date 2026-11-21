@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import { ButtonRow, Card, CounterItem } from '@/components/design';
+import { ButtonRow, Card, CounterItem, ResultBox } from '@/components/design';
+import { submissionStorage } from '@/infrastructure/storage/submission.storage';
 import { useCountUp } from '@/hooks/useCountUp';
 import { useMarqueeDuration } from '@/hooks/useMarqueeDuration';
 import { cx } from '@/lib/classes';
@@ -163,9 +164,14 @@ export function CounterBandSection({ section }: { section: Counter }) {
   return section.settings.variant === 'portfolio' ? <PortfolioBand section={section} /> : <CountUpBand section={section} />;
 }
 
-// status_card — newsletter confirmed / unsubscribed
+const fill = (template: string, values: Record<string, string>) =>
+  template.replace(/\{(\w+)\}/g, (match, name: string) => values[name] ?? match);
+
+// status_card — newsletter confirmed / unsubscribed and the thanks pages. With `summary_key` the
+// form's last submission fills the result box ("$100 · monthly · Diaspora Engagement · Kenya").
 export function StatusCardSection({ section }: { section: SectionData<typeof statusCard> }) {
   const { fields, settings } = section;
+  const summary = settings.summary_key ? submissionStorage.read(settings.summary_key) : null;
   return (
     <section className="mt_100">
       <div className="container">
@@ -177,6 +183,11 @@ export function StatusCardSection({ section }: { section: SectionData<typeof sta
               </div>
               <h2 className="ixd_title_38">{fields.title}</h2>
               <p className="ixd_band_text ixd_mt14">{fields.body}</p>
+              {summary && fields.result_title !== undefined && (
+                <ResultBox kind="wait" title={fill(fields.result_title, summary)} className="ixd_text_left">
+                  {fields.result_body !== undefined ? fill(fields.result_body, summary) : undefined}
+                </ResultBox>
+              )}
               {fields.actions && (
                 <ButtonRow className="ixd_row_center">
                   <CmsButtons links={fields.actions} />

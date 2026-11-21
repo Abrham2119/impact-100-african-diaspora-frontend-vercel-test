@@ -13,7 +13,15 @@ import { join, relative } from 'node:path';
 import ts from 'typescript';
 
 const ROOT = new URL('../../', import.meta.url).pathname;
-const SCANNED = ['src/components/design/blocks', 'src/components/design/chrome', 'src/features/content/components', 'src/pages/public'];
+const SCANNED = [
+  'src/components/design/blocks',
+  'src/components/design/chrome',
+  'src/features/content/components',
+  'src/features/engagement/components',
+  'src/features/membership/components',
+  'src/features/governance/components',
+  'src/pages/public',
+];
 const COPY_ATTRIBUTES = new Set(['alt', 'title', 'placeholder', 'aria-label', 'label']);
 const HAS_LETTER = /\p{L}/u;
 

@@ -18,7 +18,8 @@ import config from '../../tailwind.config.ts';
 
 const ROOT = new URL('../../', import.meta.url).pathname;
 const SNAPSHOTS = join(ROOT, 'design-reference/snapshots');
-const DESIGN_SOURCES = ['src/components/design', 'src/pages/design', 'src/features/content/components'].map((dir) => join(ROOT, dir));
+const PUBLIC_FEATURE_COMPONENTS = ['content', 'engagement', 'membership', 'governance'].map((slice) => `src/features/${slice}/components`);
+const DESIGN_SOURCES = ['src/components/design', 'src/pages/design', ...PUBLIC_FEATURE_COMPONENTS].map((dir) => join(ROOT, dir));
 
 /** Classes Tailwind and Bootstrap define with the same meaning; overlap is harmless. */
 const IDENTICAL_SEMANTICS = new Set(['flex-wrap']);
@@ -32,7 +33,7 @@ for (const cls of ['container', 'collapse']) {
   if (!(config.blocklist ?? []).includes(cls)) failures.push(`blocklist must contain "${cls}"`);
 }
 const content = Array.isArray(config.content) ? config.content : [];
-for (const glob of ['!./src/components/design/**', '!./src/pages/design/**', '!./src/features/content/components/**']) {
+for (const glob of ['!./src/components/design/**', '!./src/pages/design/**', ...PUBLIC_FEATURE_COMPONENTS.map((dir) => `!./${dir}/**`)]) {
   if (!content.includes(glob)) failures.push(`content must exclude ${glob}`);
 }
 

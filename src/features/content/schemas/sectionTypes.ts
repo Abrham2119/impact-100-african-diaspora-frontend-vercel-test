@@ -196,9 +196,62 @@ export const donorList = defineSection('donor_list', { settings: { source: s.sou
 export const photoGallery = defineSection('photo_gallery', { settings: { source: s.source('photos') } });
 export const videoGallery = defineSection('video_gallery', { settings: { source: s.source('videos') } });
 
+/**
+ * Thanks / status card. With `summary_key`, the last submission of that form (saved by the form,
+ * infrastructure/storage/submission.storage) fills `result_title` / `result_body` (`{name}` tokens).
+ */
 export const statusCard = defineSection('status_card', {
-  fields: { title: f.text(), body: f.text(), actions: o(f.links()) },
-  settings: { icon: s.string() },
+  fields: { title: f.text(), body: f.text(), actions: o(f.links()), result_title: o(f.text()), result_body: o(f.text()) },
+  settings: { icon: s.string(), summary_key: o(s.string()) },
+});
+
+/** `ol.ix_flow` numbered steps (nonprofits "How it works", grants roadmap). */
+export const flowSteps = defineSection('flow_steps', {
+  fields: { ...heading, list_kicker: o(f.text()) },
+  item: { fields: { num: f.text(), title: f.text(), text: o(f.text()) } },
+});
+
+/** The interactive forms and widgets, by key (formRegistry). */
+export const FORM_KEYS = [
+  'contact',
+  'volunteer',
+  'share_story',
+  'hub_join',
+  'join',
+  'donate',
+  'cancel_gift',
+  'eligibility',
+  'hub_map',
+] as const;
+
+/**
+ * An interactive block: `form_key` picks the component; the fields carry its CMS copy (headings,
+ * intro, notes, success message, side content) and `items` its repeated side content.
+ */
+export const formBlock = defineSection('form_block', {
+  fields: {
+    kicker: o(f.text()),
+    title: o(f.text()),
+    lead: o(f.text()),
+    body: o(f.rich()),
+    note: o(f.rich()),
+    side_kicker: o(f.text()),
+    side_title: o(f.text()),
+    side_body: o(f.rich()),
+    success_title: o(f.text()),
+    success_body: o(f.text()),
+    actions: o(f.links()),
+  },
+  media: { image: o(m.image()) },
+  settings: {
+    form_key: s.enumOf(FORM_KEYS, 'contact'),
+    source: o(s.source('')),
+    default_key: o(s.string()),
+  },
+  item: {
+    fields: { title: o(f.text()), body: o(f.rich()), link: o(f.link()) },
+    settings: { key: o(s.string()), done: s.bool(false) },
+  },
 });
 
 export const SECTION_TYPES = [
@@ -228,6 +281,8 @@ export const SECTION_TYPES = [
   photoGallery,
   videoGallery,
   statusCard,
+  flowSteps,
+  formBlock,
 ] as const;
 
 export type SectionTypeName = (typeof SECTION_TYPES)[number]['type'];

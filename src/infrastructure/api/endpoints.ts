@@ -60,4 +60,29 @@ export const API_ENDPOINTS = {
     pushSubscribe: 'notifications/push/subscribe',
     pushUnsubscribe: 'notifications/push/unsubscribe',
   },
+  // Public site services (backend docs/ARCHITECTURE.md §4.5–4.8). Wired in Step 13; until then the
+  // feature services resolve the same shapes from fixtures (infrastructure/api/mock.ts).
+  engagement: {
+    contact: 'engagement/contact',
+    volunteerSignups: 'engagement/volunteer-signups',
+    hubMemberships: 'engagement/hub-memberships',
+    eventRsvps: (eventKey: string) => `engagement/events/${eventKey}/rsvps`,
+    eventAvailability: 'engagement/events/availability',
+    committeeInterests: 'engagement/committee-interests',
+    stories: 'engagement/stories',
+    eligibilityChecks: 'engagement/eligibility-checks',
+  },
+  membership: {
+    publicSettings: 'membership/settings/public',
+    campaigns: 'membership/campaigns',
+    campaign: (slug: string) => `membership/campaigns/${slug}`,
+    joinQuote: 'membership/join/quote',
+    join: 'membership/join',
+    joinIntent: (intentId: string) => `membership/join/intents/${intentId}`,
+    donations: 'membership/donations',
+    donationCancel: 'membership/donations/cancel',
+  },
+  governance: {
+    publicProposals: 'governance/proposals/public',
+  },
 } as const;
