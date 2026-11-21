@@ -1,6 +1,9 @@
 import type { ComponentType } from 'react';
+import { ContactForm } from '@/features/engagement/components/ContactForm';
 import { EligibilityCheck } from '@/features/engagement/components/EligibilityCheck';
 import { HubJoin } from '@/features/engagement/components/HubJoin';
+import { RoleBrowser } from '@/features/engagement/components/RoleBrowser';
+import { ShareStoryForm } from '@/features/engagement/components/ShareStoryForm';
 import { CancelGift } from '@/features/membership/components/CancelGift';
 import type { SectionData } from '../schemas/defineSection';
 import type { FORM_KEYS, formBlock } from '../schemas/sectionTypes';
@@ -14,4 +17,7 @@ export const FORM_REGISTRY: Partial<Record<(typeof FORM_KEYS)[number], FormBlock
   eligibility: EligibilityCheck,
   hub_join: HubJoin,
   cancel_gift: CancelGift,
+  contact: ContactForm,
+  volunteer: RoleBrowser,
+  share_story: ShareStoryForm,
 };

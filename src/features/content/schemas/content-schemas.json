@@ -2148,6 +2148,18 @@
               "$ref": "#/definitions/LocalizedText",
               "x-kind": "text"
             },
+            "consent_label": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "consent_link": {
+              "$ref": "#/definitions/LocalizedLink",
+              "x-kind": "link"
+            },
+            "side_link": {
+              "$ref": "#/definitions/LocalizedLink",
+              "x-kind": "link"
+            },
             "actions": {
               "$ref": "#/definitions/LocalizedLinkList",
               "x-kind": "link_list"
@@ -3602,6 +3614,94 @@
           "required": [
             "map_key"
           ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "volunteer_roles": {
+      "title": "volunteer_roles",
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "team": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            },
+            "description": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            }
+          },
+          "required": [
+            "title",
+            "team",
+            "description"
+          ],
+          "additionalProperties": false
+        },
+        "media": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "area": {
+              "type": "string",
+              "x-kind": "string"
+            },
+            "team_key": {
+              "type": "string",
+              "x-kind": "string"
+            },
+            "interest_key": {
+              "type": "string",
+              "x-kind": "string"
+            }
+          },
+          "required": [
+            "area",
+            "team_key"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "contact_topics": {
+      "title": "contact_topics",
+      "type": "object",
+      "properties": {
+        "fields": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "$ref": "#/definitions/LocalizedText",
+              "x-kind": "text"
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "media": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        },
+        "data": {
+          "type": "object",
+          "properties": {},
+          "required": [],
           "additionalProperties": false
         }
       }

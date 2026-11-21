@@ -45,6 +45,9 @@ const CMS_COMPOSED = new Set<CmsPageKey>([
   'contact_thanks',
   'donate_thanks',
   'volunteer_thanks',
+  'contact',
+  'volunteer',
+  'share_story',
 ]);
 
 const page = (path: string | undefined, handle: RouteHandle): RouteObject => {

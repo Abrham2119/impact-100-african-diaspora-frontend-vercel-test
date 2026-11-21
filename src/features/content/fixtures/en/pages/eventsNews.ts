@@ -185,7 +185,7 @@ export const volunteerThanksPageEn = thanks('volunteer_thanks', P.volunteerThank
   fields: {
     title: 'Your sign-up is on its way',
     body: 'We sent each team that owns one of your roles a note with your details. They will get back to you by email. A confirmation is on its way to your inbox.',
-    result_title: 'Sent to {count} teams',
+    result_title: 'Sent to {count}',
     result_body: '{teams}',
     actions: [link('see events', P.events), link('back to roles', P.volunteer, 'dark')],
   },

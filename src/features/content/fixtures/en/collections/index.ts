@@ -4,6 +4,7 @@ import { committeesEn } from './committees';
 import { countriesEn } from './countries';
 import { eventsEn } from './events';
 import { faqsEn } from './faqs';
+import { contactTopicsEn, volunteerRolesEn } from './forms';
 import { blogCommentsEn, campaignCategoriesEn, campaignDisplayEn, donorsEn, newsEn, photosEn, portfoliosEn, usHubsEn, videosEn } from './misc';
 import { nonprofitFaqsEn } from './nonprofitFaqs';
 import { leadershipEn, volunteersEn } from './people';
@@ -16,6 +17,7 @@ export const collectionsEn: Record<string, EntryCardDto[]> = {
   campaign_display: campaignDisplayEn,
   charter_versions: charterVersionsEn,
   committees: committeesEn,
+  contact_topics: contactTopicsEn,
   countries: countriesEn,
   donors: donorsEn,
   events: eventsEn,
@@ -28,5 +30,6 @@ export const collectionsEn: Record<string, EntryCardDto[]> = {
   testimonials: testimonialsEn,
   us_hubs: usHubsEn,
   videos: videosEn,
+  volunteer_roles: volunteerRolesEn,
   volunteers: volunteersEn,
 };

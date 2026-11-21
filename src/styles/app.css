@@ -162,6 +162,7 @@
 .ixd_gap10 { gap: 10px !important; }
 .ixd_mt10 { margin-top: 10px !important; }
 .ixd_relative { position: relative !important; }
+.ixd_m2_0 { margin: 2px 0 0 !important; }
 /* a wrapper that takes no box (dt/dd pairs rendered from one item) */
 .ixd_contents { display: contents !important; }
 

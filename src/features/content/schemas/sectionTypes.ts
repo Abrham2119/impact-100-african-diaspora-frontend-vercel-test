@@ -336,6 +336,11 @@ export const formBlock = defineSection('form_block', {
     form_kicker: o(f.text()),
     form_title: o(f.text()),
     submit_label: o(f.text()),
+    /** consent checkbox label; `{link}` marks where `consent_link` goes */
+    consent_label: o(f.text()),
+    consent_link: o(f.link()),
+    /** a plain text link (`.ix_link`) under the side card */
+    side_link: o(f.link()),
     actions: o(f.links()),
   },
   media: { image: o(m.image()) },
@@ -412,6 +417,13 @@ export const countries = defineCollection('countries', {
   fields: { name: f.text(), capital: f.text(), hub_text: o(f.text()) },
   data: { map_key: s.string(), featured: s.bool(false) },
 });
+
+export const volunteerRoles = defineCollection('volunteer_roles', {
+  fields: { title: f.text(), team: f.text(), description: f.text() },
+  data: { area: s.string(), team_key: s.string(), interest_key: o(s.string()) },
+});
+
+export const contactTopics = defineCollection('contact_topics', { fields: { name: f.text() } });
 
 /** C:us_hubs — the five US regional hubs (hubs.dc.html, join form). */
 export const usHubs = defineCollection('us_hubs', {
@@ -510,4 +522,6 @@ export const COLLECTION_TYPES = [
   usHubs,
   blogComments,
   countries,
+  volunteerRoles,
+  contactTopics,
 ] as const;
