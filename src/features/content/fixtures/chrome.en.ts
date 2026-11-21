@@ -99,7 +99,7 @@ export const chromeEn: PublicChrome = {
         menu: {
           kind: 'list',
           links: [
-            { id: 'grants.map', label: 'Grants & Africa Map', to: P.grants },
+            { id: 'grants.map', label: 'Grants', to: P.grants },
             { id: 'grants.campaigns', label: 'Campaigns', to: P.campaigns },
             { id: 'grants.categories', label: 'Categories', to: P.campaignCategory() },
           ],
